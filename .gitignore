@@ -1,0 +1,13 @@
+node_modules/
+dist/
+target/
+src-tauri/target/
+src-tauri/gen/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+.DS_Store
+src-misc
+CLAUDE.md
+HELIX_Agile_Portal_AppDesign_and_UserJourneys.md
+.claude
