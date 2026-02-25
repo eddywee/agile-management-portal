@@ -1,0 +1,92 @@
+# GitLab CI/CD — HELIX Agile Portal
+# Builds Tauri 2.x desktop app for macOS and Windows.
+#
+# Runner prerequisites:
+#   Both:    Node.js 20+, Rust stable (≥ 1.77)
+#   macOS:   Xcode Command Line Tools
+#   Windows: Visual Studio Build Tools (C++ desktop workload)
+#
+# Workflow:
+#   MR pipeline  → typecheck only (fast gate)
+#   Tag v*       → full platform builds + GitLab release
+#
+# Runner tags expected: "macos", "windows"
+# © Edmund Wallner - Mercedes-Benz AG
+
+stages:
+  - check
+  - build
+  - release
+
+variables:
+  CARGO_INCREMENTAL: "0"
+
+# ── Merge-request gate ───────────────────────────────────
+
+typecheck:
+  stage: check
+  tags: [macos]
+  script:
+    - npm ci
+    - npx tsc --noEmit
+  rules:
+    - if: $CI_MERGE_REQUEST_IID
+
+# ── Platform builds (tag push only) ─────────────────────
+
+build:macos:
+  stage: build
+  tags: [macos]
+  script:
+    - npm ci
+    - npm run tauri:build
+  artifacts:
+    paths:
+      - src-tauri/target/release/bundle/dmg/*.dmg
+    expire_in: 90 days
+  cache:
+    key: cargo-macos
+    paths:
+      - src-tauri/target/release/deps
+      - src-tauri/target/release/build
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v/
+
+build:windows:
+  stage: build
+  tags: [windows]
+  script:
+    - npm ci
+    - npm run tauri:build
+  artifacts:
+    paths:
+      - src-tauri/target/release/bundle/msi/*.msi
+      - src-tauri/target/release/bundle/nsis/*.exe
+    expire_in: 90 days
+  cache:
+    key: cargo-windows
+    paths:
+      - src-tauri/target/release/deps
+      - src-tauri/target/release/build
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v/
+
+# ── GitLab release (created automatically on tag) ───────
+# Requires release-cli on the runner (GitLab Runner 15.0+
+# downloads it automatically for shell executors).
+# Installers are downloadable from the pipeline artifacts.
+
+release:
+  stage: release
+  tags: [macos]
+  needs:
+    - build:macos
+    - build:windows
+  script:
+    - echo "Creating release for ${CI_COMMIT_TAG}"
+  release:
+    tag_name: ${CI_COMMIT_TAG}
+    name: "HELIX Agile Portal ${CI_COMMIT_TAG}"
+    description: "Installers available as pipeline artifacts."
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v/
