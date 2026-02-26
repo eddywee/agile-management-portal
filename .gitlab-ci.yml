@@ -83,6 +83,7 @@ release:
     - build:windows
   variables:
     GITLAB_TOKEN: ${CI_JOB_TOKEN}
+    GITLAB_HOST: ${CI_SERVER_HOST}
   before_script:
     - command -v glab >/dev/null 2>&1 || brew install glab
   script:
