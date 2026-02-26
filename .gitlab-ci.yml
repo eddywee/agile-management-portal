@@ -3,7 +3,7 @@
 #
 # Runner prerequisites:
 #   Both:    Node.js 20+, Rust stable (≥ 1.77)
-#   macOS:   Xcode Command Line Tools
+#   macOS:   Xcode Command Line Tools, glab CLI (auto-installed via Homebrew)
 #   Windows: Visual Studio Build Tools (C++ desktop workload)
 #
 # Workflow:
@@ -54,7 +54,7 @@ build:macos:
 
 build:windows:
   stage: build
-  tags: [windows]
+  tags: [windows, shared]
   script:
     - npm ci
     - npm run tauri:build
@@ -72,8 +72,7 @@ build:windows:
     - if: $CI_COMMIT_TAG =~ /^v/
 
 # ── GitLab release (created automatically on tag) ───────
-# Requires release-cli on the runner (GitLab Runner 15.0+
-# downloads it automatically for shell executors).
+# Uses glab CLI (>= 1.58.0) for the release: keyword.
 # Installers are downloadable from the pipeline artifacts.
 
 release:
@@ -82,6 +81,8 @@ release:
   needs:
     - build:macos
     - build:windows
+  before_script:
+    - command -v glab >/dev/null 2>&1 || brew install glab
   script:
     - echo "Creating release for ${CI_COMMIT_TAG}"
   release:
