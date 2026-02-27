@@ -57,10 +57,10 @@ build:windows:
   tags: [windows, shared]
   script:
     - npm ci
-    - npm run tauri:build -- --bundles nsis
+    - npm run tauri:build -- --bundles none
   artifacts:
     paths:
-      - src-tauri/target/release/bundle/nsis/*.exe
+      - src-tauri/target/release/helix-agile-portal.exe
     expire_in: 90 days
   cache:
     key: cargo-windows
@@ -89,7 +89,7 @@ release:
     - |
       ASSETS=()
       for f in src-tauri/target/release/bundle/dmg/*.dmg \
-               src-tauri/target/release/bundle/nsis/*.exe; do
+               src-tauri/target/release/helix-agile-portal.exe; do
         [ -f "$f" ] && ASSETS+=("$f")
       done
       echo "Uploading ${#ASSETS[@]} installer(s) for ${CI_COMMIT_TAG}"
