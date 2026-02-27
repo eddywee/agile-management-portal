@@ -1,6 +1,6 @@
 [package]
 name = "helix-agile-portal"
-version = "1.0.0"
+version = "0.1.1"
 description = "HELIX Agile Portal — SAFe Investment Tracker"
 authors = ["Edmund Wallner - Mercedes-Benz AG"]
 license = "UNLICENSED"
@@ -23,3 +23,5 @@ csv = "1.3"
 tauri-plugin-dialog = "2"
 log = "0.4"
 tauri-plugin-log = "2"
+tauri-plugin-process = "2"
+tauri-plugin-updater = "2"
