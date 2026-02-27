@@ -3,12 +3,15 @@
 #
 # Runner prerequisites:
 #   Both:    Node.js 20+, Rust stable (≥ 1.77)
-#   macOS:   Xcode Command Line Tools, glab CLI (auto-installed via Homebrew)
+#   macOS:   Xcode Command Line Tools
 #   Windows: Visual Studio Build Tools (C++ desktop workload)
 #
 # Workflow:
 #   MR pipeline  → typecheck only (fast gate)
 #   Tag v*       → full platform builds + GitLab release
+#
+# Release assets are stored in the GitLab Generic Package Registry
+# (CI_JOB_TOKEN has publish access, unlike project uploads).
 #
 # Runner tags expected: "macos", "windows"
 # © Edmund Wallner - Mercedes-Benz AG
@@ -84,6 +87,8 @@ release:
     - |
       API="${CI_API_V4_URL}/projects/${CI_PROJECT_ID}"
       AUTH="JOB-TOKEN: ${CI_JOB_TOKEN}"
+      VERSION="${CI_COMMIT_TAG#v}"
+      PKG_URL="${API}/packages/generic/helix-agile-portal/${VERSION}"
 
       # Create the release
       echo "Creating release ${CI_COMMIT_TAG}..."
@@ -98,30 +103,29 @@ release:
         "${API}/releases"
 
       echo ""
-      echo "Release created. Uploading assets..."
+      echo "Release created. Uploading assets to package registry..."
 
-      # Upload each installer and add as a release link
+      # Upload each installer to the Generic Package Registry
+      # and add as a release asset link
       for f in src-tauri/target/release/bundle/dmg/*.dmg \
                src-tauri/target/release/helix-agile-portal.exe; do
         [ -f "$f" ] || continue
         FILENAME=$(basename "$f")
         echo "  Uploading ${FILENAME}..."
 
-        # Upload to project uploads
-        UPLOAD=$(curl --fail --silent --show-error \
+        # PUT to Generic Package Registry
+        curl --fail --silent --show-error \
           --header "${AUTH}" \
-          --form "file=@${f}" \
-          "${API}/uploads")
+          --upload-file "$f" \
+          "${PKG_URL}/${FILENAME}"
 
-        URL=$(echo "$UPLOAD" | python3 -c "import sys,json; print(json.load(sys.stdin)['full_path'])")
-
-        # Link upload to the release
+        # Link package to the release
         curl --fail --silent --show-error \
           --header "${AUTH}" \
           --header "Content-Type: application/json" \
           --data "{
             \"name\": \"${FILENAME}\",
-            \"url\": \"${CI_SERVER_URL}${URL}\",
+            \"url\": \"${PKG_URL}/${FILENAME}\",
             \"link_type\": \"package\"
           }" \
           "${API}/releases/${CI_COMMIT_TAG}/assets/links"
