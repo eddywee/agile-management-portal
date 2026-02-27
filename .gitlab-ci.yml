@@ -82,11 +82,13 @@ release:
     - build:windows
   variables:
     GITLAB_TOKEN: ${CI_JOB_TOKEN}
-    GITLAB_HOST: ${CI_SERVER_HOST}
   before_script:
     - command -v glab >/dev/null 2>&1 || brew install glab
   script:
     - |
+      echo "Server: ${CI_SERVER_URL}"
+      echo "Project: ${CI_PROJECT_PATH}"
+      glab auth login --hostname "${CI_SERVER_HOST}" --token "${CI_JOB_TOKEN}"
       ASSETS=()
       for f in src-tauri/target/release/bundle/dmg/*.dmg \
                src-tauri/target/release/helix-agile-portal.exe; do
@@ -94,6 +96,7 @@ release:
       done
       echo "Uploading ${#ASSETS[@]} installer(s) for ${CI_COMMIT_TAG}"
       glab release create "${CI_COMMIT_TAG}" "${ASSETS[@]}" \
+        --repo "${CI_PROJECT_URL}" \
         --name "HELIX Agile Portal ${CI_COMMIT_TAG}" \
         --notes "Desktop installers for macOS and Windows."
   rules:
