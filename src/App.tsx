@@ -7,6 +7,7 @@ import { PageRouter } from './components/layout/PageRouter';
 import { ModalContainer } from './components/common/ModalContainer';
 import { SearchOverlay } from './components/common/SearchOverlay';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
+import { UpdateBanner } from './components/common/UpdateBanner';
 import { useModalStore } from './store/modalStore';
 import { usePIStore } from './store/piStore';
 
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <div className={`app${collapsed ? ' collapsed' : ''}`} id="app">
+      <UpdateBanner />
       <Header onOpenSearch={openSearch} onToggleSidebar={toggleSidebar} />
       <Sidebar />
       <PageRouter />

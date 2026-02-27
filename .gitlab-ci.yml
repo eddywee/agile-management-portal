@@ -4,14 +4,18 @@
 # Runner prerequisites:
 #   Both:    Node.js 20+, Rust stable (≥ 1.77)
 #   macOS:   Xcode Command Line Tools
-#   Windows: Visual Studio Build Tools (C++ desktop workload)
+#   Windows: Visual Studio Build Tools (C++ desktop workload), NSIS 3.x
 #
 # Workflow:
 #   MR pipeline  → typecheck only (fast gate)
-#   Tag v*       → full platform builds + GitLab release
+#   Tag v*       → full platform builds + GitLab release + updater manifest
 #
 # Release assets are stored in the GitLab Generic Package Registry
 # (CI_JOB_TOKEN has publish access, unlike project uploads).
+#
+# Auto-update requires CI variables (Settings > CI/CD > Variables):
+#   TAURI_SIGNING_PRIVATE_KEY          — signing key (masked, protected)
+#   TAURI_SIGNING_PRIVATE_KEY_PASSWORD — key password (masked, protected)
 #
 # Runner tags expected: "macos", "windows"
 # © Edmund Wallner - Mercedes-Benz AG
@@ -46,6 +50,8 @@ build:macos:
   artifacts:
     paths:
       - src-tauri/target/release/bundle/dmg/*.dmg
+      - src-tauri/target/release/bundle/macos/*.tar.gz
+      - src-tauri/target/release/bundle/macos/*.tar.gz.sig
     expire_in: 90 days
   cache:
     key: cargo-macos
@@ -60,10 +66,12 @@ build:windows:
   tags: [windows, shared]
   script:
     - npm ci
-    - npm run tauri:build -- --no-bundle
+    - npm run tauri:build -- --bundles nsis
   artifacts:
     paths:
-      - src-tauri/target/release/helix-agile-portal.exe
+      - src-tauri/target/release/bundle/nsis/*.exe
+      - src-tauri/target/release/bundle/nsis/*.nsis.zip
+      - src-tauri/target/release/bundle/nsis/*.nsis.zip.sig
     expire_in: 90 days
   cache:
     key: cargo-windows
@@ -73,9 +81,10 @@ build:windows:
   rules:
     - if: $CI_COMMIT_TAG =~ /^v/
 
-# ── GitLab release (created automatically on tag) ───────
-# Creates a release via the GitLab API and uploads installer
-# binaries from the build stage artifacts as release links.
+# ── GitLab release + updater manifest ────────────────────
+# Creates a release via the GitLab API, uploads installer binaries
+# as release links, and publishes an update.json manifest for
+# the in-app auto-updater (tauri-plugin-updater).
 
 release:
   stage: release
@@ -89,6 +98,7 @@ release:
       AUTH="JOB-TOKEN: ${CI_JOB_TOKEN}"
       VERSION="${CI_COMMIT_TAG#v}"
       PKG_URL="${API}/packages/generic/helix-agile-portal/${VERSION}"
+      UPDATE_PKG_URL="${API}/packages/generic/helix-agile-portal-update/latest"
 
       # Create the release
       echo "Creating release ${CI_COMMIT_TAG}..."
@@ -105,10 +115,14 @@ release:
       echo ""
       echo "Release created. Uploading assets to package registry..."
 
-      # Upload each installer to the Generic Package Registry
-      # and add as a release asset link
+      # Upload each installer/updater artifact to the Generic Package Registry
+      # and add installers as release asset links
       for f in src-tauri/target/release/bundle/dmg/*.dmg \
-               src-tauri/target/release/helix-agile-portal.exe; do
+               src-tauri/target/release/bundle/nsis/*.exe \
+               src-tauri/target/release/bundle/macos/*.tar.gz \
+               src-tauri/target/release/bundle/macos/*.tar.gz.sig \
+               src-tauri/target/release/bundle/nsis/*.nsis.zip \
+               src-tauri/target/release/bundle/nsis/*.nsis.zip.sig; do
         [ -f "$f" ] || continue
         FILENAME=$(basename "$f")
         # Registry filenames must match [A-Za-z0-9._-+], replace spaces
@@ -121,19 +135,78 @@ release:
           --upload-file "$f" \
           "${PKG_URL}/${SAFE_FILENAME}"
 
-        # Link package to the release
-        curl --fail --silent --show-error \
-          --header "${AUTH}" \
-          --header "Content-Type: application/json" \
-          --data "{
-            \"name\": \"${FILENAME}\",
-            \"url\": \"${PKG_URL}/${SAFE_FILENAME}\",
-            \"link_type\": \"package\"
-          }" \
-          "${API}/releases/${CI_COMMIT_TAG}/assets/links"
+        # Only link user-facing installers (dmg, exe) to the release
+        case "$FILENAME" in
+          *.dmg|*.exe)
+            curl --fail --silent --show-error \
+              --header "${AUTH}" \
+              --header "Content-Type: application/json" \
+              --data "{
+                \"name\": \"${FILENAME}\",
+                \"url\": \"${PKG_URL}/${SAFE_FILENAME}\",
+                \"link_type\": \"package\"
+              }" \
+              "${API}/releases/${CI_COMMIT_TAG}/assets/links"
+            ;;
+        esac
 
         echo ""
       done
-      echo "Done — ${CI_COMMIT_TAG} released."
+
+      # ── Generate and upload update.json for auto-updater ──
+      echo "Generating update.json manifest..."
+      PUB_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+      # Read macOS signature
+      MAC_SIG=""
+      for sigfile in src-tauri/target/release/bundle/macos/*.tar.gz.sig; do
+        [ -f "$sigfile" ] && MAC_SIG=$(cat "$sigfile")
+      done
+
+      # Find macOS updater bundle filename
+      MAC_BUNDLE=""
+      for bundle in src-tauri/target/release/bundle/macos/*.tar.gz; do
+        [ -f "$bundle" ] && MAC_BUNDLE=$(basename "$bundle" | tr ' ' '-')
+      done
+
+      # Read Windows signature
+      WIN_SIG=""
+      for sigfile in src-tauri/target/release/bundle/nsis/*.nsis.zip.sig; do
+        [ -f "$sigfile" ] && WIN_SIG=$(cat "$sigfile")
+      done
+
+      # Find Windows updater bundle filename
+      WIN_BUNDLE=""
+      for bundle in src-tauri/target/release/bundle/nsis/*.nsis.zip; do
+        [ -f "$bundle" ] && WIN_BUNDLE=$(basename "$bundle" | tr ' ' '-')
+      done
+
+      # Build the update manifest JSON
+      PLATFORMS="{"
+      if [ -n "$MAC_SIG" ] && [ -n "$MAC_BUNDLE" ]; then
+        PLATFORMS="${PLATFORMS}\"darwin-aarch64\":{\"signature\":\"${MAC_SIG}\",\"url\":\"${PKG_URL}/${MAC_BUNDLE}\"}"
+      fi
+      if [ -n "$WIN_SIG" ] && [ -n "$WIN_BUNDLE" ]; then
+        [ "$PLATFORMS" != "{" ] && PLATFORMS="${PLATFORMS},"
+        PLATFORMS="${PLATFORMS}\"windows-x86_64\":{\"signature\":\"${WIN_SIG}\",\"url\":\"${PKG_URL}/${WIN_BUNDLE}\"}"
+      fi
+      PLATFORMS="${PLATFORMS}}"
+
+      UPDATE_JSON="{\"version\":\"${VERSION}\",\"notes\":\"Desktop installers for macOS and Windows.\",\"pub_date\":\"${PUB_DATE}\",\"platforms\":${PLATFORMS}}"
+
+      echo "$UPDATE_JSON" > update.json
+      echo "  update.json contents:"
+      cat update.json
+      echo ""
+
+      # Upload to the well-known updater endpoint (overwrites previous)
+      echo "  Uploading update.json..."
+      curl --fail --silent --show-error \
+        --header "${AUTH}" \
+        --upload-file update.json \
+        "${UPDATE_PKG_URL}/update.json"
+
+      echo ""
+      echo "Done — ${CI_COMMIT_TAG} released with auto-update manifest."
   rules:
     - if: $CI_COMMIT_TAG =~ /^v/
