@@ -111,13 +111,14 @@ release:
                src-tauri/target/release/helix-agile-portal.exe; do
         [ -f "$f" ] || continue
         FILENAME=$(basename "$f")
+        URL_FILENAME=$(echo "$FILENAME" | sed 's/ /%20/g')
         echo "  Uploading ${FILENAME}..."
 
-        # PUT to Generic Package Registry
+        # PUT to Generic Package Registry (URL-encode spaces in filename)
         curl --fail --silent --show-error \
           --header "${AUTH}" \
           --upload-file "$f" \
-          "${PKG_URL}/${FILENAME}"
+          "${PKG_URL}/${URL_FILENAME}"
 
         # Link package to the release
         curl --fail --silent --show-error \
@@ -125,7 +126,7 @@ release:
           --header "Content-Type: application/json" \
           --data "{
             \"name\": \"${FILENAME}\",
-            \"url\": \"${PKG_URL}/${FILENAME}\",
+            \"url\": \"${PKG_URL}/${URL_FILENAME}\",
             \"link_type\": \"package\"
           }" \
           "${API}/releases/${CI_COMMIT_TAG}/assets/links"
