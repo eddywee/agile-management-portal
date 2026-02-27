@@ -24,4 +24,4 @@ tauri-plugin-dialog = "2"
 log = "0.4"
 tauri-plugin-log = "2"
 tauri-plugin-process = "2"
-tauri-plugin-updater = "2"
+tauri-plugin-updater = { version = "2", default-features = false, features = ["native-tls", "zip"] }
