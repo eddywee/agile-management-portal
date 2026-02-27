@@ -57,10 +57,9 @@ build:windows:
   tags: [windows, shared]
   script:
     - npm ci
-    - npm run tauri:build
+    - npm run tauri:build -- --bundles nsis
   artifacts:
     paths:
-      - src-tauri/target/release/bundle/msi/*.msi
       - src-tauri/target/release/bundle/nsis/*.exe
     expire_in: 90 days
   cache:
@@ -90,7 +89,6 @@ release:
     - |
       ASSETS=()
       for f in src-tauri/target/release/bundle/dmg/*.dmg \
-               src-tauri/target/release/bundle/msi/*.msi \
                src-tauri/target/release/bundle/nsis/*.exe; do
         [ -f "$f" ] && ASSETS+=("$f")
       done
