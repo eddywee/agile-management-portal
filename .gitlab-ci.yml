@@ -66,12 +66,10 @@ build:windows:
   tags: [windows, shared]
   script:
     - npm ci
-    - npm run tauri:build -- --bundles nsis
+    - npm run tauri:build -- --no-bundle
   artifacts:
     paths:
-      - src-tauri/target/release/bundle/nsis/*.exe
-      - src-tauri/target/release/bundle/nsis/*.nsis.zip
-      - src-tauri/target/release/bundle/nsis/*.nsis.zip.sig
+      - src-tauri/target/release/helix-agile-portal.exe
     expire_in: 90 days
   cache:
     key: cargo-windows
@@ -118,11 +116,9 @@ release:
       # Upload each installer/updater artifact to the Generic Package Registry
       # and add installers as release asset links
       for f in src-tauri/target/release/bundle/dmg/*.dmg \
-               src-tauri/target/release/bundle/nsis/*.exe \
+               src-tauri/target/release/helix-agile-portal.exe \
                src-tauri/target/release/bundle/macos/*.tar.gz \
-               src-tauri/target/release/bundle/macos/*.tar.gz.sig \
-               src-tauri/target/release/bundle/nsis/*.nsis.zip \
-               src-tauri/target/release/bundle/nsis/*.nsis.zip.sig; do
+               src-tauri/target/release/bundle/macos/*.tar.gz.sig; do
         [ -f "$f" ] || continue
         FILENAME=$(basename "$f")
         # Registry filenames must match [A-Za-z0-9._-+], replace spaces
@@ -169,26 +165,10 @@ release:
         [ -f "$bundle" ] && MAC_BUNDLE=$(basename "$bundle" | tr ' ' '-')
       done
 
-      # Read Windows signature
-      WIN_SIG=""
-      for sigfile in src-tauri/target/release/bundle/nsis/*.nsis.zip.sig; do
-        [ -f "$sigfile" ] && WIN_SIG=$(cat "$sigfile")
-      done
-
-      # Find Windows updater bundle filename
-      WIN_BUNDLE=""
-      for bundle in src-tauri/target/release/bundle/nsis/*.nsis.zip; do
-        [ -f "$bundle" ] && WIN_BUNDLE=$(basename "$bundle" | tr ' ' '-')
-      done
-
-      # Build the update manifest JSON
+      # Build the update manifest JSON (macOS only — Windows lacks NSIS on shared runner)
       PLATFORMS="{"
       if [ -n "$MAC_SIG" ] && [ -n "$MAC_BUNDLE" ]; then
         PLATFORMS="${PLATFORMS}\"darwin-aarch64\":{\"signature\":\"${MAC_SIG}\",\"url\":\"${PKG_URL}/${MAC_BUNDLE}\"}"
-      fi
-      if [ -n "$WIN_SIG" ] && [ -n "$WIN_BUNDLE" ]; then
-        [ "$PLATFORMS" != "{" ] && PLATFORMS="${PLATFORMS},"
-        PLATFORMS="${PLATFORMS}\"windows-x86_64\":{\"signature\":\"${WIN_SIG}\",\"url\":\"${PKG_URL}/${WIN_BUNDLE}\"}"
       fi
       PLATFORMS="${PLATFORMS}}"
 
