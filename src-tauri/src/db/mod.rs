@@ -14,10 +14,15 @@ fn migrate(conn: &Connection) {
 
     if version < 1 {
         // Migration: make arts.solution_id and product_teams.art_id nullable with ON DELETE SET NULL
-        // Check if arts table has NOT NULL on solution_id by trying to insert NULL
+        // Check if arts table still lacks ON DELETE SET NULL (old schema)
         let needs_migration = conn
-            .execute("INSERT INTO arts (solution_id, name) VALUES (NULL, '__migration_test__')", [])
-            .is_err();
+            .query_row(
+                "SELECT sql FROM sqlite_master WHERE type='table' AND name='arts'",
+                [],
+                |row| row.get::<_, String>(0),
+            )
+            .map(|sql| !sql.contains("ON DELETE SET NULL"))
+            .unwrap_or(false);
 
         if needs_migration {
             conn.execute_batch("PRAGMA foreign_keys=OFF;").ok();
@@ -45,9 +50,6 @@ fn migrate(conn: &Connection) {
                 "
             ).expect("Migration v1 failed");
             conn.execute_batch("PRAGMA foreign_keys=ON;").ok();
-        } else {
-            // Clean up test row
-            conn.execute("DELETE FROM arts WHERE name = '__migration_test__'", []).ok();
         }
 
         conn.execute_batch("PRAGMA user_version = 1;").ok();
