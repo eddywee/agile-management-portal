@@ -71,8 +71,8 @@ build:windows:
     - if: $CI_COMMIT_TAG =~ /^v/
 
 # ── GitLab release (created automatically on tag) ───────
-# Uses glab CLI (>= 1.58.0) to create the release and
-# upload installer binaries from the build stage artifacts.
+# Creates a release via the GitLab API and uploads installer
+# binaries from the build stage artifacts as release links.
 
 release:
   stage: release
@@ -80,24 +80,54 @@ release:
   needs:
     - build:macos
     - build:windows
-  variables:
-    GITLAB_TOKEN: ${CI_JOB_TOKEN}
-  before_script:
-    - command -v glab >/dev/null 2>&1 || brew install glab
   script:
     - |
-      echo "Server: ${CI_SERVER_URL}"
-      echo "Project: ${CI_PROJECT_PATH}"
-      glab auth login --hostname "${CI_SERVER_HOST}" --token "${CI_JOB_TOKEN}"
-      ASSETS=()
+      API="${CI_API_V4_URL}/projects/${CI_PROJECT_ID}"
+      AUTH="JOB-TOKEN: ${CI_JOB_TOKEN}"
+
+      # Create the release
+      echo "Creating release ${CI_COMMIT_TAG}..."
+      curl --fail --silent --show-error \
+        --header "${AUTH}" \
+        --header "Content-Type: application/json" \
+        --data "{
+          \"tag_name\": \"${CI_COMMIT_TAG}\",
+          \"name\": \"HELIX Agile Portal ${CI_COMMIT_TAG}\",
+          \"description\": \"Desktop installers for macOS and Windows.\"
+        }" \
+        "${API}/releases"
+
+      echo ""
+      echo "Release created. Uploading assets..."
+
+      # Upload each installer and add as a release link
       for f in src-tauri/target/release/bundle/dmg/*.dmg \
                src-tauri/target/release/helix-agile-portal.exe; do
-        [ -f "$f" ] && ASSETS+=("$f")
+        [ -f "$f" ] || continue
+        FILENAME=$(basename "$f")
+        echo "  Uploading ${FILENAME}..."
+
+        # Upload to project uploads
+        UPLOAD=$(curl --fail --silent --show-error \
+          --header "${AUTH}" \
+          --form "file=@${f}" \
+          "${API}/uploads")
+
+        URL=$(echo "$UPLOAD" | python3 -c "import sys,json; print(json.load(sys.stdin)['full_path'])")
+
+        # Link upload to the release
+        curl --fail --silent --show-error \
+          --header "${AUTH}" \
+          --header "Content-Type: application/json" \
+          --data "{
+            \"name\": \"${FILENAME}\",
+            \"url\": \"${CI_SERVER_URL}${URL}\",
+            \"link_type\": \"package\"
+          }" \
+          "${API}/releases/${CI_COMMIT_TAG}/assets/links"
+
+        echo ""
       done
-      echo "Uploading ${#ASSETS[@]} installer(s) for ${CI_COMMIT_TAG}"
-      glab release create "${CI_COMMIT_TAG}" "${ASSETS[@]}" \
-        --repo "${CI_PROJECT_URL}" \
-        --name "HELIX Agile Portal ${CI_COMMIT_TAG}" \
-        --notes "Desktop installers for macOS and Windows."
+      echo "Done — ${CI_COMMIT_TAG} released."
   rules:
     - if: $CI_COMMIT_TAG =~ /^v/
