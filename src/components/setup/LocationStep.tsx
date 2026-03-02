@@ -16,8 +16,8 @@ export function LocationStep({ defaultPath, onNext, onBack }: LocationStepProps)
     if (result) {
       const dir = result as string;
       const dbPath = dir.endsWith('/') || dir.endsWith('\\')
-        ? `${dir}agile_management_portal.sqlite`
-        : `${dir}/agile_management_portal.sqlite`;
+        ? `${dir}agile_management_portal.apdb`
+        : `${dir}/agile_management_portal.apdb`;
       setSelectedPath(dbPath);
     }
   };
@@ -25,7 +25,7 @@ export function LocationStep({ defaultPath, onNext, onBack }: LocationStepProps)
   const handleOpenExisting = async () => {
     const result = await open({
       title: 'Open Existing Database',
-      filters: [{ name: 'SQLite Database', extensions: ['sqlite', 'db', 'sqlite3'] }],
+      filters: [{ name: 'Agile Portal Database', extensions: ['apdb', 'sqlite', 'db'] }],
     });
     if (result) {
       setSelectedPath(result as string);

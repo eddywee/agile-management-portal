@@ -29,7 +29,7 @@ export function DatabaseTab() {
   const handleOpenExisting = async () => {
     const result = await open({
       title: 'Open Existing Database',
-      filters: [{ name: 'SQLite Database', extensions: ['sqlite', 'db', 'sqlite3'] }],
+      filters: [{ name: 'Agile Portal Database', extensions: ['apdb', 'sqlite', 'db'] }],
     });
     if (result) {
       await handleSwitch(result as string);
@@ -39,8 +39,8 @@ export function DatabaseTab() {
   const handleCreateNew = async () => {
     const result = await save({
       title: 'Create New Database',
-      defaultPath: 'agile_management_portal.sqlite',
-      filters: [{ name: 'SQLite Database', extensions: ['sqlite'] }],
+      defaultPath: 'agile_management_portal.apdb',
+      filters: [{ name: 'Agile Portal Database', extensions: ['apdb'] }],
     });
     if (result) {
       await handleSwitch(result as string);

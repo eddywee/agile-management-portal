@@ -22,7 +22,7 @@ pub fn default_db_path(app: &AppHandle) -> String {
         .app_data_dir()
         .expect("Failed to resolve app data dir");
     fs::create_dir_all(&dir).ok();
-    dir.join("agile_management_portal.sqlite")
+    dir.join("agile_management_portal.apdb")
         .to_string_lossy()
         .to_string()
 }
