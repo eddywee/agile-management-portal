@@ -5,6 +5,7 @@ import type {
   MembershipWithPerson, LeadershipWithPerson, PersonAllocation,
   ConflictPerson, RoleDistribution, SolutionFTEBreakdown,
   CostRate, SearchResults, CsvParseResult, ImportMapping, ImportResult,
+  AppStateInfo,
 } from '../types';
 
 // Program Increments
@@ -120,3 +121,12 @@ export const executeCsvImport = (rows: string[][], headers: string[], mappings: 
   invoke<ImportResult>('execute_csv_import', { rows, headers, mappings, piId: pi_id, euroDecimal: euro_decimal });
 export const exportPIAsCSV = (pi_id: number) => invoke<string>('export_pi_as_csv', { piId: pi_id });
 export const resetDatabase = () => invoke<void>('reset_database');
+
+// Database Configuration
+export const getAppState = () => invoke<AppStateInfo>('get_app_state');
+export const initializeDatabase = (dbPath: string, seedDemo: boolean) =>
+  invoke<void>('initialize_database', { dbPath, seedDemo });
+export const switchDatabase = (dbPath: string) =>
+  invoke<void>('switch_database', { dbPath });
+export const seedDemoData = () => invoke<void>('seed_demo_data');
+export const getDatabasePath = () => invoke<string>('get_database_path');

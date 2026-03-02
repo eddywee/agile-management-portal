@@ -1,10 +1,12 @@
 // © Edmund Wallner
 // Tauri commands organized by domain
 
+use crate::config;
 use crate::db::Database;
 use crate::models::*;
 use rusqlite::params;
-use tauri::State;
+use std::sync::Mutex;
+use tauri::{AppHandle, Manager, State};
 
 // ═══ PROGRAM INCREMENTS ═══
 
@@ -904,3 +906,81 @@ pub fn reset_database(db: State<Database>) -> Result<(), String> {
     crate::db::seed::seed_data(&conn);
     Ok(())
 }
+
+// ═══ DATABASE CONFIGURATION ═══
+
+#[tauri::command]
+pub fn get_app_state(app: AppHandle) -> Result<AppStateInfo, String> {
+    let is_first_launch = config::load_config(&app).is_none();
+    let default_path = config::default_db_path(&app);
+    let db_path = config::load_config(&app)
+        .map(|c| c.db_path)
+        .unwrap_or_else(|| default_path.clone());
+    Ok(AppStateInfo {
+        is_first_launch,
+        db_path,
+        default_db_path: default_path,
+    })
+}
+
+#[tauri::command]
+pub fn initialize_database(
+    app: AppHandle,
+    db: State<Database>,
+    db_path: String,
+    seed_demo: bool,
+) -> Result<(), String> {
+    let conn = crate::db::open_database(&db_path);
+    if seed_demo {
+        crate::db::seed_if_empty(&conn);
+    }
+    db.replace_connection(conn);
+
+    let cfg = config::AppConfig {
+        db_path: db_path.clone(),
+    };
+    config::save_config(&app, &cfg)?;
+
+    // Store the path as managed state for get_database_path
+    let path_state = app.state::<DatabasePath>();
+    let mut p = path_state.0.lock().map_err(|e| e.to_string())?;
+    *p = db_path;
+
+    Ok(())
+}
+
+#[tauri::command]
+pub fn switch_database(
+    app: AppHandle,
+    db: State<Database>,
+    db_path: String,
+) -> Result<(), String> {
+    let conn = crate::db::open_database(&db_path);
+    db.replace_connection(conn);
+
+    let cfg = config::AppConfig {
+        db_path: db_path.clone(),
+    };
+    config::save_config(&app, &cfg)?;
+
+    let path_state = app.state::<DatabasePath>();
+    let mut p = path_state.0.lock().map_err(|e| e.to_string())?;
+    *p = db_path;
+
+    Ok(())
+}
+
+#[tauri::command]
+pub fn seed_demo_data(db: State<Database>) -> Result<(), String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    crate::db::seed_if_empty(&conn);
+    Ok(())
+}
+
+#[tauri::command]
+pub fn get_database_path(db_path: State<DatabasePath>) -> Result<String, String> {
+    let p = db_path.0.lock().map_err(|e| e.to_string())?;
+    Ok(p.clone())
+}
+
+pub struct DatabasePath(pub Mutex<String>);
