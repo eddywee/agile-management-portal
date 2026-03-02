@@ -1,0 +1,138 @@
+# CI/CD — Agile Management Portal
+# Builds Tauri 2.x desktop app for macOS and Windows.
+#
+# Workflow:
+#   PR pipeline  → typecheck only (fast gate)
+#   Tag v*       → full platform builds + GitHub release + updater manifest
+#
+# Auto-update requires repository secrets:
+#   TAURI_SIGNING_PRIVATE_KEY          — signing key
+#   TAURI_SIGNING_PRIVATE_KEY_PASSWORD — key password
+#
+# © Edmund Wallner
+
+name: CI/CD
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    tags: ['v*']
+
+env:
+  CARGO_INCREMENTAL: '0'
+
+jobs:
+  # ── Pull-request gate ───────────────────────────────────
+  typecheck:
+    if: github.event_name == 'pull_request'
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx tsc --noEmit
+
+  # ── Platform builds (tag push only) ─────────────────────
+  build-macos:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: macos-latest
+    env:
+      TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+      TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - uses: dtolnay/rust-toolchain@stable
+      - run: npm ci
+      - run: npm run tauri:build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-artifacts
+          path: |
+            src-tauri/target/release/bundle/dmg/*.dmg
+            src-tauri/target/release/bundle/macos/*.tar.gz
+            src-tauri/target/release/bundle/macos/*.tar.gz.sig
+
+  build-windows:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - uses: dtolnay/rust-toolchain@stable
+      - run: npm ci
+      - run: npm run tauri:build -- --no-bundle
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-artifacts
+          path: src-tauri/target/release/agile-management-portal.exe
+
+  # ── GitHub release + updater manifest ────────────────────
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [build-macos, build-windows]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Generate update.json and create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          PUB_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+          # Read macOS signature
+          MAC_SIG=""
+          for sigfile in artifacts/macos-artifacts/src-tauri/target/release/bundle/macos/*.tar.gz.sig; do
+            [ -f "$sigfile" ] && MAC_SIG=$(cat "$sigfile")
+          done
+
+          # Find macOS updater bundle filename
+          MAC_BUNDLE=""
+          for bundle in artifacts/macos-artifacts/src-tauri/target/release/bundle/macos/*.tar.gz; do
+            [ -f "$bundle" ] && MAC_BUNDLE=$(basename "$bundle")
+          done
+
+          # Build update manifest (macOS only — Windows lacks bundled installer)
+          PLATFORMS="{"
+          if [ -n "$MAC_SIG" ] && [ -n "$MAC_BUNDLE" ]; then
+            MAC_URL="https://github.com/${{ github.repository }}/releases/download/${GITHUB_REF_NAME}/${MAC_BUNDLE}"
+            PLATFORMS="${PLATFORMS}\"darwin-aarch64\":{\"signature\":\"${MAC_SIG}\",\"url\":\"${MAC_URL}\"}"
+          fi
+          PLATFORMS="${PLATFORMS}}"
+
+          echo "{\"version\":\"${VERSION}\",\"notes\":\"Desktop installers for macOS and Windows.\",\"pub_date\":\"${PUB_DATE}\",\"platforms\":${PLATFORMS}}" > update.json
+
+          echo "update.json contents:"
+          cat update.json
+
+          # Collect release assets
+          ASSETS=()
+          for f in artifacts/macos-artifacts/src-tauri/target/release/bundle/dmg/*.dmg \
+                   artifacts/windows-artifacts/src-tauri/target/release/agile-management-portal.exe \
+                   artifacts/macos-artifacts/src-tauri/target/release/bundle/macos/*.tar.gz \
+                   artifacts/macos-artifacts/src-tauri/target/release/bundle/macos/*.tar.gz.sig; do
+            [ -f "$f" ] && ASSETS+=("$f")
+          done
+          ASSETS+=(update.json)
+
+          gh release create "${GITHUB_REF_NAME}" \
+            --title "Agile Management Portal ${GITHUB_REF_NAME}" \
+            --notes "Desktop installers for macOS and Windows." \
+            "${ASSETS[@]}"

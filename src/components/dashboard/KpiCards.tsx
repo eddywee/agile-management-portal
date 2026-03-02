@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import type { RoleDistribution, Solution, Art, ConflictPerson } from '../../types';
 
 interface KpiCardsProps {

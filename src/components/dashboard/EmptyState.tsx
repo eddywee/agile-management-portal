@@ -1,8 +1,7 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import { useNavigationStore } from '../../store/navigationStore';
 import { useModalStore } from '../../store/modalStore';
 import { AddSolutionForm } from '../common/ModalForms';
-import helixLogoFull from '../../assets/images/helix-logo-full.png';
 
 export function EmptyState() {
   const navigateTo = useNavigationStore((s) => s.navigateTo);
@@ -17,8 +16,13 @@ export function EmptyState() {
       <div className="welcome-content">
         <div className="welcome-left">
           <div className="welcome-badge">✨ Fresh Install</div>
-          <img src={helixLogoFull} alt="HELIX" className="welcome-logo" />
-          <h2 className="welcome-subtitle">Agile Portal</h2>
+          <svg viewBox="0 0 48 48" fill="none" width="64" height="64" className="welcome-logo" style={{ margin: '0 auto' }}>
+            <rect x="4" y="4" width="18" height="18" rx="3" stroke="var(--accent)" strokeWidth="2" />
+            <rect x="26" y="4" width="18" height="18" rx="3" stroke="var(--accent)" strokeWidth="2" />
+            <rect x="4" y="26" width="18" height="18" rx="3" stroke="var(--accent)" strokeWidth="2" />
+            <rect x="26" y="26" width="18" height="18" rx="3" fill="var(--accent)" stroke="var(--accent)" strokeWidth="2" />
+          </svg>
+          <h2 className="welcome-subtitle">Agile Management Portal</h2>
           <p className="welcome-desc">
             Let's get your financial planning environment set up for success.
             We'll start by defining your organizational structure.

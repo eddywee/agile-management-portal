@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import { usePIStore } from '../../store/piStore';
 import { useNavigationStore } from '../../store/navigationStore';
 import * as api from '../../api';
@@ -17,7 +17,7 @@ export function DataManagementTab() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `helix_${activePI.pi_name.replace(/\s/g, '_')}.csv`;
+    a.download = `amp_${activePI.pi_name.replace(/\s/g, '_')}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -101,7 +101,7 @@ export function DataManagementTab() {
       </div>
       <div className="settings-card">
         <h4>Application Info</h4>
-        <p>HELIX Agile Portal v{__APP_VERSION__} · SQLite (rusqlite) · Tauri Desktop App · © Edmund Wallner - Mercedes-Benz AG</p>
+        <p>Agile Management Portal v{__APP_VERSION__} · SQLite (rusqlite) · Tauri Desktop App · © Edmund Wallner</p>
       </div>
     </>
   );

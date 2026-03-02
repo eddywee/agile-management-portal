@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 // Tauri commands organized by domain
 
 use crate::db::Database;

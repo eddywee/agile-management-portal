@@ -1,8 +1,8 @@
 [package]
-name = "helix-agile-portal"
+name = "agile-management-portal"
 version = "0.1.1"
-description = "HELIX Agile Portal — SAFe Investment Tracker"
-authors = ["Edmund Wallner - Mercedes-Benz AG"]
+description = "Agile Management Portal — SAFe Investment Tracker"
+authors = ["Edmund Wallner"]
 license = "UNLICENSED"
 edition = "2021"
 rust-version = "1.77.2"

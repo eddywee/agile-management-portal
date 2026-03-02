@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import { useEffect, useState, useCallback } from 'react';
 import { useOrgStore } from '../../store/orgStore';
 import { useModalStore } from '../../store/modalStore';

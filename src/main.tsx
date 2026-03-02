@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
