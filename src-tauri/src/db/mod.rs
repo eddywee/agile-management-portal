@@ -7,14 +7,19 @@ use std::sync::Mutex;
 
 pub struct Database(pub Mutex<Connection>);
 
-fn migrate(conn: &Connection) {
+impl Database {
+    pub fn replace_connection(&self, new_conn: Connection) {
+        let mut conn = self.0.lock().expect("Failed to lock database");
+        *conn = new_conn;
+    }
+}
+
+pub(crate) fn migrate(conn: &Connection) {
     let version: i64 = conn
         .query_row("PRAGMA user_version", [], |row| row.get(0))
         .unwrap_or(0);
 
     if version < 1 {
-        // Migration: make arts.solution_id and product_teams.art_id nullable with ON DELETE SET NULL
-        // Check if arts table still lacks ON DELETE SET NULL (old schema)
         let needs_migration = conn
             .query_row(
                 "SELECT sql FROM sqlite_master WHERE type='table' AND name='arts'",
@@ -56,21 +61,21 @@ fn migrate(conn: &Connection) {
     }
 }
 
-pub fn init_database(db_path: &str) -> Database {
+pub fn open_database(db_path: &str) -> Connection {
     let conn = Connection::open(db_path).expect("Failed to open database");
     conn.execute_batch("PRAGMA journal_mode=WAL;").ok();
     conn.execute_batch("PRAGMA foreign_keys=ON;").ok();
-
     schema::create_schema(&conn);
     migrate(&conn);
+    conn
+}
 
-    // Seed only if DB is empty
+pub fn seed_if_empty(conn: &Connection) {
     let count: i64 = conn
         .query_row("SELECT COUNT(*) FROM program_increments", [], |row| row.get(0))
         .unwrap_or(0);
     if count == 0 {
-        seed::seed_data(&conn);
+        seed::seed_data(conn);
     }
-
-    Database(Mutex::new(conn))
 }
+

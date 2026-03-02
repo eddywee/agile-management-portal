@@ -179,3 +179,10 @@ pub struct ImportResult {
     pub teams_created: usize,
     pub total: usize,
 }
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct AppStateInfo {
+    pub is_first_launch: bool,
+    pub db_path: String,
+    pub default_db_path: String,
+}
