@@ -141,6 +141,12 @@ export interface ImportResult {
   total: number;
 }
 
+export interface AppStateInfo {
+  is_first_launch: boolean;
+  db_path: string;
+  default_db_path: string;
+}
+
 export type OrgNodeType = 'solution' | 'art' | 'team';
 export interface OrgNode {
   type: OrgNodeType;
