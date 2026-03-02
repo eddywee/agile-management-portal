@@ -1,6 +1,5 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import { useCallback } from 'react';
-import mbLogo from '../../assets/images/mercedes-benz-logo-white.svg';
 
 interface HeaderProps {
   onOpenSearch: () => void;
@@ -21,9 +20,14 @@ export function Header({ onOpenSearch, onToggleSidebar }: HeaderProps) {
       </div>
       <div className="header__brand">
         <div className="header__logo">
-          <img src={mbLogo} alt="Mercedes-Benz" />
+          <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+            <rect x="2" y="2" width="9" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+            <rect x="13" y="2" width="9" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+            <rect x="2" y="13" width="9" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+            <rect x="13" y="13" width="9" height="9" rx="1.5" fill="currentColor" stroke="currentColor" strokeWidth="1.5" />
+          </svg>
         </div>
-        <div className="header__title">HELIX<span>Agile Portal</span></div>
+        <div className="header__title">AMP<span>Agile Management Portal</span></div>
       </div>
       <div className="header__right">
         <button className="header__search-trigger" onClick={handleSearchClick}>
@@ -36,8 +40,8 @@ export function Header({ onOpenSearch, onToggleSidebar }: HeaderProps) {
         </button>
         <div className="env-badge"><span className="env-badge__dot"></span>Local</div>
         <div className="header__user">
-          <div className="header__user-avatar">HP</div>
-          <span className="header__user-name">HELIX Planner</span>
+          <div className="header__user-avatar">AP</div>
+          <span className="header__user-name">Planner</span>
         </div>
       </div>
     </header>

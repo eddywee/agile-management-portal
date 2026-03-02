@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 use rusqlite::Connection;
 
 pub fn create_schema(conn: &Connection) {

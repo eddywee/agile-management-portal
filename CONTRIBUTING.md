@@ -1,4 +1,4 @@
-# Contributing to HELIX Agile Portal
+# Contributing to Agile Management Portal
 
 > **This is proprietary software.** Contributions are by invitation only.
 > Please read the [LICENSE](LICENSE) before proceeding.
@@ -53,15 +53,10 @@ chore: Update rusqlite to 0.32
 docs: Add architecture diagram to README
 ```
 
-### Merge Request Process
+### Pull Request Process
 
 1. Create a branch from `main`
-2. Push with MR auto-creation:
-   ```bash
-   git push -u origin feature/my-feature \
-     -o merge_request.create \
-     -o merge_request.target=main
-   ```
+2. Push and open a PR against `main`
 3. The CI pipeline runs `npx tsc --noEmit` as a merge gate — this must pass before merging.
 4. Request review from the project owner.
 
@@ -121,7 +116,7 @@ git push origin v0.1.0
 
 The CI pipeline:
 1. Runs `sync-version.mjs` to update version in `package.json`, `Cargo.toml`, and `tauri.conf.json`
-2. Builds macOS (`.dmg`) and Windows (`.msi`, `.exe`) installers
-3. Creates a GitLab Release with download links
+2. Builds macOS (`.dmg`) and Windows (`.exe`) installers
+3. Creates a GitHub Release with download links and updater manifest
 
 Use [semantic versioning](https://semver.org/) for all tags.
