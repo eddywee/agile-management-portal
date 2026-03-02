@@ -52,13 +52,29 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - run: npm ci
       - run: npm run tauri:build
+
+      # Debug: show what was built
+      - name: List build output
+        run: |
+          echo "=== DMG ==="
+          find src-tauri/target/release/bundle/dmg -type f 2>/dev/null || echo "No dmg dir"
+          echo "=== macOS updater ==="
+          find src-tauri/target/release/bundle/macos -type f 2>/dev/null || echo "No macos dir"
+
+      # Copy artifacts to a flat staging directory to avoid path issues
+      - name: Stage artifacts
+        run: |
+          mkdir -p staging
+          cp src-tauri/target/release/bundle/dmg/*.dmg staging/ 2>/dev/null || true
+          cp src-tauri/target/release/bundle/macos/*.tar.gz staging/ 2>/dev/null || true
+          cp src-tauri/target/release/bundle/macos/*.tar.gz.sig staging/ 2>/dev/null || true
+          echo "=== Staged files ==="
+          ls -la staging/
+
       - uses: actions/upload-artifact@v4
         with:
           name: macos-artifacts
-          path: |
-            src-tauri/target/release/bundle/dmg/*.dmg
-            src-tauri/target/release/bundle/macos/*.tar.gz
-            src-tauri/target/release/bundle/macos/*.tar.gz.sig
+          path: staging/*
 
   build-windows:
     if: startsWith(github.ref, 'refs/tags/v')
@@ -72,10 +88,18 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - run: npm ci
       - run: npm run tauri:build -- --no-bundle
+
+      - name: Stage artifacts
+        shell: bash
+        run: |
+          mkdir -p staging
+          cp src-tauri/target/release/agile-management-portal.exe staging/
+          ls -la staging/
+
       - uses: actions/upload-artifact@v4
         with:
           name: windows-artifacts
-          path: src-tauri/target/release/agile-management-portal.exe
+          path: staging/*
 
   # ── GitHub release + updater manifest ────────────────────
   release:
@@ -90,6 +114,9 @@ jobs:
         with:
           path: artifacts
 
+      - name: List downloaded artifacts
+        run: find artifacts -type f
+
       - name: Generate update.json and create release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -99,20 +126,20 @@ jobs:
 
           # Read macOS signature
           MAC_SIG=""
-          for sigfile in artifacts/macos-artifacts/src-tauri/target/release/bundle/macos/*.tar.gz.sig; do
+          for sigfile in artifacts/macos-artifacts/*.tar.gz.sig; do
             [ -f "$sigfile" ] && MAC_SIG=$(cat "$sigfile")
           done
 
           # Find macOS updater bundle filename
           MAC_BUNDLE=""
-          for bundle in artifacts/macos-artifacts/src-tauri/target/release/bundle/macos/*.tar.gz; do
+          for bundle in artifacts/macos-artifacts/*.tar.gz; do
             [ -f "$bundle" ] && MAC_BUNDLE=$(basename "$bundle")
           done
 
           # Build update manifest (macOS only — Windows lacks bundled installer)
           PLATFORMS="{"
           if [ -n "$MAC_SIG" ] && [ -n "$MAC_BUNDLE" ]; then
-            MAC_URL="https://github.com/${{ github.repository }}/releases/download/${GITHUB_REF_NAME}/${MAC_BUNDLE}"
+            MAC_URL="https://github.com/${{ github.repository }}/releases/download/${GITHUB_REF_NAME}/${MAC_BUNDLE// /%20}"
             PLATFORMS="${PLATFORMS}\"darwin-aarch64\":{\"signature\":\"${MAC_SIG}\",\"url\":\"${MAC_URL}\"}"
           fi
           PLATFORMS="${PLATFORMS}}"
@@ -124,13 +151,16 @@ jobs:
 
           # Collect release assets
           ASSETS=()
-          for f in artifacts/macos-artifacts/src-tauri/target/release/bundle/dmg/*.dmg \
-                   artifacts/windows-artifacts/src-tauri/target/release/agile-management-portal.exe \
-                   artifacts/macos-artifacts/src-tauri/target/release/bundle/macos/*.tar.gz \
-                   artifacts/macos-artifacts/src-tauri/target/release/bundle/macos/*.tar.gz.sig; do
+          for f in artifacts/macos-artifacts/*.dmg \
+                   artifacts/windows-artifacts/*.exe \
+                   artifacts/macos-artifacts/*.tar.gz \
+                   artifacts/macos-artifacts/*.tar.gz.sig; do
             [ -f "$f" ] && ASSETS+=("$f")
           done
           ASSETS+=(update.json)
+
+          echo "Assets to upload:"
+          printf '  %s\n' "${ASSETS[@]}"
 
           gh release create "${GITHUB_REF_NAME}" \
             --title "Agile Management Portal ${GITHUB_REF_NAME}" \
