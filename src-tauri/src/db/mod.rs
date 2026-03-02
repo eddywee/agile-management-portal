@@ -63,7 +63,7 @@ pub(crate) fn migrate(conn: &Connection) {
 
 pub fn open_database(db_path: &str) -> Connection {
     let conn = Connection::open(db_path).expect("Failed to open database");
-    conn.execute_batch("PRAGMA journal_mode=WAL;").ok();
+    conn.execute_batch("PRAGMA journal_mode=DELETE;").ok();
     conn.execute_batch("PRAGMA foreign_keys=ON;").ok();
     schema::create_schema(&conn);
     migrate(&conn);
