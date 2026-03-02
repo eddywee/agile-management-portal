@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Agile Management Portal",
-  "version": "0.1.1",
+  "version": "0.2.3",
   "identifier": "io.github.eddywee.agile-management-portal",
   "build": {
     "frontendDist": "../dist",
@@ -27,7 +27,10 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["dmg", "nsis"],
+    "targets": [
+      "dmg",
+      "nsis"
+    ],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -41,7 +44,7 @@
       "endpoints": [
         "https://github.com/eddywee/agile-management-portal/releases/latest/download/update.json"
       ],
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDRDRTVFQThGOTUyRTM1OEMKUldTTU5TNlZqK3JsVE0yeHU5YkM3dVNWaXNmRG1kc1ZlN2FBMzRZY29wUkRFZ1J4RzQ5TGVxR3YK"
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDJEQ0E4RkZERDBGQTBGMTQKUldRVUQvclEvWS9LTFJBWHpPb3FwVjVmSHU3RnN0S25MWlM4NkVEZmJlWmhYTklFeUtaaUMrUWYK"
     }
   }
 }
