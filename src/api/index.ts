@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import { invoke } from '@tauri-apps/api/core';
 import type {
   ProgramIncrement, Person, Solution, Art, ProductTeam,

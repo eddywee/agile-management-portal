@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import { useEffect, type ReactNode } from 'react';
 import { usePIStore } from '../../store/piStore';
 import { useNavigationStore } from '../../store/navigationStore';

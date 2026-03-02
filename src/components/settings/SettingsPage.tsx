@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import { useState } from 'react';
 import { PiManagementTab } from './PiManagementTab';
 import { DataManagementTab } from './DataManagementTab';

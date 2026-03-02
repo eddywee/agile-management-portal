@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import { useEffect, useState } from 'react';
 import { usePIStore } from '../../store/piStore';
 import { useNavigationStore } from '../../store/navigationStore';
@@ -41,9 +41,9 @@ export function Footer() {
         </span>
       </div>
       <div className="footer__right">
-        <span>HELIX Agile Portal</span>
+        <span>Agile Management Portal</span>
         <span className="footer__version">v{__APP_VERSION__}</span>
-        <span>© Edmund Wallner - Mercedes-Benz AG</span>
+        <span>© Edmund Wallner</span>
       </div>
     </footer>
   );

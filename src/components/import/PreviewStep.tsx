@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import { useState, useCallback } from 'react';
 import { useImportStore } from '../../store/importStore';
 import * as api from '../../api';

@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { usePIStore } from '../../store/piStore';
 import { useNavigationStore } from '../../store/navigationStore';
@@ -184,7 +184,7 @@ export function SearchOverlay({ onClose }: SearchOverlayProps) {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--green)' }}></span>
-            Helix Index Active
+            Search Index Active
           </div>
         </div>
       </div>
