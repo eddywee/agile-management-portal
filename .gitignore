@@ -3,9 +3,8 @@ dist/
 target/
 src-tauri/target/
 src-tauri/gen/
+*.apdb
 *.sqlite
-*.sqlite-wal
-*.sqlite-shm
 .DS_Store
 src-misc
 CLAUDE.md
