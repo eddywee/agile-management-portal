@@ -2,26 +2,34 @@
 // Agile Management Portal — Tauri Backend
 
 mod commands;
+mod config;
 mod db;
 mod models;
 
-use std::env;
+use std::sync::Mutex;
+use tauri::Manager;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    let db_path = env::current_dir()
-        .unwrap_or_default()
-        .join("agile_management_portal.sqlite")
-        .to_string_lossy()
-        .to_string();
-
-    let database = db::init_database(&db_path);
-
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
-        .manage(database)
+        .setup(|app| {
+            let handle = app.handle().clone();
+            let db_path = match config::load_config(&handle) {
+                Some(cfg) => cfg.db_path,
+                None => config::default_db_path(&handle),
+            };
+
+            let conn = db::open_database(&db_path);
+            let database = db::Database(Mutex::new(conn));
+
+            app.manage(database);
+            app.manage(commands::DatabasePath(Mutex::new(db_path)));
+
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             // Program Increments
             commands::get_all_pis,
@@ -86,6 +94,12 @@ pub fn run() {
             commands::execute_csv_import,
             commands::export_pi_as_csv,
             commands::reset_database,
+            // Database Configuration
+            commands::get_app_state,
+            commands::initialize_database,
+            commands::switch_database,
+            commands::seed_demo_data,
+            commands::get_database_path,
         ])
         .run(tauri::generate_context!())
         .expect("error while running Agile Management Portal");
