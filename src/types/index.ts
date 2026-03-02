@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 export interface ProgramIncrement {
   id: number;
   pi_name: string;

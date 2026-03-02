@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import { useState, useCallback } from 'react';
 import { OrgTree } from './OrgTree';
 import { OrgDetail } from './OrgDetail';

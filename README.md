@@ -1,4 +1,4 @@
-# HELIX Agile Portal
+# Agile Management Portal
 
 **SAFe Investment Tracker** — A cross-platform desktop application for tracking FTE allocation across Scaled Agile Framework (SAFe) organizational hierarchies.
 
@@ -10,7 +10,7 @@ Built with **Tauri 2.x** (Rust) and **React + TypeScript**.
 
 ## Overview
 
-HELIX Agile Portal gives portfolio planners, RTEs, and auditors a single pane of glass for investment allocation within SAFe structures. It answers questions like *"How many FTEs are allocated to this ART?"* and *"Who is over-allocated this PI?"* — all from a fast, local-first desktop app.
+Agile Management Portal gives portfolio planners, RTEs, and auditors a single pane of glass for investment allocation within SAFe structures. It answers questions like *"How many FTEs are allocated to this ART?"* and *"Who is over-allocated this PI?"* — all from a fast, local-first desktop app.
 
 **Design principles:**
 
@@ -139,15 +139,13 @@ Produces platform-specific installers:
 
 ## CI/CD
 
-The GitLab CI/CD pipeline (`.gitlab-ci.yml`) has three stages:
+The GitHub Actions pipeline (`.github/workflows/ci.yml`) has three stages:
 
-| Stage | Job | Trigger | What it does |
-|-------|-----|---------|-------------|
-| **check** | `typecheck` | Merge request | Runs `npx tsc --noEmit` as a fast gate |
-| **build** | `build:macos`, `build:windows` | Tag `v*` | Full `npm run tauri:build` on each platform |
-| **release** | `release` | Tag `v*` | Creates a GitLab Release with artifact links |
-
-**Runner requirements:** Runners need `macos` and `windows` tags, with Node.js 20+, Rust stable, and platform-specific build tools installed.
+| Job | Trigger | What it does |
+|-----|---------|-------------|
+| `typecheck` | Pull request | Runs `npx tsc --noEmit` as a fast gate |
+| `build-macos`, `build-windows` | Tag `v*` | Full `npm run tauri:build` on each platform |
+| `release` | Tag `v*` | Creates a GitHub Release with artifact links + updater manifest |
 
 **Version sync:** When you push a git tag (e.g., `v0.1.0`), the `sync-version.mjs` script automatically updates the version in `package.json`, `Cargo.toml`, and `tauri.conf.json` before building.
 

@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import { useModalStore } from '../../store/modalStore';
 
 export function ModalContainer() {

@@ -1,7 +1,7 @@
 {
-  "name": "helix-agile-portal",
+  "name": "agile-management-portal",
   "version": "0.1.1",
-  "description": "HELIX Agile Portal — SAFe Investment Tracker. © Edmund Wallner - Mercedes-Benz AG",
+  "description": "Agile Management Portal — SAFe Investment Tracker. © Edmund Wallner",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,7 +12,7 @@
     "tauri:dev": "node scripts/sync-version.mjs && tauri dev",
     "tauri:build": "node scripts/sync-version.mjs && tauri build"
   },
-  "author": "Edmund Wallner - Mercedes-Benz AG",
+  "author": "Edmund Wallner",
   "license": "UNLICENSED",
   "dependencies": {
     "@tauri-apps/api": "^2.10.1",

@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "HELIX Agile Portal",
+  "productName": "Agile Management Portal",
   "version": "0.1.1",
-  "identifier": "com.mercedes-benz.helix-agile-portal",
+  "identifier": "io.github.eddywee.agile-management-portal",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "HELIX Agile Portal — SAFe Investment Tracker",
+        "title": "Agile Management Portal — SAFe Investment Tracker",
         "width": 1440,
         "height": 900,
         "minWidth": 1024,
@@ -39,7 +39,7 @@
   "plugins": {
     "updater": {
       "endpoints": [
-        "https://git.swf.i.mercedes-benz.com/api/v4/projects/wallnee%2Fhelix-agile-portal/packages/generic/helix-agile-portal-update/latest/update.json"
+        "https://github.com/eddywee/agile-management-portal/releases/latest/download/update.json"
       ],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDRDRTVFQThGOTUyRTM1OEMKUldTTU5TNlZqK3JsVE0yeHU5YkM3dVNWaXNmRG1kc1ZlN2FBMzRZY29wUkRFZ1J4RzQ5TGVxR3YK"
     }

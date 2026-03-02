@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useModalStore } from '../../store/modalStore';
 import { usePIStore } from '../../store/piStore';
@@ -33,14 +33,14 @@ export function AddPersonForm({ onDone }: { onDone?: () => void }) {
     <>
       <div className="modal-body">
         <div className="form-group"><label className="form-label">Full Name *</label><input className="form-input" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Max Mustermann" /></div>
-        <div className="form-group"><label className="form-label">Email</label><input className="form-input" value={email} onChange={e => setEmail(e.target.value)} placeholder="e.g. m.mustermann@mb.com" /></div>
+        <div className="form-group"><label className="form-label">Email</label><input className="form-input" value={email} onChange={e => setEmail(e.target.value)} placeholder="e.g. j.smith@example.com" /></div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
           <div className="form-group"><label className="form-label">Department</label><input className="form-input" value={dept} onChange={e => setDept(e.target.value)} placeholder="e.g. IT-PLT" /></div>
           <div className="form-group"><label className="form-label">Hub</label><input className="form-input" value={hub} onChange={e => setHub(e.target.value)} placeholder="e.g. Stuttgart" /></div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
           <div className="form-group"><label className="form-label">Cost Center</label><input className="form-input" value={cc} onChange={e => setCc(e.target.value)} placeholder="e.g. CC-4810" /></div>
-          <div className="form-group"><label className="form-label">Company</label><input className="form-input" value={company} onChange={e => setCompany(e.target.value)} placeholder="e.g. Mercedes-Benz AG" /></div>
+          <div className="form-group"><label className="form-label">Company</label><input className="form-input" value={company} onChange={e => setCompany(e.target.value)} placeholder="e.g. Acme Corp" /></div>
         </div>
       </div>
       <div className="modal-actions">
@@ -105,7 +105,7 @@ export function AddSolutionForm({ onDone }: { onDone?: () => void }) {
   return (
     <>
       <div className="modal-body">
-        <div className="form-group"><label className="form-label">Solution Name *</label><input className="form-input" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. HELIX Platform" /></div>
+        <div className="form-group"><label className="form-label">Solution Name *</label><input className="form-input" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Cloud Platform" /></div>
         <div className="form-group"><label className="form-label">Description</label><input className="form-input" value={desc} onChange={e => setDesc(e.target.value)} placeholder="Brief description" /></div>
       </div>
       <div className="modal-actions">

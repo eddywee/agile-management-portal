@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import { useEffect, useState } from 'react';
 import * as api from '../../api';
 import type { CostRate } from '../../types';

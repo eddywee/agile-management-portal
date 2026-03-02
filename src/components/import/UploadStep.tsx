@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 import { useCallback } from 'react';
 import { open } from '@tauri-apps/plugin-dialog';
 import { useImportStore } from '../../store/importStore';

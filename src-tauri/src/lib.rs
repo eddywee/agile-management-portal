@@ -1,5 +1,5 @@
-// © Edmund Wallner - Mercedes-Benz AG
-// HELIX Agile Portal — Tauri Backend
+// © Edmund Wallner
+// Agile Management Portal — Tauri Backend
 
 mod commands;
 mod db;
@@ -11,7 +11,7 @@ use std::env;
 pub fn run() {
     let db_path = env::current_dir()
         .unwrap_or_default()
-        .join("helix_agile_portal.sqlite")
+        .join("agile_management_portal.sqlite")
         .to_string_lossy()
         .to_string();
 
@@ -88,5 +88,5 @@ pub fn run() {
             commands::reset_database,
         ])
         .run(tauri::generate_context!())
-        .expect("error while running HELIX Agile Portal");
+        .expect("error while running Agile Management Portal");
 }

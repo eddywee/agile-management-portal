@@ -1,4 +1,4 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 use rusqlite::Connection;
 
 pub fn seed_data(conn: &Connection) {
@@ -15,8 +15,8 @@ pub fn seed_data(conn: &Connection) {
     // Solutions
     conn.execute_batch(
         "
-        INSERT INTO solutions (name, description) VALUES ('HELIX Platform','Enterprise data platform for autonomous driving data management');
-        INSERT INTO solutions (name, description) VALUES ('ADAS Solution','Advanced driver assistance systems and perception stack');
+        INSERT INTO solutions (name, description) VALUES ('Cloud Platform','Enterprise cloud infrastructure and data management platform');
+        INSERT INTO solutions (name, description) VALUES ('Analytics Solution','Business intelligence and advanced analytics platform');
         "
     ).expect("Failed to seed solutions");
 
@@ -25,8 +25,8 @@ pub fn seed_data(conn: &Connection) {
         "
         INSERT INTO arts (solution_id, name) VALUES (1,'Platform ART');
         INSERT INTO arts (solution_id, name) VALUES (1,'Customer ART');
-        INSERT INTO arts (solution_id, name) VALUES (2,'Perception ART');
-        INSERT INTO arts (solution_id, name) VALUES (2,'Fusion ART');
+        INSERT INTO arts (solution_id, name) VALUES (2,'Data ART');
+        INSERT INTO arts (solution_id, name) VALUES (2,'Insights ART');
         "
     ).expect("Failed to seed ARTs");
 
@@ -38,34 +38,34 @@ pub fn seed_data(conn: &Connection) {
         INSERT INTO product_teams (art_id, name) VALUES (1,'Team Gamma');
         INSERT INTO product_teams (art_id, name) VALUES (2,'Team Delta');
         INSERT INTO product_teams (art_id, name) VALUES (2,'Team Epsilon');
-        INSERT INTO product_teams (art_id, name) VALUES (3,'Sensor Team');
-        INSERT INTO product_teams (art_id, name) VALUES (3,'Vision Team');
-        INSERT INTO product_teams (art_id, name) VALUES (4,'Fusion Core');
+        INSERT INTO product_teams (art_id, name) VALUES (3,'Pipeline Team');
+        INSERT INTO product_teams (art_id, name) VALUES (3,'Reporting Team');
+        INSERT INTO product_teams (art_id, name) VALUES (4,'Insights Core');
         "
     ).expect("Failed to seed teams");
 
     // People
     let people = [
-        ("Anna Müller", "a.mueller@mb.com", "IT-PLT", "CC-4810", "Stuttgart", "Mercedes-Benz AG"),
-        ("Boris Chen", "b.chen@mb.com", "IT-PLT", "CC-4810", "Bangalore", "Mercedes-Benz R&D India"),
-        ("James Smith", "j.smith@mb.com", "IT-CUS", "CC-4820", "Stuttgart", "Mercedes-Benz AG"),
-        ("Maria Weber", "m.weber@mb.com", "IT-DEV", "CC-4830", "Singapore", "Mercedes-Benz Asia"),
-        ("Carlos Díaz", "c.diaz@mb.com", "RD-PRC", "CC-5100", "Stuttgart", "Mercedes-Benz AG"),
-        ("Lisa Park", "l.park@mb.com", "IT-PLT", "CC-4810", "Stuttgart", "Mercedes-Benz AG"),
-        ("David Kim", "d.kim@mb.com", "RD-PRC", "CC-5100", "Bangalore", "Mercedes-Benz R&D India"),
-        ("Sophie Taylor", "s.taylor@mb.com", "IT-CUS", "CC-4820", "Stuttgart", "Mercedes-Benz AG"),
-        ("Marco Rossi", "m.rossi@mb.com", "IT-DEV", "CC-4830", "Stuttgart", "Mercedes-Benz AG"),
-        ("Yuki Tanaka", "y.tanaka@mb.com", "RD-FUS", "CC-5200", "Stuttgart", "Mercedes-Benz AG"),
-        ("Priya Sharma", "p.sharma@mb.com", "IT-PLT", "CC-4810", "Bangalore", "Mercedes-Benz R&D India"),
-        ("Thomas Braun", "t.braun@mb.com", "IT-PLT", "CC-4810", "Stuttgart", "Mercedes-Benz AG"),
-        ("Elena Vogt", "e.vogt@mb.com", "RD-PRC", "CC-5100", "Stuttgart", "Mercedes-Benz AG"),
-        ("Raj Patel", "r.patel@mb.com", "IT-CUS", "CC-4820", "Bangalore", "Mercedes-Benz R&D India"),
-        ("Olga Novak", "o.novak@mb.com", "RD-FUS", "CC-5200", "Stuttgart", "Mercedes-Benz AG"),
-        ("Felix Wagner", "f.wagner@mb.com", "IT-DEV", "CC-4830", "Stuttgart", "Mercedes-Benz AG"),
-        ("Aisha Khan", "a.khan@mb.com", "RD-PRC", "CC-5100", "Bangalore", "Mercedes-Benz R&D India"),
-        ("Max Hoffmann", "m.hoffmann@mb.com", "IT-PLT", "CC-4810", "Stuttgart", "Mercedes-Benz AG"),
-        ("Nina Costa", "n.costa@mb.com", "IT-CUS", "CC-4820", "Singapore", "Mercedes-Benz Asia"),
-        ("Peter Schneider", "p.schneider@mb.com", "RD-FUS", "CC-5200", "Stuttgart", "Mercedes-Benz AG"),
+        ("Anna Miller", "a.miller@example.com", "ENG-PLT", "CC-1010", "New York", "Acme Corp"),
+        ("Boris Chen", "b.chen@example.com", "ENG-PLT", "CC-1010", "Bangalore", "Acme R&D India"),
+        ("James Smith", "j.smith@example.com", "ENG-CUS", "CC-1020", "New York", "Acme Corp"),
+        ("Maria Weber", "m.weber@example.com", "ENG-DEV", "CC-1030", "Singapore", "Acme Asia Pacific"),
+        ("Carlos Diaz", "c.diaz@example.com", "RD-DAT", "CC-2100", "New York", "Acme Corp"),
+        ("Lisa Park", "l.park@example.com", "ENG-PLT", "CC-1010", "New York", "Acme Corp"),
+        ("David Kim", "d.kim@example.com", "RD-DAT", "CC-2100", "Bangalore", "Acme R&D India"),
+        ("Sophie Taylor", "s.taylor@example.com", "ENG-CUS", "CC-1020", "New York", "Acme Corp"),
+        ("Marco Rossi", "m.rossi@example.com", "ENG-DEV", "CC-1030", "New York", "Acme Corp"),
+        ("Yuki Tanaka", "y.tanaka@example.com", "RD-ANL", "CC-2200", "New York", "Acme Corp"),
+        ("Priya Sharma", "p.sharma@example.com", "ENG-PLT", "CC-1010", "Bangalore", "Acme R&D India"),
+        ("Thomas Brown", "t.brown@example.com", "ENG-PLT", "CC-1010", "New York", "Acme Corp"),
+        ("Elena Voss", "e.voss@example.com", "RD-DAT", "CC-2100", "New York", "Acme Corp"),
+        ("Raj Patel", "r.patel@example.com", "ENG-CUS", "CC-1020", "Bangalore", "Acme R&D India"),
+        ("Olga Novak", "o.novak@example.com", "RD-ANL", "CC-2200", "New York", "Acme Corp"),
+        ("Felix Wagner", "f.wagner@example.com", "ENG-DEV", "CC-1030", "New York", "Acme Corp"),
+        ("Aisha Khan", "a.khan@example.com", "RD-DAT", "CC-2100", "Bangalore", "Acme R&D India"),
+        ("Max Hoffman", "m.hoffman@example.com", "ENG-PLT", "CC-1010", "New York", "Acme Corp"),
+        ("Nina Costa", "n.costa@example.com", "ENG-CUS", "CC-1020", "Singapore", "Acme Asia Pacific"),
+        ("Peter Scott", "p.scott@example.com", "RD-ANL", "CC-2200", "New York", "Acme Corp"),
     ];
 
     for (name, email, dept, cc, hub, company) in &people {
@@ -119,18 +119,18 @@ pub fn seed_data(conn: &Connection) {
 
     // Cost Rates
     let cost_rates: Vec<(&str, &str, &str, f64, &str)> = vec![
-        ("STR", "Engineering", "Senior Developer (L3)", 650.0, "PI 24.3"),
-        ("STR", "Engineering", "Developer (L2)", 520.0, "PI 24.3"),
-        ("STR", "Engineering", "Junior Developer (L1)", 380.0, "PI 24.3"),
-        ("STR", "Product", "Product Owner", 700.0, "PI 24.3"),
-        ("STR", "Product", "Business Analyst", 550.0, "PI 24.3"),
+        ("NYC", "Engineering", "Senior Developer (L3)", 650.0, "PI 24.3"),
+        ("NYC", "Engineering", "Developer (L2)", 520.0, "PI 24.3"),
+        ("NYC", "Engineering", "Junior Developer (L1)", 380.0, "PI 24.3"),
+        ("NYC", "Product", "Product Owner", 700.0, "PI 24.3"),
+        ("NYC", "Product", "Business Analyst", 550.0, "PI 24.3"),
         ("BLR", "Engineering", "Senior Developer (L3)", 320.0, "PI 24.3"),
         ("BLR", "Engineering", "Developer (L2)", 260.0, "PI 24.3"),
         ("BLR", "Product", "Product Owner", 380.0, "PI 24.3"),
         ("SIN", "Engineering", "Senior Developer (L3)", 580.0, "PI 25.1"),
         ("SIN", "Product", "Product Owner", 640.0, "PI 25.1"),
-        ("STR", "Design", "UX Designer", 600.0, "PI 25.1"),
-        ("STR", "Design", "UI Designer", 520.0, "PI 25.1"),
+        ("NYC", "Design", "UX Designer", 600.0, "PI 25.1"),
+        ("NYC", "Design", "UI Designer", 520.0, "PI 25.1"),
     ];
     for (hub, dept, role, rate, pi) in &cost_rates {
         conn.execute(
