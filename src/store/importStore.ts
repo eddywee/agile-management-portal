@@ -37,5 +37,16 @@ export const useImportStore = create<ImportState>((set) => ({
   setPiId: (id) => set({ piId: id }),
   setEuroDecimal: (v) => set({ euroDecimal: v }),
   setResult: (result) => set({ result }),
-  reset: () => set({ step: 1, filePath: null, fileName: null, headers: [], rows: [], mappings: [], piId: null, euroDecimal: false, result: null }),
+  reset: () =>
+    set({
+      step: 1,
+      filePath: null,
+      fileName: null,
+      headers: [],
+      rows: [],
+      mappings: [],
+      piId: null,
+      euroDecimal: false,
+      result: null,
+    }),
 }));

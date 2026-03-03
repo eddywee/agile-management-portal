@@ -9,14 +9,14 @@ export function PreviewStep() {
 
   // Build reverse map: field → csv_column index
   const reverseMap: Record<string, number> = {};
-  mappings.forEach(m => {
+  mappings.forEach((m) => {
     if (m.field !== '— skip —') {
       const idx = headers.indexOf(m.csv_column);
       if (idx >= 0) reverseMap[m.field] = idx;
     }
   });
 
-  const preview = rows.slice(0, 50).map(row => ({
+  const preview = rows.slice(0, 50).map((row) => ({
     full_name: reverseMap.full_name !== undefined ? row[reverseMap.full_name] : '',
     email: reverseMap.email !== undefined ? row[reverseMap.email] : '',
     team_name: reverseMap.team_name !== undefined ? row[reverseMap.team_name] : '',
@@ -36,10 +36,23 @@ export function PreviewStep() {
   return (
     <>
       <div className="import-summary">
-        <div className="import-stat"><div className="import-stat__value" style={{ color: 'var(--white)' }}>{rows.length}</div><div className="import-stat__label">Total Rows</div></div>
+        <div className="import-stat">
+          <div className="import-stat__value" style={{ color: 'var(--white)' }}>
+            {rows.length}
+          </div>
+          <div className="import-stat__label">Total Rows</div>
+        </div>
       </div>
       <table className="data-table">
-        <thead><tr><th>Name</th><th>Email</th><th>Team</th><th>Role</th><th>FTE</th></tr></thead>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Team</th>
+            <th>Role</th>
+            <th>FTE</th>
+          </tr>
+        </thead>
         <tbody>
           {preview.map((r, i) => (
             <tr key={i}>
@@ -53,7 +66,9 @@ export function PreviewStep() {
         </tbody>
       </table>
       <div style={{ marginTop: 20, display: 'flex', gap: 10 }}>
-        <button className="btn btn-outline" onClick={() => setStep(2)}>← Back</button>
+        <button className="btn btn-outline" onClick={() => setStep(2)}>
+          ← Back
+        </button>
         <button className="btn btn-primary" disabled={importing} onClick={handleImport}>
           {importing ? 'Importing…' : `Import ${rows.length} rows`}
         </button>

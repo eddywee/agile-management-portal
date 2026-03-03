@@ -13,7 +13,7 @@ export function RoleDonutChart({ dist }: RoleDonutChartProps) {
     { name: 'Delivery', value: dist.delivery },
     { name: 'ART Leadership', value: dist.art_leadership },
     { name: 'Solution Leadership', value: dist.solution_leadership },
-  ].filter(d => d.value > 0);
+  ].filter((d) => d.value > 0);
 
   return (
     <div className="chart-card">
@@ -35,7 +35,12 @@ export function RoleDonutChart({ dist }: RoleDonutChartProps) {
             ))}
           </Pie>
           <Tooltip
-            contentStyle={{ background: '#1a1a2e', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, fontSize: 12 }}
+            contentStyle={{
+              background: '#1a1a2e',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: 6,
+              fontSize: 12,
+            }}
             formatter={(value: number | undefined) => `${(value ?? 0).toFixed(1)} FTE`}
           />
           <Legend
@@ -44,12 +49,20 @@ export function RoleDonutChart({ dist }: RoleDonutChartProps) {
             verticalAlign="middle"
             wrapperStyle={{ fontSize: 11, color: '#a0a0a8' }}
             formatter={(value, entry) => {
-              const pct = dist.total > 0 ? ((entry.payload?.value ?? 0) / dist.total * 100).toFixed(0) : '0';
+              const pct = dist.total > 0 ? (((entry.payload?.value ?? 0) / dist.total) * 100).toFixed(0) : '0';
               return `${value} (${pct}%)`;
             }}
           />
           {/* Center text */}
-          <text x="40%" y="48%" textAnchor="middle" fill="#f0f0f2" fontFamily="Playfair Display" fontWeight="600" fontSize="22">
+          <text
+            x="40%"
+            y="48%"
+            textAnchor="middle"
+            fill="#f0f0f2"
+            fontFamily="Playfair Display"
+            fontWeight="600"
+            fontSize="22"
+          >
             {dist.total.toFixed(1)}
           </text>
           <text x="40%" y="60%" textAnchor="middle" fill="#a0a0a8" fontSize="10">

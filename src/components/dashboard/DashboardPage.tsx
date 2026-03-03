@@ -11,7 +11,12 @@ import { EmptyState } from './EmptyState';
 
 export function DashboardPage() {
   const activePI = usePIStore((s) => s.activePI);
-  const [dist, setDist] = useState<RoleDistribution>({ delivery: 0, art_leadership: 0, solution_leadership: 0, total: 0 });
+  const [dist, setDist] = useState<RoleDistribution>({
+    delivery: 0,
+    art_leadership: 0,
+    solution_leadership: 0,
+    total: 0,
+  });
   const [solutions, setSolutions] = useState<Solution[]>([]);
   const [arts, setArts] = useState<Art[]>([]);
   const [conflicts, setConflicts] = useState<ConflictPerson[]>([]);
@@ -39,7 +44,9 @@ export function DashboardPage() {
       setBreakdown(b);
       setLoading(false);
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [activePI]);
 
   const scrollToConflicts = useCallback(() => {
@@ -71,13 +78,25 @@ export function DashboardPage() {
         <div className="page-header__actions">
           <button className="btn btn-outline btn-sm" onClick={() => api.exportPIAsCSV(activePI.id)}>
             <svg viewBox="0 0 14 14" fill="none">
-              <path d="M3 9v3h8v-3M7 1v7M4 5l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M3 9v3h8v-3M7 1v7M4 5l3 3 3-3"
+                stroke="currentColor"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
             Export
           </button>
         </div>
       </div>
-      <KpiCards dist={dist} solutions={solutions} arts={arts} conflicts={conflicts} onScrollToConflicts={scrollToConflicts} />
+      <KpiCards
+        dist={dist}
+        solutions={solutions}
+        arts={arts}
+        conflicts={conflicts}
+        onScrollToConflicts={scrollToConflicts}
+      />
       <div className="charts-row">
         <SolutionBarChart data={breakdown} />
         <RoleDonutChart dist={dist} />
