@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react';
 import { usePIStore } from '../../store/piStore';
 import { useNavigationStore } from '../../store/navigationStore';
+import { useUpdateStore } from '../../store/updateStore';
+import { openUpdateModal } from '../common/UpdateModal';
 import * as api from '../../api';
 
 
@@ -10,6 +12,10 @@ export function Footer() {
   const navigateTo = useNavigationStore((s) => s.navigateTo);
   const [totalFTE, setTotalFTE] = useState(0);
   const [conflictCount, setConflictCount] = useState(0);
+
+  const update = useUpdateStore((s) => s.update);
+  const sessionDismissed = useUpdateStore((s) => s.sessionDismissed);
+  const showIndicator = !!update && !sessionDismissed;
 
   useEffect(() => {
     if (!activePI) return;
@@ -42,7 +48,13 @@ export function Footer() {
       </div>
       <div className="footer__right">
         <span>Agile Management Portal</span>
-        <span className="footer__version">v{__APP_VERSION__}</span>
+        <span
+          className={`footer__version${showIndicator ? ' footer__version--update' : ''}`}
+          onClick={showIndicator ? openUpdateModal : undefined}
+        >
+          v{__APP_VERSION__}
+          {showIndicator && <span className="footer__update-dot" />}
+        </span>
         <span>© Edmund Wallner</span>
       </div>
     </footer>
