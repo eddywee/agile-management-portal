@@ -23,6 +23,7 @@ export function UpdateBanner() {
 
   const handleUpdate = async () => {
     setInstalling(true);
+    setProgress('Preparing update…');
     try {
       let total = 0;
       let downloaded = 0;
@@ -40,10 +41,11 @@ export function UpdateBanner() {
           setProgress('Installing…');
         }
       });
+      setProgress('Restarting…');
       await relaunch();
-    } catch {
-      setProgress('Update failed');
-      setInstalling(false);
+    } catch (e) {
+      console.error('Update failed:', e);
+      setProgress(`Update failed: ${e instanceof Error ? e.message : String(e)}`);
     }
   };
 
