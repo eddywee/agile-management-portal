@@ -1,8 +1,15 @@
 # Agile Management Portal
 
+[![CI/CD](https://github.com/eddywee/agile-management-portal/actions/workflows/ci.yml/badge.svg)](https://github.com/eddywee/agile-management-portal/actions/workflows/ci.yml)
+[![Docs](https://github.com/eddywee/agile-management-portal/actions/workflows/docs.yml/badge.svg)](https://eddywee.github.io/agile-management-portal/)
+[![GitHub release](https://img.shields.io/github/v/release/eddywee/agile-management-portal)](https://github.com/eddywee/agile-management-portal/releases/latest)
+[![License](https://img.shields.io/badge/license-proprietary-blue)](LICENSE)
+
 **SAFe Investment Tracker** — A cross-platform desktop application for tracking FTE allocation across Scaled Agile Framework (SAFe) organizational hierarchies.
 
 Built with **Tauri 2.x** (Rust) and **React + TypeScript**.
+
+**[Documentation](https://eddywee.github.io/agile-management-portal/)** | **[Latest Release](https://github.com/eddywee/agile-management-portal/releases/latest)**
 
 > Copyright © 2025 Edmund Wallner. All rights reserved. See [LICENSE](LICENSE).
 
