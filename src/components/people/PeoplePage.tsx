@@ -1,11 +1,11 @@
 // © Edmund Wallner
 import { useEffect, useState, useCallback } from 'react';
-import { usePIStore } from '../../store/piStore';
-import { usePeopleStore } from '../../store/peopleStore';
-import { useModalStore } from '../../store/modalStore';
-import * as api from '../../api';
-import type { Person, PersonAllocation, ProgramIncrement } from '../../types';
-import { AddPersonForm, EditPersonForm, EditAllocationForm, AddToTeamForm, AddToLeadershipForm, DeactivatePersonDialog } from '../common/ModalForms';
+import { usePIStore } from '@/store/piStore';
+import { usePeopleStore } from '@/store/peopleStore';
+import { useModalStore } from '@/store/modalStore';
+import * as api from '@/api';
+import type { Person, PersonAllocation, ProgramIncrement } from '@/types';
+import { AddPersonForm, EditPersonForm, EditAllocationForm, AddToTeamForm, AddToLeadershipForm, DeactivatePersonDialog } from '@/components/common/ModalForms';
 
 const avatarColors = ['blue', 'green', 'amber', 'purple', 'red'] as const;
 

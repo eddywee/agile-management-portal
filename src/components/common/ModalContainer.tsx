@@ -1,5 +1,5 @@
 // © Edmund Wallner
-import { useModalStore } from '../../store/modalStore';
+import { useModalStore } from '@/store/modalStore';
 
 export function ModalContainer() {
   const { isOpen, title, content, actions, closeModal } = useModalStore();

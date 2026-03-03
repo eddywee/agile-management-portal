@@ -1,11 +1,11 @@
 // © Edmund Wallner
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { usePIStore } from '../../store/piStore';
-import { useNavigationStore } from '../../store/navigationStore';
-import { useOrgStore } from '../../store/orgStore';
-import { usePeopleStore } from '../../store/peopleStore';
-import * as api from '../../api';
-import type { SearchResults } from '../../types';
+import { usePIStore } from '@/store/piStore';
+import { useNavigationStore } from '@/store/navigationStore';
+import { useOrgStore } from '@/store/orgStore';
+import { usePeopleStore } from '@/store/peopleStore';
+import * as api from '@/api';
+import type { SearchResults } from '@/types';
 
 type SearchFilter = 'all' | 'people' | 'teams' | 'arts';
 

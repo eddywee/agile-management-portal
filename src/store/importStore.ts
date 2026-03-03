@@ -1,6 +1,6 @@
 // © Edmund Wallner
 import { create } from 'zustand';
-import type { ImportMapping, ImportResult } from '../types';
+import type { ImportMapping, ImportResult } from '@/types';
 
 interface ImportState {
   step: number;
