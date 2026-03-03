@@ -1,6 +1,7 @@
-// © Edmund Wallner - Mercedes-Benz AG
+// © Edmund Wallner
 // Reads version from the latest git tag and syncs it to all config files.
 // Falls back to the existing package.json version if no git tags exist.
+// Never downgrades: if package.json already has a higher version, keeps it.
 
 import { execSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -55,8 +56,24 @@ function updateTauriConf(version) {
   return true;
 }
 
+function compareSemver(a, b) {
+  const pa = a.split('.').map(Number);
+  const pb = b.split('.').map(Number);
+  for (let i = 0; i < 3; i++) {
+    if ((pa[i] ?? 0) !== (pb[i] ?? 0)) return (pa[i] ?? 0) - (pb[i] ?? 0);
+  }
+  return 0;
+}
+
 const gitVersion = getVersionFromGit();
-const version = gitVersion ?? getVersionFromPackageJson();
+const pkgVersion = getVersionFromPackageJson();
+
+let version;
+if (gitVersion && compareSemver(gitVersion, pkgVersion) > 0) {
+  version = gitVersion;
+} else {
+  version = pkgVersion;
+}
 
 const changed = [
   updatePackageJson(version),
@@ -64,8 +81,10 @@ const changed = [
   updateTauriConf(version),
 ].filter(Boolean).length;
 
-if (gitVersion) {
+if (gitVersion && version === gitVersion) {
   console.log(`[sync-version] git tag → ${version} (${changed} file${changed !== 1 ? 's' : ''} updated)`);
+} else if (gitVersion) {
+  console.log(`[sync-version] keeping ${version} (ahead of git tag ${gitVersion})`);
 } else {
   console.log(`[sync-version] no git tag found, keeping ${version}`);
 }
