@@ -43,7 +43,13 @@ export function DataStep({ dbPath, onBack }: DataStepProps) {
         <button className="setup-data-option" onClick={() => handleFinish(true)}>
           <div className="setup-data-option__icon setup-data-option__icon--blue">
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </div>
           <div>
@@ -67,7 +73,9 @@ export function DataStep({ dbPath, onBack }: DataStepProps) {
       </div>
 
       <div className="setup-nav">
-        <button className="btn btn-outline" onClick={onBack}>Back</button>
+        <button className="btn btn-outline" onClick={onBack}>
+          Back
+        </button>
       </div>
     </div>
   );

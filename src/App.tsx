@@ -22,12 +22,16 @@ function App() {
 
   const { isReady, isSetupComplete, loadAppState } = useAppStore();
 
-  useEffect(() => { loadAppState(); }, [loadAppState]);
-  useEffect(() => { if (isSetupComplete) loadPIs(); }, [isSetupComplete, loadPIs]);
+  useEffect(() => {
+    loadAppState();
+  }, [loadAppState]);
+  useEffect(() => {
+    if (isSetupComplete) loadPIs();
+  }, [isSetupComplete, loadPIs]);
 
   const openSearch = useCallback(() => setSearchOpen(true), []);
   const closeSearch = useCallback(() => setSearchOpen(false), []);
-  const toggleSidebar = useCallback(() => setCollapsed(c => !c), []);
+  const toggleSidebar = useCallback(() => setCollapsed((c) => !c), []);
 
   useKeyboardShortcuts(openSearch, closeSearch, closeModal);
   useUpdateChecker();

@@ -38,7 +38,8 @@ function WizardSteps({ currentStep }: { currentStep: number }) {
           <div key={num}>
             {i > 0 && <div className="wizard-connector" />}
             <div className={`wizard-step${cls}`} data-step={num}>
-              <div className="wizard-step__num">{num}</div>{label}
+              <div className="wizard-step__num">{num}</div>
+              {label}
             </div>
           </div>
         );

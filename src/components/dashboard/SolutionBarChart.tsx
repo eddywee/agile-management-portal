@@ -7,7 +7,7 @@ interface SolutionBarChartProps {
 }
 
 export function SolutionBarChart({ data }: SolutionBarChartProps) {
-  const chartData = data.map(d => ({
+  const chartData = data.map((d) => ({
     name: d.name.length > 14 ? d.name.substring(0, 13) + '…' : d.name,
     Delivery: d.delivery,
     'ART Overhead': d.art_overhead,
@@ -22,7 +22,12 @@ export function SolutionBarChart({ data }: SolutionBarChartProps) {
           <XAxis dataKey="name" tick={{ fill: '#a0a0a8', fontSize: 11 }} />
           <YAxis tick={{ fill: '#a0a0a8', fontSize: 11 }} />
           <Tooltip
-            contentStyle={{ background: '#1a1a2e', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, fontSize: 12 }}
+            contentStyle={{
+              background: '#1a1a2e',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: 6,
+              fontSize: 12,
+            }}
             labelStyle={{ color: '#f0f0f2' }}
           />
           <Legend wrapperStyle={{ fontSize: 11, color: '#a0a0a8' }} />

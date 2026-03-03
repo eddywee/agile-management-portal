@@ -28,6 +28,8 @@ export function useUpdateChecker() {
       .catch(() => {
         // Silently ignore update check failures (offline, no key configured, etc.)
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [setUpdate, showToast, setUpdateCheckDone]);
 }

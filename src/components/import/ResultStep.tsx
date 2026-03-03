@@ -18,15 +18,36 @@ export function ResultStep() {
       <p style={{ color: 'var(--muted)', fontSize: 14 }}>{result.total} rows processed successfully</p>
 
       <div className="import-summary" style={{ justifyContent: 'center', marginTop: 16 }}>
-        <div className="import-stat"><div className="import-stat__value" style={{ color: 'var(--green)' }}>{result.created}</div><div className="import-stat__label">Created</div></div>
-        <div className="import-stat"><div className="import-stat__value" style={{ color: 'var(--accent)' }}>{result.updated}</div><div className="import-stat__label">Updated</div></div>
-        <div className="import-stat"><div className="import-stat__value" style={{ color: 'var(--purple)' }}>{result.teams_created}</div><div className="import-stat__label">Teams Created</div></div>
+        <div className="import-stat">
+          <div className="import-stat__value" style={{ color: 'var(--green)' }}>
+            {result.created}
+          </div>
+          <div className="import-stat__label">Created</div>
+        </div>
+        <div className="import-stat">
+          <div className="import-stat__value" style={{ color: 'var(--accent)' }}>
+            {result.updated}
+          </div>
+          <div className="import-stat__label">Updated</div>
+        </div>
+        <div className="import-stat">
+          <div className="import-stat__value" style={{ color: 'var(--purple)' }}>
+            {result.teams_created}
+          </div>
+          <div className="import-stat__label">Teams Created</div>
+        </div>
       </div>
 
       <div style={{ marginTop: 24, display: 'flex', gap: 10, justifyContent: 'center' }}>
-        <button className="btn btn-outline" onClick={() => navigateTo('people')}>View People</button>
-        <button className="btn btn-outline" onClick={() => navigateTo('organization')}>View Organization</button>
-        <button className="btn btn-primary" onClick={reset}>New Import</button>
+        <button className="btn btn-outline" onClick={() => navigateTo('people')}>
+          View People
+        </button>
+        <button className="btn btn-outline" onClick={() => navigateTo('organization')}>
+          View Organization
+        </button>
+        <button className="btn btn-primary" onClick={reset}>
+          New Import
+        </button>
       </div>
     </div>
   );
