@@ -139,14 +139,30 @@ jobs:
           done
 
           # Build update manifest (macOS only — Windows lacks bundled installer)
-          PLATFORMS="{"
+          PLATFORMS="{}"
           if [ -n "$MAC_SIG" ] && [ -n "$MAC_BUNDLE" ]; then
             MAC_URL="https://github.com/${{ github.repository }}/releases/download/${GITHUB_REF_NAME}/${MAC_BUNDLE// /%20}"
-            PLATFORMS="${PLATFORMS}\"darwin-aarch64\":{\"signature\":\"${MAC_SIG}\",\"url\":\"${MAC_URL}\"}"
+            PLATFORMS=$(jq -n \
+              --arg sig "$MAC_SIG" \
+              --arg url "$MAC_URL" \
+              '{"darwin-aarch64":{"signature":$sig,"url":$url}}')
           fi
-          PLATFORMS="${PLATFORMS}}"
 
-          echo "{\"version\":\"${VERSION}\",\"notes\":\"Desktop installers for macOS and Windows.\",\"pub_date\":\"${PUB_DATE}\",\"platforms\":${PLATFORMS}}" > update.json
+          # Fetch release notes from GitHub release (if pre-created)
+          NOTES="Desktop installers for macOS and Windows."
+          if gh release view "${GITHUB_REF_NAME}" &>/dev/null; then
+            RELEASE_BODY=$(gh release view "${GITHUB_REF_NAME}" --json body -q '.body' 2>/dev/null || echo "")
+            if [ -n "$RELEASE_BODY" ]; then
+              NOTES="$RELEASE_BODY"
+            fi
+          fi
+
+          jq -n \
+            --arg version "$VERSION" \
+            --arg notes "$NOTES" \
+            --arg pub_date "$PUB_DATE" \
+            --argjson platforms "$PLATFORMS" \
+            '{version: $version, notes: $notes, pub_date: $pub_date, platforms: $platforms}' > update.json
 
           echo "update.json contents:"
           cat update.json
