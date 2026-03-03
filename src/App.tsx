@@ -6,9 +6,10 @@ import { Footer } from './components/layout/Footer';
 import { PageRouter } from './components/layout/PageRouter';
 import { ModalContainer } from './components/common/ModalContainer';
 import { SearchOverlay } from './components/common/SearchOverlay';
+import { UpdateToast } from './components/common/UpdateToast';
 import { SetupWizard } from './components/setup/SetupWizard';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
-import { UpdateBanner } from './components/common/UpdateBanner';
+import { useUpdateChecker } from './hooks/useUpdateChecker';
 import { useModalStore } from './store/modalStore';
 import { usePIStore } from './store/piStore';
 import { useAppStore } from './store/appStore';
@@ -29,6 +30,7 @@ function App() {
   const toggleSidebar = useCallback(() => setCollapsed(c => !c), []);
 
   useKeyboardShortcuts(openSearch, closeSearch, closeModal);
+  useUpdateChecker();
 
   if (!isReady) {
     return (
@@ -46,12 +48,12 @@ function App() {
 
   return (
     <div className={`app${collapsed ? ' collapsed' : ''}`} id="app">
-      <UpdateBanner />
       <Header onOpenSearch={openSearch} onToggleSidebar={toggleSidebar} />
       <Sidebar />
       <PageRouter />
       <Footer />
       <ModalContainer />
+      <UpdateToast />
       {searchOpen && <SearchOverlay onClose={closeSearch} />}
     </div>
   );
