@@ -1,6 +1,6 @@
 // © Edmund Wallner
 import { useEffect, useState } from 'react';
-import { useUpdateStore } from '../../store/updateStore';
+import { useUpdateStore } from '@/store/updateStore';
 import { openUpdateModal } from './UpdateModal';
 
 export function UpdateToast() {

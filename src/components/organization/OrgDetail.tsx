@@ -1,11 +1,11 @@
 // © Edmund Wallner
 import { useEffect, useState, useCallback } from 'react';
-import { usePIStore } from '../../store/piStore';
-import { useOrgStore } from '../../store/orgStore';
-import { useModalStore } from '../../store/modalStore';
-import * as api from '../../api';
-import type { Solution, Art, ProductTeam, LeadershipWithPerson, MembershipWithPerson } from '../../types';
-import { AddLeadershipForm, AddMemberForm, AddTeamForm, EditSolutionForm, EditARTForm, EditTeamForm } from '../common/ModalForms';
+import { usePIStore } from '@/store/piStore';
+import { useOrgStore } from '@/store/orgStore';
+import { useModalStore } from '@/store/modalStore';
+import * as api from '@/api';
+import type { Solution, Art, ProductTeam, LeadershipWithPerson, MembershipWithPerson } from '@/types';
+import { AddLeadershipForm, AddMemberForm, AddTeamForm, EditSolutionForm, EditARTForm, EditTeamForm } from '@/components/common/ModalForms';
 
 export function OrgDetail({ onRefreshRequest }: { onRefreshRequest: () => void }) {
   const selectedNode = useOrgStore((s) => s.selectedNode);

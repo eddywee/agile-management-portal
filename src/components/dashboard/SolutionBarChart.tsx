@@ -1,6 +1,6 @@
 // © Edmund Wallner
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import type { SolutionFTEBreakdown } from '../../types';
+import type { SolutionFTEBreakdown } from '@/types';
 
 interface SolutionBarChartProps {
   data: SolutionFTEBreakdown[];

@@ -1,7 +1,7 @@
 // © Edmund Wallner
 import { create } from 'zustand';
-import type { ProgramIncrement } from '../types';
-import * as api from '../api';
+import type { ProgramIncrement } from '@/types';
+import * as api from '@/api';
 
 interface PIState {
   activePI: ProgramIncrement | null;

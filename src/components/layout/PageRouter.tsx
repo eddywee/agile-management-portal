@@ -1,10 +1,10 @@
 // © Edmund Wallner
-import { useNavigationStore } from '../../store/navigationStore';
-import { DashboardPage } from '../dashboard/DashboardPage';
-import { OrganizationPage } from '../organization/OrganizationPage';
-import { PeoplePage } from '../people/PeoplePage';
-import { ImportPage } from '../import/ImportPage';
-import { SettingsPage } from '../settings/SettingsPage';
+import { useNavigationStore } from '@/store/navigationStore';
+import { DashboardPage } from '@/components/dashboard/DashboardPage';
+import { OrganizationPage } from '@/components/organization/OrganizationPage';
+import { PeoplePage } from '@/components/people/PeoplePage';
+import { ImportPage } from '@/components/import/ImportPage';
+import { SettingsPage } from '@/components/settings/SettingsPage';
 
 export function PageRouter() {
   const currentPage = useNavigationStore((s) => s.currentPage);

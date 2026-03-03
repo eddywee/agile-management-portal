@@ -1,7 +1,7 @@
 // © Edmund Wallner
-import { useNavigationStore } from '../../store/navigationStore';
-import { useModalStore } from '../../store/modalStore';
-import { AddSolutionForm } from '../common/ModalForms';
+import { useNavigationStore } from '@/store/navigationStore';
+import { useModalStore } from '@/store/modalStore';
+import { AddSolutionForm } from '@/components/common/ModalForms';
 
 export function EmptyState() {
   const navigateTo = useNavigationStore((s) => s.navigateTo);

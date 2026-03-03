@@ -1,8 +1,8 @@
 // © Edmund Wallner
 import { useEffect, type ReactNode } from 'react';
-import { usePIStore } from '../../store/piStore';
-import { useNavigationStore } from '../../store/navigationStore';
-import type { PageName } from '../../types';
+import { usePIStore } from '@/store/piStore';
+import { useNavigationStore } from '@/store/navigationStore';
+import type { PageName } from '@/types';
 
 const navItems: { page: PageName; label: string; section: 'views' | 'admin'; icon: ReactNode }[] = [
   {

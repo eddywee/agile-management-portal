@@ -1,6 +1,6 @@
 // © Edmund Wallner
-import { useImportStore } from '../../store/importStore';
-import { useNavigationStore } from '../../store/navigationStore';
+import { useImportStore } from '@/store/importStore';
+import { useNavigationStore } from '@/store/navigationStore';
 
 export function ResultStep() {
   const { result, reset } = useImportStore();
