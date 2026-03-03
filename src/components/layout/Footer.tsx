@@ -6,6 +6,12 @@ import { useUpdateStore } from '../../store/updateStore';
 import { openUpdateModal } from '../common/UpdateModal';
 import * as api from '../../api';
 
+function getUpdateSeverity(current: string, available: string): 'major' | 'minor' {
+  const [curMajor] = current.split('.').map(Number);
+  const [avaMajor] = available.split('.').map(Number);
+  return avaMajor > curMajor ? 'major' : 'minor';
+}
+
 
 export function Footer() {
   const activePI = usePIStore((s) => s.activePI);
@@ -15,7 +21,8 @@ export function Footer() {
 
   const update = useUpdateStore((s) => s.update);
   const sessionDismissed = useUpdateStore((s) => s.sessionDismissed);
-  const showIndicator = !!update && !sessionDismissed;
+  const updateCheckDone = useUpdateStore((s) => s.updateCheckDone);
+  const hasUpdate = !!update && !sessionDismissed;
 
   useEffect(() => {
     if (!activePI) return;
@@ -49,11 +56,19 @@ export function Footer() {
       <div className="footer__right">
         <span>Agile Management Portal</span>
         <span
-          className={`footer__version${showIndicator ? ' footer__version--update' : ''}`}
-          onClick={showIndicator ? openUpdateModal : undefined}
+          className={`footer__version${
+            hasUpdate
+              ? getUpdateSeverity(__APP_VERSION__, update!.version) === 'major'
+                ? ' footer__version--major'
+                : ' footer__version--minor'
+              : updateCheckDone && !update
+                ? ' footer__version--latest'
+                : ''
+          }`}
+          onClick={hasUpdate ? openUpdateModal : undefined}
         >
           v{__APP_VERSION__}
-          {showIndicator && <span className="footer__update-dot" />}
+          {hasUpdate && <span className="footer__update-dot" />}
         </span>
         <span>© Edmund Wallner</span>
       </div>

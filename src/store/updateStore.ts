@@ -14,6 +14,7 @@ interface UpdateState {
   errorMessage: string | null;
   toastVisible: boolean;
   sessionDismissed: boolean;
+  updateCheckDone: boolean;
 
   setUpdate: (update: Update) => void;
   showToast: () => void;
@@ -22,6 +23,7 @@ interface UpdateState {
   skipVersion: (version: string) => void;
   startDownload: () => Promise<void>;
   clearUpdate: () => void;
+  setUpdateCheckDone: () => void;
 }
 
 export const useUpdateStore = create<UpdateState>((set, get) => ({
@@ -31,8 +33,10 @@ export const useUpdateStore = create<UpdateState>((set, get) => ({
   errorMessage: null,
   toastVisible: false,
   sessionDismissed: false,
+  updateCheckDone: false,
 
   setUpdate: (update) => set({ update }),
+  setUpdateCheckDone: () => set({ updateCheckDone: true }),
   showToast: () => set({ toastVisible: true }),
   hideToast: () => set({ toastVisible: false }),
   dismissSession: () => set({ sessionDismissed: true, toastVisible: false }),
