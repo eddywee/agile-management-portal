@@ -1,9 +1,9 @@
 // © Edmund Wallner
 import { useCallback } from 'react';
 import { open } from '@tauri-apps/plugin-dialog';
-import { useImportStore } from '../../store/importStore';
-import { usePIStore } from '../../store/piStore';
-import * as api from '../../api';
+import { useImportStore } from '@/store/importStore';
+import { usePIStore } from '@/store/piStore';
+import * as api from '@/api';
 
 export function UploadStep() {
   const { fileName, rows, setFile, setStep, setPiId } = useImportStore();

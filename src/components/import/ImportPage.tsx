@@ -1,5 +1,5 @@
 // © Edmund Wallner
-import { useImportStore } from '../../store/importStore';
+import { useImportStore } from '@/store/importStore';
 import { UploadStep } from './UploadStep';
 import { MappingStep } from './MappingStep';
 import { PreviewStep } from './PreviewStep';

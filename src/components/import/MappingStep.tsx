@@ -1,7 +1,7 @@
 // © Edmund Wallner
 import { useState, useEffect } from 'react';
-import { useImportStore } from '../../store/importStore';
-import { usePIStore } from '../../store/piStore';
+import { useImportStore } from '@/store/importStore';
+import { usePIStore } from '@/store/piStore';
 
 const FIELDS = ['— skip —', 'full_name', 'email', 'department', 'hub', 'cost_center', 'company', 'team_name', 'art_name', 'solution_name', 'role', 'fte_percent'];
 

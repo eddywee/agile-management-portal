@@ -1,6 +1,6 @@
 // © Edmund Wallner
 import { useEffect } from 'react';
-import { useNavigationStore } from '../store/navigationStore';
+import { useNavigationStore } from '@/store/navigationStore';
 
 export function useKeyboardShortcuts(onOpenSearch: () => void, onCloseSearch: () => void, onCloseModal: () => void) {
   const navigateTo = useNavigationStore((s) => s.navigateTo);
