@@ -1,8 +1,8 @@
 // © Edmund Wallner
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { usePIStore } from '../../store/piStore';
-import * as api from '../../api';
-import type { RoleDistribution, Solution, Art, ConflictPerson, SolutionFTEBreakdown } from '../../types';
+import { usePIStore } from '@/store/piStore';
+import * as api from '@/api';
+import type { RoleDistribution, Solution, Art, ConflictPerson, SolutionFTEBreakdown } from '@/types';
 import { KpiCards } from './KpiCards';
 import { SolutionBarChart } from './SolutionBarChart';
 import { RoleDonutChart } from './RoleDonutChart';

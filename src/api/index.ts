@@ -6,7 +6,7 @@ import type {
   ConflictPerson, RoleDistribution, SolutionFTEBreakdown,
   CostRate, SearchResults, CsvParseResult, ImportMapping, ImportResult,
   AppStateInfo,
-} from '../types';
+} from '@/types';
 
 // Program Increments
 export const getAllPIs = () => invoke<ProgramIncrement[]>('get_all_pis');

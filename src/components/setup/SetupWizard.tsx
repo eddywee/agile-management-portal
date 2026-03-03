@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { WelcomeStep } from './WelcomeStep';
 import { LocationStep } from './LocationStep';
 import { DataStep } from './DataStep';
-import { useAppStore } from '../../store/appStore';
+import { useAppStore } from '@/store/appStore';
 
 type Step = 'welcome' | 'location' | 'data';
 
