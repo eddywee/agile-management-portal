@@ -164,7 +164,14 @@ jobs:
           echo "Assets to upload:"
           printf '  %s\n' "${ASSETS[@]}"
 
-          gh release create "${GITHUB_REF_NAME}" \
-            --title "Agile Management Portal ${GITHUB_REF_NAME}" \
-            --notes "Desktop installers for macOS and Windows." \
-            "${ASSETS[@]}"
+          # Upload to existing release (pre-created with notes), or create one
+          if gh release view "${GITHUB_REF_NAME}" &>/dev/null; then
+            echo "Release ${GITHUB_REF_NAME} exists, uploading assets..."
+            gh release upload "${GITHUB_REF_NAME}" "${ASSETS[@]}" --clobber
+          else
+            echo "Creating release ${GITHUB_REF_NAME}..."
+            gh release create "${GITHUB_REF_NAME}" \
+              --title "Agile Management Portal ${GITHUB_REF_NAME}" \
+              --generate-notes \
+              "${ASSETS[@]}"
+          fi
