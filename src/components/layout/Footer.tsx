@@ -1,10 +1,10 @@
 // © Edmund Wallner
 import { useEffect, useState } from 'react';
-import { usePIStore } from '../../store/piStore';
-import { useNavigationStore } from '../../store/navigationStore';
-import { useUpdateStore } from '../../store/updateStore';
-import { openUpdateModal } from '../common/UpdateModal';
-import * as api from '../../api';
+import { usePIStore } from '@/store/piStore';
+import { useNavigationStore } from '@/store/navigationStore';
+import { useUpdateStore } from '@/store/updateStore';
+import { openUpdateModal } from '@/components/common/UpdateModal';
+import * as api from '@/api';
 
 function getUpdateSeverity(current: string, available: string): 'major' | 'minor' {
   const [curMajor] = current.split('.').map(Number);

@@ -1,10 +1,10 @@
 // © Edmund Wallner
 import { useEffect, useState, useCallback } from 'react';
-import { useOrgStore } from '../../store/orgStore';
-import { useModalStore } from '../../store/modalStore';
-import * as api from '../../api';
-import type { Solution, Art, ProductTeam, OrgNode } from '../../types';
-import { AddSolutionForm, AddARTForm, AddTeamForm, EditSolutionForm, EditARTForm, EditTeamForm } from '../common/ModalForms';
+import { useOrgStore } from '@/store/orgStore';
+import { useModalStore } from '@/store/modalStore';
+import * as api from '@/api';
+import type { Solution, Art, ProductTeam, OrgNode } from '@/types';
+import { AddSolutionForm, AddARTForm, AddTeamForm, EditSolutionForm, EditARTForm, EditTeamForm } from '@/components/common/ModalForms';
 
 interface TreeData {
   solutions: Solution[];

@@ -1,9 +1,9 @@
 // © Edmund Wallner
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useModalStore } from '../../store/modalStore';
-import { usePIStore } from '../../store/piStore';
-import * as api from '../../api';
-import type { Person, PersonAllocation, ProgramIncrement, Solution, Art, ProductTeam } from '../../types';
+import { useModalStore } from '@/store/modalStore';
+import { usePIStore } from '@/store/piStore';
+import * as api from '@/api';
+import type { Person, PersonAllocation, ProgramIncrement, Solution, Art, ProductTeam } from '@/types';
 
 // ── Helpers ──
 function useRefresh() {

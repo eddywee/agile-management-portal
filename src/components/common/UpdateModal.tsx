@@ -1,6 +1,6 @@
 // © Edmund Wallner
-import { useUpdateStore } from '../../store/updateStore';
-import { useModalStore } from '../../store/modalStore';
+import { useUpdateStore } from '@/store/updateStore';
+import { useModalStore } from '@/store/modalStore';
 
 export function openUpdateModal() {
   useModalStore.getState().showModal(

@@ -1,5 +1,5 @@
 // © Edmund Wallner
-import type { RoleDistribution, Solution, Art, ConflictPerson } from '../../types';
+import type { RoleDistribution, Solution, Art, ConflictPerson } from '@/types';
 
 interface KpiCardsProps {
   dist: RoleDistribution;
