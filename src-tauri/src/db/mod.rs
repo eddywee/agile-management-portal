@@ -72,10 +72,94 @@ pub fn open_database(db_path: &str) -> Connection {
 
 pub fn seed_if_empty(conn: &Connection) {
     let count: i64 = conn
-        .query_row("SELECT COUNT(*) FROM program_increments", [], |row| row.get(0))
+        .query_row("SELECT COUNT(*) FROM program_increments", [], |row| {
+            row.get(0)
+        })
         .unwrap_or(0);
     if count == 0 {
         seed::seed_data(conn);
     }
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use rusqlite::Connection;
+
+    fn test_db() -> Connection {
+        let conn = Connection::open_in_memory().unwrap();
+        conn.execute_batch("PRAGMA foreign_keys=ON;").unwrap();
+        schema::create_schema(&conn);
+        migrate(&conn);
+        conn
+    }
+
+    fn table_count(conn: &Connection) -> i64 {
+        conn.query_row(
+            "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'",
+            [],
+            |row| row.get(0),
+        )
+        .unwrap()
+    }
+
+    fn row_count(conn: &Connection, table: &str) -> i64 {
+        conn.query_row(&format!("SELECT COUNT(*) FROM {table}"), [], |row| {
+            row.get(0)
+        })
+        .unwrap()
+    }
+
+    #[test]
+    fn schema_creates_all_tables() {
+        let conn = test_db();
+        assert_eq!(table_count(&conn), 9);
+    }
+
+    #[test]
+    fn schema_is_idempotent() {
+        let conn = test_db();
+        schema::create_schema(&conn);
+        assert_eq!(table_count(&conn), 9);
+    }
+
+    #[test]
+    fn seed_populates_expected_data() {
+        let conn = test_db();
+        seed::seed_data(&conn);
+        assert_eq!(row_count(&conn, "program_increments"), 4);
+        assert_eq!(row_count(&conn, "people"), 20);
+        assert_eq!(row_count(&conn, "solutions"), 2);
+        assert_eq!(row_count(&conn, "arts"), 4);
+        assert_eq!(row_count(&conn, "product_teams"), 8);
+    }
+
+    #[test]
+    fn seed_if_empty_is_noop_on_nonempty_db() {
+        let conn = test_db();
+        seed::seed_data(&conn);
+        let before = row_count(&conn, "people");
+        seed_if_empty(&conn);
+        assert_eq!(row_count(&conn, "people"), before);
+    }
+
+    #[test]
+    fn foreign_key_enforcement() {
+        let conn = test_db();
+        let result = conn.execute(
+            "INSERT INTO memberships (team_id, person_id, role, fte_percent, pi_id) VALUES (999, 999, 'Dev', 100, 999)",
+            [],
+        );
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn pi_status_check_constraint() {
+        let conn = test_db();
+        let result = conn.execute(
+            "INSERT INTO program_increments (pi_name, start_date, end_date, status) VALUES ('Test', '2025-01-01', '2025-03-31', 'Invalid')",
+            [],
+        );
+        assert!(result.is_err());
+    }
+}
