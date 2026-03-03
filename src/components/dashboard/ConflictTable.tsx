@@ -1,8 +1,8 @@
 // © Edmund Wallner
 import { forwardRef } from 'react';
-import { useNavigationStore } from '../../store/navigationStore';
-import { usePeopleStore } from '../../store/peopleStore';
-import type { ConflictPerson } from '../../types';
+import { useNavigationStore } from '@/store/navigationStore';
+import { usePeopleStore } from '@/store/peopleStore';
+import type { ConflictPerson } from '@/types';
 
 interface ConflictTableProps {
   conflicts: ConflictPerson[];

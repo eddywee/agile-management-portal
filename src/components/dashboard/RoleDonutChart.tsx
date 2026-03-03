@@ -1,6 +1,6 @@
 // © Edmund Wallner
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
-import type { RoleDistribution } from '../../types';
+import type { RoleDistribution } from '@/types';
 
 interface RoleDonutChartProps {
   dist: RoleDistribution;

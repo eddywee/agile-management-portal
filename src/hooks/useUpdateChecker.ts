@@ -1,7 +1,7 @@
 // © Edmund Wallner
 import { useEffect } from 'react';
 import { check } from '@tauri-apps/plugin-updater';
-import { useUpdateStore, isVersionSkipped } from '../store/updateStore';
+import { useUpdateStore, isVersionSkipped } from '@/store/updateStore';
 
 export function useUpdateChecker() {
   const setUpdate = useUpdateStore((s) => s.setUpdate);

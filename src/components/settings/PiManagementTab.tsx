@@ -1,9 +1,9 @@
 // © Edmund Wallner
 import { useEffect, useState, useCallback } from 'react';
-import { usePIStore } from '../../store/piStore';
-import { useModalStore } from '../../store/modalStore';
-import * as api from '../../api';
-import { AddPIForm, EditPIForm } from '../common/ModalForms';
+import { usePIStore } from '@/store/piStore';
+import { useModalStore } from '@/store/modalStore';
+import * as api from '@/api';
+import { AddPIForm, EditPIForm } from '@/components/common/ModalForms';
 
 export function PiManagementTab() {
   const { allPIs, activePI, loadPIs, setActivePI } = usePIStore();

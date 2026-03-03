@@ -1,7 +1,7 @@
 // © Edmund Wallner
 import { useState } from 'react';
-import * as api from '../../api';
-import { useAppStore } from '../../store/appStore';
+import * as api from '@/api';
+import { useAppStore } from '@/store/appStore';
 
 interface DataStepProps {
   dbPath: string;

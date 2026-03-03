@@ -1,6 +1,6 @@
 // © Edmund Wallner
 import { create } from 'zustand';
-import type { PageName } from '../types';
+import type { PageName } from '@/types';
 
 interface NavigationState {
   currentPage: PageName;
