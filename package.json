@@ -10,7 +10,14 @@
     "preview": "vite preview",
     "version:sync": "node scripts/sync-version.mjs",
     "tauri:dev": "node scripts/sync-version.mjs && tauri dev",
-    "tauri:build": "node scripts/sync-version.mjs && tauri build"
+    "tauri:build": "node scripts/sync-version.mjs && tauri build",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "format": "prettier --write 'src/**/*.{ts,tsx}' '*.{js,json}'",
+    "format:check": "prettier --check 'src/**/*.{ts,tsx}' '*.{js,json}'",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "author": "Edmund Wallner",
   "license": "UNLICENSED",
@@ -25,11 +32,23 @@
     "zustand": "^5.0.11"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.3",
     "@tauri-apps/cli": "^2.10.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.4",
+    "eslint": "^9.39.3",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.26",
+    "jsdom": "^28.1.0",
+    "prettier": "^3.8.1",
     "typescript": "^5.9.3",
-    "vite": "^7.3.1"
+    "typescript-eslint": "^8.56.1",
+    "vite": "^7.3.1",
+    "vitest": "^4.0.18"
   }
 }

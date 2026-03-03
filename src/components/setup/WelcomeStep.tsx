@@ -14,12 +14,18 @@ export function WelcomeStep({ onNext }: WelcomeStepProps) {
         </svg>
         <h2>Welcome to Agile Management Portal</h2>
         <p>
-          Track FTE allocation across your SAFe organizational hierarchy.
-          Let's get your database set up before we begin.
+          Track FTE allocation across your SAFe organizational hierarchy. Let's get your database set up before we
+          begin.
         </p>
         <button className="btn btn-primary" onClick={onNext}>
           <svg viewBox="0 0 16 16" fill="none">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            <path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              strokeWidth="1.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
           Get Started
         </button>

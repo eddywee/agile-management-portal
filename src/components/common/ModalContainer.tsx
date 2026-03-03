@@ -7,7 +7,12 @@ export function ModalContainer() {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}>
+    <div
+      className="modal-overlay"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) closeModal();
+      }}
+    >
       <div className="modal">
         <h3>{title}</h3>
         <div className="modal-body">{content}</div>

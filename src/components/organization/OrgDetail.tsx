@@ -5,7 +5,14 @@ import { useOrgStore } from '@/store/orgStore';
 import { useModalStore } from '@/store/modalStore';
 import * as api from '@/api';
 import type { Solution, Art, ProductTeam, LeadershipWithPerson, MembershipWithPerson } from '@/types';
-import { AddLeadershipForm, AddMemberForm, AddTeamForm, EditSolutionForm, EditARTForm, EditTeamForm } from '@/components/common/ModalForms';
+import {
+  AddLeadershipForm,
+  AddMemberForm,
+  AddTeamForm,
+  EditSolutionForm,
+  EditARTForm,
+  EditTeamForm,
+} from '@/components/common/ModalForms';
 
 export function OrgDetail({ onRefreshRequest }: { onRefreshRequest: () => void }) {
   const selectedNode = useOrgStore((s) => s.selectedNode);
@@ -34,12 +41,23 @@ export function OrgDetail({ onRefreshRequest }: { onRefreshRequest: () => void }
 
 const pencilIcon = (
   <svg viewBox="0 0 14 14" fill="none" style={{ width: 14, height: 14 }}>
-    <path d="M10 2l2 2-7 7H3V9l7-7z" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
+    <path
+      d="M10 2l2 2-7 7H3V9l7-7z"
+      stroke="currentColor"
+      strokeWidth="1.1"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 const trashIcon = (
   <svg viewBox="0 0 14 14" fill="none" style={{ width: 14, height: 14 }}>
-    <path d="M3 4h8M5 4V3h4v1M4.5 4v7a.5.5 0 00.5.5h4a.5.5 0 00.5-.5V4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
+    <path
+      d="M3 4h8M5 4V3h4v1M4.5 4v7a.5.5 0 00.5.5h4a.5.5 0 00.5-.5V4"
+      stroke="currentColor"
+      strokeWidth="1.1"
+      strokeLinecap="round"
+    />
   </svg>
 );
 
@@ -62,7 +80,7 @@ function SolutionDetail({ id, onRefresh }: { id: number; onRefresh: () => void }
       api.getSolutionLeadership(id, activePI.id),
       api.getSolutionFTE(id, activePI.id),
     ]);
-    setSol(sols.find(s => s.id === id) || null);
+    setSol(sols.find((s) => s.id === id) || null);
     setArts(artList);
     setLeadership(lead);
     setTotalFTE(fte);
@@ -76,7 +94,9 @@ function SolutionDetail({ id, onRefresh }: { id: number; onRefresh: () => void }
     setArtTeamCounts(counts);
   }, [id, activePI]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load();
+  }, [load]);
 
   const handleRemoveLeadership = async (leadId: number) => {
     if (!confirm('Remove this leader?')) return;
@@ -87,7 +107,17 @@ function SolutionDetail({ id, onRefresh }: { id: number; onRefresh: () => void }
 
   const handleEdit = () => {
     if (!sol) return;
-    showModal('Edit Solution', <EditSolutionForm solution={sol} onDone={() => { load(); onRefresh(); }} />, null);
+    showModal(
+      'Edit Solution',
+      <EditSolutionForm
+        solution={sol}
+        onDone={() => {
+          load();
+          onRefresh();
+        }}
+      />,
+      null,
+    );
   };
 
   const handleDelete = async () => {
@@ -102,52 +132,113 @@ function SolutionDetail({ id, onRefresh }: { id: number; onRefresh: () => void }
 
   return (
     <>
-      <div className="detail-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div
+        className="detail-header"
+        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}
+      >
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <h3>{sol.name}</h3>
-            <button className="icon-btn icon-btn--dim" onClick={handleEdit} title="Edit">{pencilIcon}</button>
-            <button className="icon-btn icon-btn--red" onClick={handleDelete} title="Delete">{trashIcon}</button>
+            <button className="icon-btn icon-btn--dim" onClick={handleEdit} title="Edit">
+              {pencilIcon}
+            </button>
+            <button className="icon-btn icon-btn--red" onClick={handleDelete} title="Delete">
+              {trashIcon}
+            </button>
           </div>
           <p>{sol.description || 'No description'}</p>
         </div>
-        <div className="detail-fte"><div className="detail-fte__number">{totalFTE.toFixed(1)}</div><div className="detail-fte__label">Total FTE</div></div>
+        <div className="detail-fte">
+          <div className="detail-fte__number">{totalFTE.toFixed(1)}</div>
+          <div className="detail-fte__label">Total FTE</div>
+        </div>
       </div>
       <div className="detail-section">
         <div className="detail-section__title">
           Solution Leadership ({activePI.pi_name})
-          <button className="btn btn-sm btn-primary" onClick={() => showModal(`Add Solution Leader`, <AddLeadershipForm level="solution" entityId={id} onDone={() => { load(); onRefresh(); }} />, null)}>
-            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg> Add
+          <button
+            className="btn btn-sm btn-primary"
+            onClick={() =>
+              showModal(
+                `Add Solution Leader`,
+                <AddLeadershipForm
+                  level="solution"
+                  entityId={id}
+                  onDone={() => {
+                    load();
+                    onRefresh();
+                  }}
+                />,
+                null,
+              )
+            }
+          >
+            <svg viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+            </svg>{' '}
+            Add
           </button>
         </div>
         {leadership.length ? (
-          <table className="mini-table"><thead><tr><th>Role</th><th>Person</th><th>FTE</th><th></th></tr></thead><tbody>
-            {leadership.map(l => (
-              <tr key={l.id}>
-                <td>{l.role}</td>
-                <td style={{ fontWeight: 500, color: 'var(--white)' }}>{l.full_name}</td>
-                <td>{l.fte_percent}%</td>
-                <td><button className="icon-btn icon-btn--red" onClick={() => handleRemoveLeadership(l.id)}>
-                  <svg viewBox="0 0 14 14" fill="none"><path d="M3 4h8M5 4V3h4v1M4.5 4v7a.5.5 0 00.5.5h4a.5.5 0 00.5-.5V4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" /></svg>
-                </button></td>
+          <table className="mini-table">
+            <thead>
+              <tr>
+                <th>Role</th>
+                <th>Person</th>
+                <th>FTE</th>
+                <th></th>
               </tr>
-            ))}
-          </tbody></table>
-        ) : <p style={{ color: 'var(--dim)', fontSize: 13 }}>No leadership assigned for this PI</p>}
+            </thead>
+            <tbody>
+              {leadership.map((l) => (
+                <tr key={l.id}>
+                  <td>{l.role}</td>
+                  <td style={{ fontWeight: 500, color: 'var(--white)' }}>{l.full_name}</td>
+                  <td>{l.fte_percent}%</td>
+                  <td>
+                    <button className="icon-btn icon-btn--red" onClick={() => handleRemoveLeadership(l.id)}>
+                      <svg viewBox="0 0 14 14" fill="none">
+                        <path
+                          d="M3 4h8M5 4V3h4v1M4.5 4v7a.5.5 0 00.5.5h4a.5.5 0 00.5-.5V4"
+                          stroke="currentColor"
+                          strokeWidth="1.1"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p style={{ color: 'var(--dim)', fontSize: 13 }}>No leadership assigned for this PI</p>
+        )}
       </div>
       <div className="detail-section">
         <div className="detail-section__title">ARTs ({arts.length})</div>
         {arts.length ? (
-          <table className="mini-table"><thead><tr><th>ART</th><th>FTE</th><th>Teams</th></tr></thead><tbody>
-            {arts.map(a => (
-              <tr key={a.id} onClick={() => selectNode({ type: 'art', id: a.id })} style={{ cursor: 'pointer' }}>
-                <td style={{ fontWeight: 500, color: 'var(--white)' }}>{a.name}</td>
-                <td>{(artFTEs[a.id] ?? 0).toFixed(1)}</td>
-                <td>{artTeamCounts[a.id] ?? 0}</td>
+          <table className="mini-table">
+            <thead>
+              <tr>
+                <th>ART</th>
+                <th>FTE</th>
+                <th>Teams</th>
               </tr>
-            ))}
-          </tbody></table>
-        ) : <p style={{ color: 'var(--dim)', fontSize: 13 }}>No ARTs yet</p>}
+            </thead>
+            <tbody>
+              {arts.map((a) => (
+                <tr key={a.id} onClick={() => selectNode({ type: 'art', id: a.id })} style={{ cursor: 'pointer' }}>
+                  <td style={{ fontWeight: 500, color: 'var(--white)' }}>{a.name}</td>
+                  <td>{(artFTEs[a.id] ?? 0).toFixed(1)}</td>
+                  <td>{artTeamCounts[a.id] ?? 0}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p style={{ color: 'var(--dim)', fontSize: 13 }}>No ARTs yet</p>
+        )}
       </div>
     </>
   );
@@ -172,11 +263,11 @@ function ArtDetail({ id, onRefresh }: { id: number; onRefresh: () => void }) {
       api.getArtLeadership(id, activePI.id),
       api.getArtFTE(id, activePI.id),
     ]);
-    const art = allArts.find(a => a.id === id) || null;
+    const art = allArts.find((a) => a.id === id) || null;
     setArtObj(art);
     if (art?.solution_id) {
       const sols = await api.getSolutions();
-      setSolName(sols.find(s => s.id === art.solution_id)?.name || null);
+      setSolName(sols.find((s) => s.id === art.solution_id)?.name || null);
     } else {
       setSolName(null);
     }
@@ -190,14 +281,19 @@ function ArtDetail({ id, onRefresh }: { id: number; onRefresh: () => void }) {
       let hasConflict = false;
       for (const m of members) {
         const pFte = await api.getPersonTotalFTE(m.person_id, activePI.id);
-        if (pFte > 100) { hasConflict = true; break; }
+        if (pFte > 100) {
+          hasConflict = true;
+          break;
+        }
       }
       td[t.id] = { fte: tFte, members: members.length, hasConflict };
     }
     setTeamData(td);
   }, [id, activePI]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load();
+  }, [load]);
 
   const handleRemoveLeadership = async (leadId: number) => {
     if (!confirm('Remove this leader?')) return;
@@ -208,7 +304,17 @@ function ArtDetail({ id, onRefresh }: { id: number; onRefresh: () => void }) {
 
   const handleEdit = () => {
     if (!artObj) return;
-    showModal('Edit ART', <EditARTForm art={artObj} onDone={() => { load(); onRefresh(); }} />, null);
+    showModal(
+      'Edit ART',
+      <EditARTForm
+        art={artObj}
+        onDone={() => {
+          load();
+          onRefresh();
+        }}
+      />,
+      null,
+    );
   };
 
   const handleDelete = async () => {
@@ -225,64 +331,147 @@ function ArtDetail({ id, onRefresh }: { id: number; onRefresh: () => void }) {
 
   return (
     <>
-      <div className="detail-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div
+        className="detail-header"
+        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}
+      >
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <h3>{artObj.name}</h3>
-            <button className="icon-btn icon-btn--dim" onClick={handleEdit} title="Edit">{pencilIcon}</button>
-            <button className="icon-btn icon-btn--red" onClick={handleDelete} title="Delete">{trashIcon}</button>
+            <button className="icon-btn icon-btn--dim" onClick={handleEdit} title="Edit">
+              {pencilIcon}
+            </button>
+            <button className="icon-btn icon-btn--red" onClick={handleDelete} title="Delete">
+              {trashIcon}
+            </button>
           </div>
           <p>{breadcrumb}</p>
         </div>
-        <div className="detail-fte"><div className="detail-fte__number">{totalFTE.toFixed(1)}</div><div className="detail-fte__label">Total FTE</div></div>
+        <div className="detail-fte">
+          <div className="detail-fte__number">{totalFTE.toFixed(1)}</div>
+          <div className="detail-fte__label">Total FTE</div>
+        </div>
       </div>
       <div className="detail-section">
         <div className="detail-section__title">
           ART Leadership ({activePI.pi_name})
-          <button className="btn btn-sm btn-primary" onClick={() => showModal('Add ART Leader', <AddLeadershipForm level="art" entityId={id} onDone={() => { load(); onRefresh(); }} />, null)}>
-            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg> Add
+          <button
+            className="btn btn-sm btn-primary"
+            onClick={() =>
+              showModal(
+                'Add ART Leader',
+                <AddLeadershipForm
+                  level="art"
+                  entityId={id}
+                  onDone={() => {
+                    load();
+                    onRefresh();
+                  }}
+                />,
+                null,
+              )
+            }
+          >
+            <svg viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+            </svg>{' '}
+            Add
           </button>
         </div>
         {leadership.length ? (
-          <table className="mini-table"><thead><tr><th>Role</th><th>Person</th><th>FTE</th><th></th></tr></thead><tbody>
-            {leadership.map(l => (
-              <tr key={l.id}>
-                <td>{l.role}</td>
-                <td style={{ fontWeight: 500, color: 'var(--white)' }}>{l.full_name}</td>
-                <td>{l.fte_percent}%</td>
-                <td><button className="icon-btn icon-btn--red" onClick={() => handleRemoveLeadership(l.id)}>
-                  <svg viewBox="0 0 14 14" fill="none"><path d="M3 4h8M5 4V3h4v1M4.5 4v7a.5.5 0 00.5.5h4a.5.5 0 00.5-.5V4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" /></svg>
-                </button></td>
+          <table className="mini-table">
+            <thead>
+              <tr>
+                <th>Role</th>
+                <th>Person</th>
+                <th>FTE</th>
+                <th></th>
               </tr>
-            ))}
-          </tbody></table>
-        ) : <p style={{ color: 'var(--dim)', fontSize: 13 }}>No leadership assigned</p>}
+            </thead>
+            <tbody>
+              {leadership.map((l) => (
+                <tr key={l.id}>
+                  <td>{l.role}</td>
+                  <td style={{ fontWeight: 500, color: 'var(--white)' }}>{l.full_name}</td>
+                  <td>{l.fte_percent}%</td>
+                  <td>
+                    <button className="icon-btn icon-btn--red" onClick={() => handleRemoveLeadership(l.id)}>
+                      <svg viewBox="0 0 14 14" fill="none">
+                        <path
+                          d="M3 4h8M5 4V3h4v1M4.5 4v7a.5.5 0 00.5.5h4a.5.5 0 00.5-.5V4"
+                          stroke="currentColor"
+                          strokeWidth="1.1"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p style={{ color: 'var(--dim)', fontSize: 13 }}>No leadership assigned</p>
+        )}
       </div>
       <div className="detail-section">
         <div className="detail-section__title">
           Teams ({teams.length})
-          <button className="btn btn-sm btn-primary" onClick={() => showModal('New Team', <AddTeamForm artId={id} onDone={() => { load(); onRefresh(); }} />, null)}>
-            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg> Add Team
+          <button
+            className="btn btn-sm btn-primary"
+            onClick={() =>
+              showModal(
+                'New Team',
+                <AddTeamForm
+                  artId={id}
+                  onDone={() => {
+                    load();
+                    onRefresh();
+                  }}
+                />,
+                null,
+              )
+            }
+          >
+            <svg viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+            </svg>{' '}
+            Add Team
           </button>
         </div>
         {teams.length ? (
-          <table className="mini-table"><thead><tr><th>Team</th><th>FTE</th><th>Members</th><th>Health</th></tr></thead><tbody>
-            {teams.map(t => {
-              const td = teamData[t.id];
-              return (
-                <tr key={t.id} onClick={() => selectNode({ type: 'team', id: t.id })} style={{ cursor: 'pointer' }}>
-                  <td style={{ fontWeight: 500, color: 'var(--white)' }}>{t.name}</td>
-                  <td>{(td?.fte ?? 0).toFixed(1)}</td>
-                  <td>{td?.members ?? 0}</td>
-                  <td>{td?.hasConflict
-                    ? <span className="health-badge health-badge--conflict">⚠ Conflict</span>
-                    : <span className="health-badge health-badge--healthy">✓ Healthy</span>}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody></table>
-        ) : <p style={{ color: 'var(--dim)', fontSize: 13 }}>No teams yet</p>}
+          <table className="mini-table">
+            <thead>
+              <tr>
+                <th>Team</th>
+                <th>FTE</th>
+                <th>Members</th>
+                <th>Health</th>
+              </tr>
+            </thead>
+            <tbody>
+              {teams.map((t) => {
+                const td = teamData[t.id];
+                return (
+                  <tr key={t.id} onClick={() => selectNode({ type: 'team', id: t.id })} style={{ cursor: 'pointer' }}>
+                    <td style={{ fontWeight: 500, color: 'var(--white)' }}>{t.name}</td>
+                    <td>{(td?.fte ?? 0).toFixed(1)}</td>
+                    <td>{td?.members ?? 0}</td>
+                    <td>
+                      {td?.hasConflict ? (
+                        <span className="health-badge health-badge--conflict">⚠ Conflict</span>
+                      ) : (
+                        <span className="health-badge health-badge--healthy">✓ Healthy</span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ) : (
+          <p style={{ color: 'var(--dim)', fontSize: 13 }}>No teams yet</p>
+        )}
       </div>
     </>
   );
@@ -302,16 +491,16 @@ function TeamDetail({ id, onRefresh }: { id: number; onRefresh: () => void }) {
   const load = useCallback(async () => {
     if (!activePI) return;
     const teamList = await api.getTeams();
-    const t = teamList.find(t => t.id === id);
+    const t = teamList.find((t) => t.id === id);
     if (!t) return;
     setTeamObj(t);
     if (t.art_id) {
       const allArts = await api.getArts();
-      const art = allArts.find(a => a.id === t.art_id);
+      const art = allArts.find((a) => a.id === t.art_id);
       setArtName(art?.name || null);
       if (art?.solution_id) {
         const sols = await api.getSolutions();
-        setSolName(sols.find(s => s.id === art.solution_id)?.name || null);
+        setSolName(sols.find((s) => s.id === art.solution_id)?.name || null);
       } else {
         setSolName(null);
       }
@@ -320,10 +509,7 @@ function TeamDetail({ id, onRefresh }: { id: number; onRefresh: () => void }) {
       setSolName(null);
     }
 
-    const [mems, fte] = await Promise.all([
-      api.getTeamMembers(id, activePI.id),
-      api.getTeamFTE(id, activePI.id),
-    ]);
+    const [mems, fte] = await Promise.all([api.getTeamMembers(id, activePI.id), api.getTeamFTE(id, activePI.id)]);
     setMembers(mems);
     setTotalFTE(fte);
     const ftes: Record<number, number> = {};
@@ -333,7 +519,9 @@ function TeamDetail({ id, onRefresh }: { id: number; onRefresh: () => void }) {
     setMemberFTEs(ftes);
   }, [id, activePI]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load();
+  }, [load]);
 
   const handleRemoveMember = async (membershipId: number) => {
     if (!confirm('Remove this member from the team?')) return;
@@ -344,7 +532,17 @@ function TeamDetail({ id, onRefresh }: { id: number; onRefresh: () => void }) {
 
   const handleEdit = () => {
     if (!teamObj) return;
-    showModal('Edit Team', <EditTeamForm team={teamObj} onDone={() => { load(); onRefresh(); }} />, null);
+    showModal(
+      'Edit Team',
+      <EditTeamForm
+        team={teamObj}
+        onDone={() => {
+          load();
+          onRefresh();
+        }}
+      />,
+      null,
+    );
   };
 
   const handleDelete = async () => {
@@ -367,48 +565,120 @@ function TeamDetail({ id, onRefresh }: { id: number; onRefresh: () => void }) {
 
   return (
     <>
-      <div className="detail-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div
+        className="detail-header"
+        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}
+      >
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <h3>{teamObj.name}</h3>
-            <button className="icon-btn icon-btn--dim" onClick={handleEdit} title="Edit">{pencilIcon}</button>
-            <button className="icon-btn icon-btn--red" onClick={handleDelete} title="Delete">{trashIcon}</button>
+            <button className="icon-btn icon-btn--dim" onClick={handleEdit} title="Edit">
+              {pencilIcon}
+            </button>
+            <button className="icon-btn icon-btn--red" onClick={handleDelete} title="Delete">
+              {trashIcon}
+            </button>
           </div>
           <p>{breadcrumb}</p>
         </div>
-        <div className="detail-fte"><div className="detail-fte__number">{totalFTE.toFixed(1)}</div><div className="detail-fte__label">Total FTE</div></div>
+        <div className="detail-fte">
+          <div className="detail-fte__number">{totalFTE.toFixed(1)}</div>
+          <div className="detail-fte__label">Total FTE</div>
+        </div>
       </div>
       <div className="detail-section">
         <div className="detail-section__title">
           Members ({activePI.pi_name})
-          <button className="btn btn-sm btn-primary" onClick={() => showModal('Add Team Member', <AddMemberForm teamId={id} onDone={() => { load(); onRefresh(); }} />, null)}>
-            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg> Add Member
+          <button
+            className="btn btn-sm btn-primary"
+            onClick={() =>
+              showModal(
+                'Add Team Member',
+                <AddMemberForm
+                  teamId={id}
+                  onDone={() => {
+                    load();
+                    onRefresh();
+                  }}
+                />,
+                null,
+              )
+            }
+          >
+            <svg viewBox="0 0 12 12" fill="none">
+              <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+            </svg>{' '}
+            Add Member
           </button>
         </div>
         {members.length ? (
-          <table className="mini-table"><thead><tr><th>Person</th><th>Role</th><th>FTE</th><th></th></tr></thead><tbody>
-            {members.map(m => {
-              const pfte = memberFTEs[m.person_id] ?? 0;
-              return (
-                <tr key={m.id}>
-                  <td style={{ fontWeight: 500, color: 'var(--white)' }}>
-                    {m.full_name}
-                    {pfte > 100 && <span className="conflict-icon" title={`${pfte}% total`}> ⚠ {pfte}%</span>}
-                  </td>
-                  <td><span className="badge badge--dim">{m.role}</span></td>
-                  <td>{m.fte_percent}%</td>
-                  <td><button className="icon-btn icon-btn--red" onClick={() => handleRemoveMember(m.id)}>
-                    <svg viewBox="0 0 14 14" fill="none"><path d="M3 4h8M5 4V3h4v1M4.5 4v7a.5.5 0 00.5.5h4a.5.5 0 00.5-.5V4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" /></svg>
-                  </button></td>
-                </tr>
-              );
-            })}
-          </tbody></table>
+          <table className="mini-table">
+            <thead>
+              <tr>
+                <th>Person</th>
+                <th>Role</th>
+                <th>FTE</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {members.map((m) => {
+                const pfte = memberFTEs[m.person_id] ?? 0;
+                return (
+                  <tr key={m.id}>
+                    <td style={{ fontWeight: 500, color: 'var(--white)' }}>
+                      {m.full_name}
+                      {pfte > 100 && (
+                        <span className="conflict-icon" title={`${pfte}% total`}>
+                          {' '}
+                          ⚠ {pfte}%
+                        </span>
+                      )}
+                    </td>
+                    <td>
+                      <span className="badge badge--dim">{m.role}</span>
+                    </td>
+                    <td>{m.fte_percent}%</td>
+                    <td>
+                      <button className="icon-btn icon-btn--red" onClick={() => handleRemoveMember(m.id)}>
+                        <svg viewBox="0 0 14 14" fill="none">
+                          <path
+                            d="M3 4h8M5 4V3h4v1M4.5 4v7a.5.5 0 00.5.5h4a.5.5 0 00.5-.5V4"
+                            stroke="currentColor"
+                            strokeWidth="1.1"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         ) : (
           <div className="empty-state" style={{ padding: 30 }}>
             <p>This team has no members yet.</p>
-            <button className="btn btn-primary" onClick={() => showModal('Add Team Member', <AddMemberForm teamId={id} onDone={() => { load(); onRefresh(); }} />, null)}>
-              <svg viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg> Add Member
+            <button
+              className="btn btn-primary"
+              onClick={() =>
+                showModal(
+                  'Add Team Member',
+                  <AddMemberForm
+                    teamId={id}
+                    onDone={() => {
+                      load();
+                      onRefresh();
+                    }}
+                  />,
+                  null,
+                )
+              }
+            >
+              <svg viewBox="0 0 14 14" fill="none">
+                <path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+              </svg>{' '}
+              Add Member
             </button>
           </div>
         )}
