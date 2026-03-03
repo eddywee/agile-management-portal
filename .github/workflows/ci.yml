@@ -69,7 +69,7 @@ jobs:
           cp src-tauri/target/release/bundle/dmg/*.dmg staging/ 2>/dev/null || true
           cp src-tauri/target/release/bundle/macos/*.tar.gz staging/ 2>/dev/null || true
           cp src-tauri/target/release/bundle/macos/*.tar.gz.sig staging/ 2>/dev/null || true
-          cd staging && for f in *' '*; do [ -e "$f" ] && mv "$f" "${f// /.}"; done
+          cd staging && for f in *' '*; do [ -e "$f" ] && mv "$f" "${f// /.}"; done && cd ..
           echo "=== Staged files ==="
           ls -la staging/
 
