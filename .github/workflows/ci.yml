@@ -2,7 +2,7 @@
 # Builds Tauri 2.x desktop app for macOS and Windows.
 #
 # Workflow:
-#   PR pipeline  → typecheck only (fast gate)
+#   PR pipeline  → lint, format, typecheck, test (fast gate)
 #   Tag v*       → full platform builds + GitHub release + updater manifest
 #
 # Auto-update requires repository secrets:
@@ -24,17 +24,37 @@ env:
 
 jobs:
   # ── Pull-request gate ───────────────────────────────────
-  typecheck:
+  quality:
     if: github.event_name == 'pull_request'
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
+
+      # ── Frontend checks ──
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
       - run: npm ci
-      - run: npx tsc --noEmit
+      - name: TypeScript typecheck
+        run: npx tsc --noEmit
+      - name: ESLint
+        run: npm run lint
+      - name: Prettier check
+        run: npm run format:check
+      - name: Vitest
+        run: npm test
+
+      # ── Rust checks ──
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+      - name: rustfmt check
+        run: cargo fmt --manifest-path src-tauri/Cargo.toml -- --check
+      - name: Clippy
+        run: cargo clippy --manifest-path src-tauri/Cargo.toml -- -D warnings
+      - name: Rust tests
+        run: cargo test --manifest-path src-tauri/Cargo.toml
 
   # ── Platform builds (tag push only) ─────────────────────
   build-macos:
