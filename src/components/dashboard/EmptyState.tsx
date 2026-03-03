@@ -16,16 +16,32 @@ export function EmptyState() {
       <div className="welcome-content">
         <div className="welcome-left">
           <div className="welcome-badge">✨ Fresh Install</div>
-          <svg viewBox="0 0 48 48" fill="none" width="64" height="64" className="welcome-logo" style={{ margin: '0 auto' }}>
+          <svg
+            viewBox="0 0 48 48"
+            fill="none"
+            width="64"
+            height="64"
+            className="welcome-logo"
+            style={{ margin: '0 auto' }}
+          >
             <rect x="4" y="4" width="18" height="18" rx="3" stroke="var(--accent)" strokeWidth="2" />
             <rect x="26" y="4" width="18" height="18" rx="3" stroke="var(--accent)" strokeWidth="2" />
             <rect x="4" y="26" width="18" height="18" rx="3" stroke="var(--accent)" strokeWidth="2" />
-            <rect x="26" y="26" width="18" height="18" rx="3" fill="var(--accent)" stroke="var(--accent)" strokeWidth="2" />
+            <rect
+              x="26"
+              y="26"
+              width="18"
+              height="18"
+              rx="3"
+              fill="var(--accent)"
+              stroke="var(--accent)"
+              strokeWidth="2"
+            />
           </svg>
           <h2 className="welcome-subtitle">Agile Management Portal</h2>
           <p className="welcome-desc">
-            Let's get your financial planning environment set up for success.
-            We'll start by defining your organizational structure.
+            Let's get your financial planning environment set up for success. We'll start by defining your
+            organizational structure.
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <div className="welcome-action" onClick={handleAddSolution}>
@@ -54,9 +70,13 @@ export function EmptyState() {
             </div>
             <div className="welcome-diagram__connector"></div>
             <div style={{ display: 'flex', gap: 6 }}>
-              {[1, 2, 3].map(i => <div key={i} style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--dim)' }} />)}
+              {[1, 2, 3].map((i) => (
+                <div key={i} style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--dim)' }} />
+              ))}
               <div style={{ width: 16 }} />
-              {[4, 5].map(i => <div key={i} style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--dim)' }} />)}
+              {[4, 5].map((i) => (
+                <div key={i} style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--dim)' }} />
+              ))}
             </div>
           </div>
           <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, marginBottom: 6 }}>Build your hierarchy</h3>

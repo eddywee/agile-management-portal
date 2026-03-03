@@ -29,9 +29,7 @@ export function SetupWizard() {
           {STEPS.map((s, i) => (
             <div key={s.key} className="setup-steps__row">
               {i > 0 && <div className="setup-steps__connector" />}
-              <div
-                className={`setup-step${i === stepIndex ? ' active' : ''}${i < stepIndex ? ' done' : ''}`}
-              >
+              <div className={`setup-step${i === stepIndex ? ' active' : ''}${i < stepIndex ? ' done' : ''}`}>
                 <div className="setup-step__num">{i < stepIndex ? '\u2713' : i + 1}</div>
                 <span>{s.label}</span>
               </div>
@@ -39,9 +37,7 @@ export function SetupWizard() {
           ))}
         </div>
 
-        {step === 'welcome' && (
-          <WelcomeStep onNext={() => setStep('location')} />
-        )}
+        {step === 'welcome' && <WelcomeStep onNext={() => setStep('location')} />}
         {step === 'location' && (
           <LocationStep
             defaultPath={defaultPath}
@@ -52,12 +48,7 @@ export function SetupWizard() {
             onBack={() => setStep('welcome')}
           />
         )}
-        {step === 'data' && (
-          <DataStep
-            dbPath={dbPath || defaultPath}
-            onBack={() => setStep('location')}
-          />
-        )}
+        {step === 'data' && <DataStep dbPath={dbPath || defaultPath} onBack={() => setStep('location')} />}
       </div>
     </div>
   );

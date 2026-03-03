@@ -60,25 +60,6 @@ pub struct TeamWithArt {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct TeamWithHierarchy {
-    pub id: i64,
-    pub art_id: Option<i64>,
-    pub name: String,
-    pub art_name: Option<String>,
-    pub sol_name: Option<String>,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct Membership {
-    pub id: i64,
-    pub team_id: i64,
-    pub person_id: i64,
-    pub role: String,
-    pub fte_percent: i64,
-    pub pi_id: i64,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct MembershipWithPerson {
     pub id: i64,
     pub team_id: i64,

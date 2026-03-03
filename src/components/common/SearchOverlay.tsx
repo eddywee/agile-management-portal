@@ -24,7 +24,12 @@ function highlight(text: string | null, term: string): string {
 }
 
 function getInitials(name: string): string {
-  return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  return name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .substring(0, 2)
+    .toUpperCase();
 }
 
 export function SearchOverlay({ onClose }: SearchOverlayProps) {
@@ -43,7 +48,10 @@ export function SearchOverlay({ onClose }: SearchOverlayProps) {
   }, []);
 
   useEffect(() => {
-    if (!term.trim()) { setResults(null); return; }
+    if (!term.trim()) {
+      setResults(null);
+      return;
+    }
     let cancelled = false;
     (async () => {
       const res = await api.searchAll(term.trim());
@@ -52,36 +60,54 @@ export function SearchOverlay({ onClose }: SearchOverlayProps) {
       // Fetch FTEs for people results
       if (activePI && res.people.length) {
         const ftes: Record<number, number> = {};
-        await Promise.all(res.people.map(async (p) => {
-          ftes[p.id] = await api.getPersonTotalFTE(p.id, activePI.id);
-        }));
+        await Promise.all(
+          res.people.map(async (p) => {
+            ftes[p.id] = await api.getPersonTotalFTE(p.id, activePI.id);
+          }),
+        );
         if (!cancelled) setPersonFTEs(ftes);
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [term, activePI]);
 
-  const goToPerson = useCallback((id: number) => {
-    onClose();
-    navigateTo('people');
-    setSelectedPerson(id);
-  }, [onClose, navigateTo, setSelectedPerson]);
+  const goToPerson = useCallback(
+    (id: number) => {
+      onClose();
+      navigateTo('people');
+      setSelectedPerson(id);
+    },
+    [onClose, navigateTo, setSelectedPerson],
+  );
 
-  const goToOrg = useCallback((type: 'solution' | 'art' | 'team', id: number) => {
-    onClose();
-    navigateTo('organization');
-    selectNode({ type, id });
-  }, [onClose, navigateTo, selectNode]);
+  const goToOrg = useCallback(
+    (type: 'solution' | 'art' | 'team', id: number) => {
+      onClose();
+      navigateTo('organization');
+      selectNode({ type, id });
+    },
+    [onClose, navigateTo, selectNode],
+  );
 
   const showPeople = (filter === 'all' || filter === 'people') && results?.people?.length;
   const showTeams = (filter === 'all' || filter === 'teams') && results?.teams?.length;
   const showArts = (filter === 'all' || filter === 'arts') && (results?.arts?.length || results?.solutions?.length);
 
   return (
-    <div className="search-overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+    <div
+      className="search-overlay"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
       <div className="search-modal">
         <div className="search-input-wrap">
-          <svg viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" strokeWidth="1.5" /><path d="M14 14l4.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
+          <svg viewBox="0 0 20 20" fill="none">
+            <circle cx="9" cy="9" r="6" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M14 14l4.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
           <input
             ref={inputRef}
             type="text"
@@ -91,7 +117,7 @@ export function SearchOverlay({ onClose }: SearchOverlayProps) {
           />
         </div>
         <div className="search-filters">
-          {(['all', 'people', 'teams', 'arts'] as SearchFilter[]).map(f => (
+          {(['all', 'people', 'teams', 'arts'] as SearchFilter[]).map((f) => (
             <button
               key={f}
               className={`search-filter-pill${filter === f ? ' active' : ''}`}
@@ -103,7 +129,9 @@ export function SearchOverlay({ onClose }: SearchOverlayProps) {
         </div>
         <div className="search-results">
           {!term.trim() ? (
-            <div style={{ padding: 40, textAlign: 'center', color: 'var(--dim)', fontSize: 13 }}>Start typing to search…</div>
+            <div style={{ padding: 40, textAlign: 'center', color: 'var(--dim)', fontSize: 13 }}>
+              Start typing to search…
+            </div>
           ) : results && !showPeople && !showTeams && !showArts ? (
             <div style={{ padding: 40, textAlign: 'center', color: 'var(--dim)', fontSize: 13 }}>No results found</div>
           ) : (
@@ -112,16 +140,30 @@ export function SearchOverlay({ onClose }: SearchOverlayProps) {
                 <>
                   <div className="search-category-label">
                     <span>People</span>
-                    <span style={{ background: 'rgba(255,255,255,0.04)', padding: '2px 8px', borderRadius: 3, fontSize: 10 }}>
+                    <span
+                      style={{
+                        background: 'rgba(255,255,255,0.04)',
+                        padding: '2px 8px',
+                        borderRadius: 3,
+                        fontSize: 10,
+                      }}
+                    >
                       {results!.people.length} match{results!.people.length > 1 ? 'es' : ''}
                     </span>
                   </div>
                   {results!.people.map((p, i) => (
                     <div key={p.id} className="search-result-item" onClick={() => goToPerson(p.id)}>
-                      <div className={`avatar avatar--${avatarColors[i % avatarColors.length]}`}>{getInitials(p.full_name)}</div>
+                      <div className={`avatar avatar--${avatarColors[i % avatarColors.length]}`}>
+                        {getInitials(p.full_name)}
+                      </div>
                       <div className="search-result-item__info">
-                        <div className="search-result-item__name" dangerouslySetInnerHTML={{ __html: highlight(p.full_name, term) }} />
-                        <div className="search-result-item__detail">{p.department || ''} · {p.hub || ''}</div>
+                        <div
+                          className="search-result-item__name"
+                          dangerouslySetInnerHTML={{ __html: highlight(p.full_name, term) }}
+                        />
+                        <div className="search-result-item__detail">
+                          {p.department || ''} · {p.hub || ''}
+                        </div>
                       </div>
                       <span className="search-result-item__meta">FTE: {personFTEs[p.id] ?? 0}%</span>
                     </div>
@@ -131,14 +173,23 @@ export function SearchOverlay({ onClose }: SearchOverlayProps) {
 
               {showTeams && (
                 <>
-                  <div className="search-category-label"><span>Teams</span></div>
-                  {results!.teams.map(t => (
+                  <div className="search-category-label">
+                    <span>Teams</span>
+                  </div>
+                  {results!.teams.map((t) => (
                     <div key={t.id} className="search-result-item" onClick={() => goToOrg('team', t.id)}>
                       <div className="avatar avatar--blue" style={{ borderRadius: 'var(--r)' }}>
-                        <svg viewBox="0 0 16 16" fill="none" style={{ width: 14, height: 14 }}><circle cx="5" cy="5" r="2" stroke="currentColor" strokeWidth="1" /><circle cx="11" cy="5" r="2" stroke="currentColor" strokeWidth="1" /><path d="M1 14c0-2 1.8-3 4-3m2 3c0-2 1.8-3 4-3" stroke="currentColor" strokeWidth="1" /></svg>
+                        <svg viewBox="0 0 16 16" fill="none" style={{ width: 14, height: 14 }}>
+                          <circle cx="5" cy="5" r="2" stroke="currentColor" strokeWidth="1" />
+                          <circle cx="11" cy="5" r="2" stroke="currentColor" strokeWidth="1" />
+                          <path d="M1 14c0-2 1.8-3 4-3m2 3c0-2 1.8-3 4-3" stroke="currentColor" strokeWidth="1" />
+                        </svg>
                       </div>
                       <div className="search-result-item__info">
-                        <div className="search-result-item__name" dangerouslySetInnerHTML={{ __html: highlight(t.name, term) }} />
+                        <div
+                          className="search-result-item__name"
+                          dangerouslySetInnerHTML={{ __html: highlight(t.name, term) }}
+                        />
                         <div className="search-result-item__detail">{t.art_name}</div>
                       </div>
                     </div>
@@ -148,25 +199,38 @@ export function SearchOverlay({ onClose }: SearchOverlayProps) {
 
               {showArts && (
                 <>
-                  <div className="search-category-label"><span>ARTs & Solutions</span></div>
-                  {results!.arts.map(a => (
+                  <div className="search-category-label">
+                    <span>ARTs & Solutions</span>
+                  </div>
+                  {results!.arts.map((a) => (
                     <div key={`art-${a.id}`} className="search-result-item" onClick={() => goToOrg('art', a.id)}>
                       <div className="avatar avatar--purple" style={{ borderRadius: 'var(--r)' }}>
-                        <svg viewBox="0 0 16 16" fill="none" style={{ width: 14, height: 14 }}><rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1" /><rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1" /></svg>
+                        <svg viewBox="0 0 16 16" fill="none" style={{ width: 14, height: 14 }}>
+                          <rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1" />
+                          <rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1" />
+                        </svg>
                       </div>
                       <div className="search-result-item__info">
-                        <div className="search-result-item__name" dangerouslySetInnerHTML={{ __html: highlight(a.name, term) }} />
+                        <div
+                          className="search-result-item__name"
+                          dangerouslySetInnerHTML={{ __html: highlight(a.name, term) }}
+                        />
                         <div className="search-result-item__detail">ART · {a.sol_name}</div>
                       </div>
                     </div>
                   ))}
-                  {results!.solutions.map(s => (
+                  {results!.solutions.map((s) => (
                     <div key={`sol-${s.id}`} className="search-result-item" onClick={() => goToOrg('solution', s.id)}>
                       <div className="avatar avatar--green" style={{ borderRadius: 'var(--r)' }}>
-                        <svg viewBox="0 0 16 16" fill="none" style={{ width: 14, height: 14 }}><path d="M8 1.5L1 5v6l7 4 7-4V5L8 1.5z" stroke="currentColor" strokeWidth="1" /></svg>
+                        <svg viewBox="0 0 16 16" fill="none" style={{ width: 14, height: 14 }}>
+                          <path d="M8 1.5L1 5v6l7 4 7-4V5L8 1.5z" stroke="currentColor" strokeWidth="1" />
+                        </svg>
                       </div>
                       <div className="search-result-item__info">
-                        <div className="search-result-item__name" dangerouslySetInnerHTML={{ __html: highlight(s.name, term) }} />
+                        <div
+                          className="search-result-item__name"
+                          dangerouslySetInnerHTML={{ __html: highlight(s.name, term) }}
+                        />
                         <div className="search-result-item__detail">Solution</div>
                       </div>
                     </div>
@@ -178,9 +242,16 @@ export function SearchOverlay({ onClose }: SearchOverlayProps) {
         </div>
         <div className="search-footer">
           <div className="search-footer__hints">
-            <span><kbd>↩</kbd> to select</span>
-            <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
-            <span><kbd>ESC</kbd> close</span>
+            <span>
+              <kbd>↩</kbd> to select
+            </span>
+            <span>
+              <kbd>↑</kbd>
+              <kbd>↓</kbd> navigate
+            </span>
+            <span>
+              <kbd>ESC</kbd> close
+            </span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--green)' }}></span>
