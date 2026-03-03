@@ -61,13 +61,15 @@ jobs:
           echo "=== macOS updater ==="
           find src-tauri/target/release/bundle/macos -type f 2>/dev/null || echo "No macos dir"
 
-      # Copy artifacts to a flat staging directory to avoid path issues
+      # Copy artifacts to a flat staging directory, replacing spaces with dots
+      # to match GitHub's asset naming (GitHub converts spaces to dots on upload)
       - name: Stage artifacts
         run: |
           mkdir -p staging
           cp src-tauri/target/release/bundle/dmg/*.dmg staging/ 2>/dev/null || true
           cp src-tauri/target/release/bundle/macos/*.tar.gz staging/ 2>/dev/null || true
           cp src-tauri/target/release/bundle/macos/*.tar.gz.sig staging/ 2>/dev/null || true
+          cd staging && for f in *' '*; do [ -e "$f" ] && mv "$f" "${f// /.}"; done
           echo "=== Staged files ==="
           ls -la staging/
 
