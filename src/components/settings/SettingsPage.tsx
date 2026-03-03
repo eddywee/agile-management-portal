@@ -19,10 +19,18 @@ export function SettingsPage() {
         </div>
       </div>
       <div className="tabs">
-        <div className={`tab${tab === 'pi' ? ' active' : ''}`} onClick={() => setTab('pi')}>Program Increments</div>
-        <div className={`tab${tab === 'data' ? ' active' : ''}`} onClick={() => setTab('data')}>Data Management</div>
-        <div className={`tab${tab === 'costs' ? ' active' : ''}`} onClick={() => setTab('costs')}>Cost Rates</div>
-        <div className={`tab${tab === 'database' ? ' active' : ''}`} onClick={() => setTab('database')}>Database</div>
+        <div className={`tab${tab === 'pi' ? ' active' : ''}`} onClick={() => setTab('pi')}>
+          Program Increments
+        </div>
+        <div className={`tab${tab === 'data' ? ' active' : ''}`} onClick={() => setTab('data')}>
+          Data Management
+        </div>
+        <div className={`tab${tab === 'costs' ? ' active' : ''}`} onClick={() => setTab('costs')}>
+          Cost Rates
+        </div>
+        <div className={`tab${tab === 'database' ? ' active' : ''}`} onClick={() => setTab('database')}>
+          Database
+        </div>
       </div>
       {tab === 'pi' && <PiManagementTab />}
       {tab === 'data' && <DataManagementTab />}

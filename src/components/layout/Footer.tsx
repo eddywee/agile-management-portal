@@ -12,7 +12,6 @@ function getUpdateSeverity(current: string, available: string): 'major' | 'minor
   return avaMajor > curMajor ? 'major' : 'minor';
 }
 
-
 export function Footer() {
   const activePI = usePIStore((s) => s.activePI);
   const navigateTo = useNavigationStore((s) => s.navigateTo);
@@ -36,21 +35,23 @@ export function Footer() {
       setTotalFTE(dist.total);
       setConflictCount(conflicts.length);
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [activePI]);
 
   return (
     <footer className="footer">
       <div className="footer__left">
-        <span>Active PI: <span className="footer__pi">{activePI?.pi_name ?? '—'}</span></span>
+        <span>
+          Active PI: <span className="footer__pi">{activePI?.pi_name ?? '—'}</span>
+        </span>
         <span className="footer__fte">{totalFTE.toFixed(1)} FTE</span>
         <span
           className={`footer__conflicts ${conflictCount > 0 ? 'has-conflicts' : 'no-conflicts'}`}
           onClick={() => navigateTo('dashboard')}
         >
-          {conflictCount > 0
-            ? `⚠ ${conflictCount} conflict${conflictCount > 1 ? 's' : ''}`
-            : '✓ No conflicts'}
+          {conflictCount > 0 ? `⚠ ${conflictCount} conflict${conflictCount > 1 ? 's' : ''}` : '✓ No conflicts'}
         </span>
       </div>
       <div className="footer__right">

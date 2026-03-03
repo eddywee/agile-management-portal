@@ -30,9 +30,7 @@ export function KpiCards({ dist, solutions, arts, conflicts, onScrollToConflicts
       <div className="kpi-card kpi-card--red clickable" onClick={onScrollToConflicts}>
         <div className="kpi-card__label">Conflicts</div>
         <div className="kpi-card__value">{conflicts.length}</div>
-        <div className="kpi-card__sub">
-          {conflicts.length ? '⚠ over-allocated people' : '✓ all within bounds'}
-        </div>
+        <div className="kpi-card__sub">{conflicts.length ? '⚠ over-allocated people' : '✓ all within bounds'}</div>
       </div>
     </div>
   );

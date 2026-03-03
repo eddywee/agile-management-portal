@@ -4,7 +4,14 @@ import { useOrgStore } from '@/store/orgStore';
 import { useModalStore } from '@/store/modalStore';
 import * as api from '@/api';
 import type { Solution, Art, ProductTeam, OrgNode } from '@/types';
-import { AddSolutionForm, AddARTForm, AddTeamForm, EditSolutionForm, EditARTForm, EditTeamForm } from '@/components/common/ModalForms';
+import {
+  AddSolutionForm,
+  AddARTForm,
+  AddTeamForm,
+  EditSolutionForm,
+  EditARTForm,
+  EditTeamForm,
+} from '@/components/common/ModalForms';
 
 interface TreeData {
   solutions: Solution[];
@@ -17,15 +24,17 @@ interface TreeData {
 export function OrgTree({ onRefresh }: { onRefresh: number }) {
   const { selectedNode, selectNode } = useOrgStore();
   const showModal = useModalStore((s) => s.showModal);
-  const [data, setData] = useState<TreeData>({ solutions: [], arts: {}, teams: {}, standaloneArts: [], standaloneTeams: [] });
+  const [data, setData] = useState<TreeData>({
+    solutions: [],
+    arts: {},
+    teams: {},
+    standaloneArts: [],
+    standaloneTeams: [],
+  });
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
 
   const loadTree = useCallback(async () => {
-    const [solutions, allArts, allTeams] = await Promise.all([
-      api.getSolutions(),
-      api.getArts(),
-      api.getTeams(),
-    ]);
+    const [solutions, allArts, allTeams] = await Promise.all([api.getSolutions(), api.getArts(), api.getTeams()]);
 
     const artsMap: Record<number, Art[]> = {};
     const standaloneArts: Art[] = [];
@@ -52,15 +61,16 @@ export function OrgTree({ onRefresh }: { onRefresh: number }) {
     setData({ solutions, arts: artsMap, teams: teamsMap, standaloneArts, standaloneTeams });
   }, []);
 
-  useEffect(() => { loadTree(); }, [loadTree, onRefresh]);
+  useEffect(() => {
+    loadTree();
+  }, [loadTree, onRefresh]);
 
   const toggleCollapse = (key: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    setCollapsed(prev => ({ ...prev, [key]: !prev[key] }));
+    setCollapsed((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const isSelected = (node: OrgNode) =>
-    selectedNode?.type === node.type && selectedNode?.id === node.id;
+  const isSelected = (node: OrgNode) => selectedNode?.type === node.type && selectedNode?.id === node.id;
 
   // ── Modal handlers ──
 
@@ -112,12 +122,23 @@ export function OrgTree({ onRefresh }: { onRefresh: number }) {
 
   const pencilIcon = (
     <svg viewBox="0 0 14 14" fill="none" style={{ width: 13, height: 13 }}>
-      <path d="M10 2l2 2-7 7H3V9l7-7z" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M10 2l2 2-7 7H3V9l7-7z"
+        stroke="currentColor"
+        strokeWidth="1.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
   const trashIcon = (
     <svg viewBox="0 0 14 14" fill="none" style={{ width: 13, height: 13 }}>
-      <path d="M3 4h8M5 4V3h4v1M4.5 4v7a.5.5 0 00.5.5h4a.5.5 0 00.5-.5V4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
+      <path
+        d="M3 4h8M5 4V3h4v1M4.5 4v7a.5.5 0 00.5.5h4a.5.5 0 00.5-.5V4"
+        stroke="currentColor"
+        strokeWidth="1.1"
+        strokeLinecap="round"
+      />
     </svg>
   );
   const chevronIcon = (isOpen: boolean) => (
@@ -155,8 +176,12 @@ export function OrgTree({ onRefresh }: { onRefresh: number }) {
         {teamIcon}
         <span className="tree-node__label">{team.name}</span>
         <span className="tree-node__actions">
-          <button className="icon-btn icon-btn--dim" onClick={(e) => handleEditTeam(team, e)}>{pencilIcon}</button>
-          <button className="icon-btn icon-btn--red" onClick={(e) => handleDeleteTeam(team, e)}>{trashIcon}</button>
+          <button className="icon-btn icon-btn--dim" onClick={(e) => handleEditTeam(team, e)}>
+            {pencilIcon}
+          </button>
+          <button className="icon-btn icon-btn--red" onClick={(e) => handleDeleteTeam(team, e)}>
+            {trashIcon}
+          </button>
         </span>
       </div>
     </div>
@@ -176,15 +201,21 @@ export function OrgTree({ onRefresh }: { onRefresh: number }) {
           {artIcon}
           <span className="tree-node__label">{art.name}</span>
           <span className="tree-node__actions">
-            <button className="icon-btn icon-btn--dim" onClick={(e) => handleEditART(art, e)}>{pencilIcon}</button>
-            <button className="icon-btn icon-btn--red" onClick={(e) => handleDeleteART(art, e)}>{trashIcon}</button>
+            <button className="icon-btn icon-btn--dim" onClick={(e) => handleEditART(art, e)}>
+              {pencilIcon}
+            </button>
+            <button className="icon-btn icon-btn--red" onClick={(e) => handleDeleteART(art, e)}>
+              {trashIcon}
+            </button>
           </span>
         </div>
         {isOpen && (
           <div className="tree-node__children">
             {artTeams.map(renderTeamNode)}
             <button className="tree-add-btn" onClick={() => handleAddTeam(art.id)}>
-              <svg viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+              <svg viewBox="0 0 12 12" fill="none">
+                <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+              </svg>
               Add Team
             </button>
           </div>
@@ -196,7 +227,7 @@ export function OrgTree({ onRefresh }: { onRefresh: number }) {
   return (
     <div className="org-tree-panel">
       {/* Section 1: Solutions (with nested ARTs and Teams) */}
-      {data.solutions.map(sol => {
+      {data.solutions.map((sol) => {
         const solKey = `sol-${sol.id}`;
         const solArts = data.arts[sol.id] || [];
         const isOpen = !collapsed[solKey];
@@ -210,15 +241,21 @@ export function OrgTree({ onRefresh }: { onRefresh: number }) {
               {solutionIcon}
               <span className="tree-node__label">{sol.name}</span>
               <span className="tree-node__actions">
-                <button className="icon-btn icon-btn--dim" onClick={(e) => handleEditSolution(sol, e)}>{pencilIcon}</button>
-                <button className="icon-btn icon-btn--red" onClick={(e) => handleDeleteSolution(sol, e)}>{trashIcon}</button>
+                <button className="icon-btn icon-btn--dim" onClick={(e) => handleEditSolution(sol, e)}>
+                  {pencilIcon}
+                </button>
+                <button className="icon-btn icon-btn--red" onClick={(e) => handleDeleteSolution(sol, e)}>
+                  {trashIcon}
+                </button>
               </span>
             </div>
             {isOpen && (
               <div className="tree-node__children">
-                {solArts.map(art => renderArtNode(art))}
+                {solArts.map((art) => renderArtNode(art))}
                 <button className="tree-add-btn" onClick={() => handleAddART(sol.id)}>
-                  <svg viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+                  <svg viewBox="0 0 12 12" fill="none">
+                    <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+                  </svg>
                   Add ART
                 </button>
               </div>
@@ -231,7 +268,7 @@ export function OrgTree({ onRefresh }: { onRefresh: number }) {
       {data.standaloneArts.length > 0 && (
         <>
           <div className="tree-section-label">Standalone ARTs</div>
-          {data.standaloneArts.map(art => renderArtNode(art))}
+          {data.standaloneArts.map((art) => renderArtNode(art))}
         </>
       )}
 
@@ -246,15 +283,21 @@ export function OrgTree({ onRefresh }: { onRefresh: number }) {
       {/* Add buttons */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 12 }}>
         <button className="tree-add-btn" onClick={handleAddSolution}>
-          <svg viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+          <svg viewBox="0 0 12 12" fill="none">
+            <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+          </svg>
           Add Solution
         </button>
         <button className="tree-add-btn" onClick={() => handleAddART()}>
-          <svg viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+          <svg viewBox="0 0 12 12" fill="none">
+            <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+          </svg>
           Add ART
         </button>
         <button className="tree-add-btn" onClick={() => handleAddTeam()}>
-          <svg viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+          <svg viewBox="0 0 12 12" fill="none">
+            <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+          </svg>
           Add Team
         </button>
       </div>

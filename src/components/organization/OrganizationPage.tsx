@@ -5,7 +5,7 @@ import { OrgDetail } from './OrgDetail';
 
 export function OrganizationPage() {
   const [refreshKey, setRefreshKey] = useState(0);
-  const triggerRefresh = useCallback(() => setRefreshKey(k => k + 1), []);
+  const triggerRefresh = useCallback(() => setRefreshKey((k) => k + 1), []);
 
   return (
     <>
