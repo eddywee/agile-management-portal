@@ -903,7 +903,6 @@ pub fn reset_database(db: State<Database>) -> Result<(), String> {
          DELETE FROM people; DELETE FROM program_increments;
          DELETE FROM sqlite_sequence;"
     ).map_err(|e| e.to_string())?;
-    crate::db::seed::seed_data(&conn);
     Ok(())
 }
 
