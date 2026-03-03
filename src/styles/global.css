@@ -328,6 +328,7 @@ html,body,#root{height:100%;background:var(--bg);font-family:var(--font-body);co
 .dm-section-icon--blue{background:var(--accent-lo);color:var(--accent)}
 .dm-section-icon--green{background:var(--green-lo);color:var(--green)}
 .dm-section-icon--red{background:var(--red-lo);color:var(--red)}
+.dm-section-icon--purple{background:var(--purple-lo);color:var(--purple)}
 .dm-section-title{font-family:var(--font-display);font-size:18px;font-weight:400}
 .dm-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .dm-card{padding:20px;border-radius:var(--r-lg);border:1px solid var(--border);background:var(--card);display:flex;flex-direction:column;transition:all 0.2s ease}
@@ -345,6 +346,8 @@ html,body,#root{height:100%;background:var(--bg);font-family:var(--font-body);co
 
 .dm-import-card{padding:20px;border-radius:var(--r-lg);border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:space-between;gap:24px;position:relative;overflow:hidden}
 .dm-import-card::after{content:'';position:absolute;right:0;top:0;width:30%;height:100%;background:radial-gradient(ellipse at top right,rgba(34,197,94,0.06),transparent);pointer-events:none}
+.dm-demo-card{padding:20px;border-radius:var(--r-lg);border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:space-between;gap:24px;position:relative;overflow:hidden}
+.dm-demo-card::after{content:'';position:absolute;right:0;top:0;width:30%;height:100%;background:radial-gradient(ellipse at top right,rgba(168,85,247,0.06),transparent);pointer-events:none}
 
 .divider{height:1px;background:var(--border);margin:8px 32px}
 
