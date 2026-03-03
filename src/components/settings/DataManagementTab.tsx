@@ -1,18 +1,20 @@
 // © Edmund Wallner
 import { usePIStore } from '../../store/piStore';
 import { useNavigationStore } from '../../store/navigationStore';
+import { useOrgStore } from '../../store/orgStore';
+import { usePeopleStore } from '../../store/peopleStore';
 import * as api from '../../api';
 
 export function DataManagementTab() {
   const activePI = usePIStore((s) => s.activePI);
   const loadPIs = usePIStore((s) => s.loadPIs);
   const navigateTo = useNavigationStore((s) => s.navigateTo);
+  const selectNode = useOrgStore((s) => s.selectNode);
+  const setSelectedPerson = usePeopleStore((s) => s.setSelectedPerson);
 
   const handleExportCSV = async () => {
     if (!activePI) return;
     const csv = await api.exportPIAsCSV(activePI.id);
-    // In Tauri, the Rust command returns the CSV string — we could use dialog save
-    // For now, create a Blob download
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -23,13 +25,26 @@ export function DataManagementTab() {
   };
 
   const handleReset = async () => {
-    if (!confirm('Are you sure? This will delete ALL data and reset to seed state.')) return;
+    if (!confirm('Are you sure? This will permanently delete ALL data. This cannot be undone.')) return;
     try {
       await api.resetDatabase();
       await loadPIs();
+      selectNode(null);
+      setSelectedPerson(null);
+      navigateTo('dashboard');
     } catch (err) {
       console.error('Reset failed:', err);
       alert('Failed to reset database. Please restart the application.');
+    }
+  };
+
+  const handleLoadDemoData = async () => {
+    try {
+      await api.seedDemoData();
+      await loadPIs();
+    } catch (err) {
+      console.error('Failed to load demo data:', err);
+      alert('Failed to load demo data.');
     }
   };
 
@@ -77,6 +92,27 @@ export function DataManagementTab() {
           <button className="btn btn-primary" style={{ zIndex: 1, flexShrink: 0 }} onClick={() => navigateTo('import')}>
             <svg viewBox="0 0 14 14" fill="none"><path d="M7 11v-7M4 7l3-3 3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             Launch Import Wizard
+          </button>
+        </div>
+      </div>
+      <div className="divider" />
+      <div className="dm-section">
+        <div className="dm-section-header">
+          <div className="dm-section-icon dm-section-icon--purple">
+            <svg viewBox="0 0 20 20" fill="none" style={{ width: 18, height: 18 }}><path d="M4 4h12v2H4zM4 9h12v2H4zM4 14h8v2H4z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </div>
+          <div className="dm-section-title">Demo Data</div>
+        </div>
+        <div className="dm-demo-card">
+          <div style={{ zIndex: 1 }}>
+            <h4 style={{ fontFamily: 'var(--font-display)', fontSize: 16, marginBottom: 4 }}>Load Demo Data</h4>
+            <p style={{ fontSize: 12, color: 'var(--muted)', maxWidth: 400, lineHeight: 1.5 }}>
+              Populate the database with sample solutions, ARTs, teams, and people to explore features. Only works when the database is empty.
+            </p>
+          </div>
+          <button className="btn btn-primary" style={{ zIndex: 1, flexShrink: 0 }} onClick={handleLoadDemoData}>
+            <svg viewBox="0 0 14 14" fill="none"><path d="M4 4h6v1.5H4zM4 7h6v1.5H4zM4 10h4v1.5H4z" stroke="currentColor" strokeWidth="1" strokeLinecap="round" /></svg>
+            Load Demo Data
           </button>
         </div>
       </div>
