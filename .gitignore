@@ -1,12 +1,28 @@
+# Dependencies
 node_modules/
+
+# Build output
 dist/
 target/
 src-tauri/target/
 src-tauri/gen/
+
+# Vite cache
+.vite/
+
+# Database files
 *.apdb
 *.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# OS files
 .DS_Store
-src-misc
+
+# Archive (original prototype)
+archive
+
+# Project docs / AI tooling
 CLAUDE.md
 HELIX_Agile_Portal_AppDesign_and_UserJourneys.md
 .claude

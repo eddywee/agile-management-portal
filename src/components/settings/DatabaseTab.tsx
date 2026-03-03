@@ -1,8 +1,8 @@
 // © Edmund Wallner
 import { useState, useEffect } from 'react';
 import { open, save } from '@tauri-apps/plugin-dialog';
-import * as api from '../../api';
-import { usePIStore } from '../../store/piStore';
+import * as api from '@/api';
+import { usePIStore } from '@/store/piStore';
 
 export function DatabaseTab() {
   const [dbPath, setDbPath] = useState('');

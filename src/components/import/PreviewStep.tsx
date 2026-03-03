@@ -1,7 +1,7 @@
 // © Edmund Wallner
 import { useState, useCallback } from 'react';
-import { useImportStore } from '../../store/importStore';
-import * as api from '../../api';
+import { useImportStore } from '@/store/importStore';
+import * as api from '@/api';
 
 export function PreviewStep() {
   const { rows, headers, mappings, piId, euroDecimal, setResult, setStep } = useImportStore();

@@ -1,9 +1,9 @@
 // © Edmund Wallner
-import { usePIStore } from '../../store/piStore';
-import { useNavigationStore } from '../../store/navigationStore';
-import { useOrgStore } from '../../store/orgStore';
-import { usePeopleStore } from '../../store/peopleStore';
-import * as api from '../../api';
+import { usePIStore } from '@/store/piStore';
+import { useNavigationStore } from '@/store/navigationStore';
+import { useOrgStore } from '@/store/orgStore';
+import { usePeopleStore } from '@/store/peopleStore';
+import * as api from '@/api';
 
 export function DataManagementTab() {
   const activePI = usePIStore((s) => s.activePI);

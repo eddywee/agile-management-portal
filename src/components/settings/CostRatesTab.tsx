@@ -1,7 +1,7 @@
 // © Edmund Wallner
 import { useEffect, useState } from 'react';
-import * as api from '../../api';
-import type { CostRate } from '../../types';
+import * as api from '@/api';
+import type { CostRate } from '@/types';
 
 export function CostRatesTab() {
   const [rates, setRates] = useState<CostRate[]>([]);

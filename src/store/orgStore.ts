@@ -1,6 +1,6 @@
 // © Edmund Wallner
 import { create } from 'zustand';
-import type { OrgNode } from '../types';
+import type { OrgNode } from '@/types';
 
 interface OrgState {
   selectedNode: OrgNode | null;

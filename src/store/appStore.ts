@@ -1,7 +1,7 @@
 // © Edmund Wallner
 import { create } from 'zustand';
-import type { AppStateInfo } from '../types';
-import * as api from '../api';
+import type { AppStateInfo } from '@/types';
+import * as api from '@/api';
 
 interface AppStoreState {
   appState: AppStateInfo | null;
