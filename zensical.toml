@@ -3,6 +3,8 @@ site_name = "Agile Management Portal"
 site_description = "User documentation for the Agile Management Portal desktop application — SAFe FTE allocation tracking."
 site_author = "Edmund Wallner"
 copyright = "Copyright &copy; Edmund Wallner"
+repo_url = "https://github.com/eddywee/agile-management-portal"
+repo_name = "eddywee/agile-management-portal"
 
 nav = [
   { "Home" = "index.md" },
