@@ -8,8 +8,6 @@ interface RoleDonutChartProps {
   dist: RoleDistribution;
 }
 
-const COLORS = ['#00adef', '#f59e0b', '#8b5cf6'];
-
 export function RoleDonutChart({ dist }: RoleDonutChartProps) {
   const resolved = useThemeStore((s) => s.resolved);
 
@@ -17,6 +15,7 @@ export function RoleDonutChart({ dist }: RoleDonutChartProps) {
   const card = getCSSVar('--card');
   const border = getCSSVar('--border');
   const white = getCSSVar('--white');
+  const colors = [getCSSVar('--accent'), getCSSVar('--amber'), getCSSVar('--purple')];
   void resolved;
 
   const data = [
@@ -41,7 +40,7 @@ export function RoleDonutChart({ dist }: RoleDonutChartProps) {
             endAngle={-270}
           >
             {data.map((_, i) => (
-              <Cell key={i} fill={COLORS[i]} />
+              <Cell key={i} fill={colors[i]} />
             ))}
           </Pie>
           <Tooltip
