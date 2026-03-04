@@ -15,6 +15,9 @@ export function SolutionBarChart({ data }: SolutionBarChartProps) {
   const card = getCSSVar('--card');
   const border = getCSSVar('--border');
   const white = getCSSVar('--white');
+  const accent = getCSSVar('--accent');
+  const amber = getCSSVar('--amber');
+  const purple = getCSSVar('--purple');
   // Force re-read when resolved changes
   void resolved;
 
@@ -42,9 +45,9 @@ export function SolutionBarChart({ data }: SolutionBarChartProps) {
             labelStyle={{ color: white }}
           />
           <Legend wrapperStyle={{ fontSize: 11, color: silver }} />
-          <Bar dataKey="Delivery" stackId="a" fill="#00adef" radius={[0, 0, 0, 0]} />
-          <Bar dataKey="ART Overhead" stackId="a" fill="#f59e0b" />
-          <Bar dataKey="Solution Overhead" stackId="a" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="Delivery" stackId="a" fill={accent} radius={[0, 0, 0, 0]} />
+          <Bar dataKey="ART Overhead" stackId="a" fill={amber} />
+          <Bar dataKey="Solution Overhead" stackId="a" fill={purple} radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>
