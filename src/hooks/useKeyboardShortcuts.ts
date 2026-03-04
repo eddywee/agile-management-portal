@@ -1,9 +1,11 @@
 // © Edmund Wallner
 import { useEffect } from 'react';
 import { useNavigationStore } from '@/store/navigationStore';
+import { useThemeStore } from '@/store/themeStore';
 
 export function useKeyboardShortcuts(onOpenSearch: () => void, onCloseSearch: () => void, onCloseModal: () => void) {
   const navigateTo = useNavigationStore((s) => s.navigateTo);
+  const { resolved, setTheme } = useThemeStore();
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -16,6 +18,11 @@ export function useKeyboardShortcuts(onOpenSearch: () => void, onCloseSearch: ()
         return;
       }
       const mod = e.metaKey || e.ctrlKey;
+      if (mod && e.shiftKey && (e.key === 't' || e.key === 'T')) {
+        e.preventDefault();
+        setTheme(resolved === 'dark' ? 'light' : 'dark');
+        return;
+      }
       if (mod && e.key === 'k') {
         e.preventDefault();
         onOpenSearch();
@@ -43,5 +50,5 @@ export function useKeyboardShortcuts(onOpenSearch: () => void, onCloseSearch: ()
     };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
-  }, [navigateTo, onOpenSearch, onCloseSearch, onCloseModal]);
+  }, [navigateTo, onOpenSearch, onCloseSearch, onCloseModal, resolved, setTheme]);
 }

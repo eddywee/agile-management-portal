@@ -1,6 +1,8 @@
 // © Edmund Wallner
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import type { RoleDistribution } from '@/types';
+import { getCSSVar } from '@/utils/themeColors';
+import { useThemeStore } from '@/store/themeStore';
 
 interface RoleDonutChartProps {
   dist: RoleDistribution;
@@ -9,6 +11,14 @@ interface RoleDonutChartProps {
 const COLORS = ['#00adef', '#f59e0b', '#8b5cf6'];
 
 export function RoleDonutChart({ dist }: RoleDonutChartProps) {
+  const resolved = useThemeStore((s) => s.resolved);
+
+  const silver = getCSSVar('--silver');
+  const card = getCSSVar('--card');
+  const border = getCSSVar('--border');
+  const white = getCSSVar('--white');
+  void resolved;
+
   const data = [
     { name: 'Delivery', value: dist.delivery },
     { name: 'ART Leadership', value: dist.art_leadership },
@@ -36,8 +46,8 @@ export function RoleDonutChart({ dist }: RoleDonutChartProps) {
           </Pie>
           <Tooltip
             contentStyle={{
-              background: '#1a1a2e',
-              border: '1px solid rgba(255,255,255,0.08)',
+              background: card,
+              border: `1px solid ${border}`,
               borderRadius: 6,
               fontSize: 12,
             }}
@@ -47,25 +57,24 @@ export function RoleDonutChart({ dist }: RoleDonutChartProps) {
             layout="vertical"
             align="right"
             verticalAlign="middle"
-            wrapperStyle={{ fontSize: 11, color: '#a0a0a8' }}
+            wrapperStyle={{ fontSize: 11, color: silver }}
             formatter={(value, entry) => {
               const pct = dist.total > 0 ? (((entry.payload?.value ?? 0) / dist.total) * 100).toFixed(0) : '0';
               return `${value} (${pct}%)`;
             }}
           />
-          {/* Center text */}
           <text
             x="40%"
             y="48%"
             textAnchor="middle"
-            fill="#f0f0f2"
-            fontFamily="Playfair Display"
+            fill={white}
+            fontFamily="var(--font-display)"
             fontWeight="600"
             fontSize="22"
           >
             {dist.total.toFixed(1)}
           </text>
-          <text x="40%" y="60%" textAnchor="middle" fill="#a0a0a8" fontSize="10">
+          <text x="40%" y="60%" textAnchor="middle" fill={silver} fontSize="10">
             TOTAL FTE
           </text>
         </PieChart>
