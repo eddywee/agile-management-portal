@@ -2,7 +2,7 @@
 // Reads version from the latest git tag and syncs it to all config files.
 // Falls back to the existing package.json version if no git tags exist.
 // Never downgrades: if package.json already has a higher version, keeps it.
-// Version format: CalVer YYYY.MM.# (e.g. 2026.03.1 = first release of March 2026)
+// Version format: CalVer YYYY.M.# (e.g. 2026.3.1 = first release of March 2026)
 
 import { execSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
