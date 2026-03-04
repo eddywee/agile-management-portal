@@ -16,9 +16,15 @@
 
 ## First Launch
 
-When you start the app for the first time, the database is empty. You have two options:
+When you start the app for the first time, a **Setup Wizard** guides you through three steps:
 
-- **Load Demo Data** — Go to **Settings > Data Management** and click **Load Demo Data** to populate the app with sample solutions, ARTs, teams, and people. This is the fastest way to explore features.
+1. **Welcome** — Introduction to the application.
+2. **Location** — Choose where to store your database file (or accept the default location).
+3. **Data** — Optionally load demo data to explore the app, or start with an empty database.
+
+After completing the wizard, you can always change your data setup later:
+
+- **Load Demo Data** — Go to **Settings > Data Management** and click **Load Demo Data** to populate the app with sample solutions, ARTs, teams, and people.
 - **Start From Scratch** — Begin by creating a Program Increment in **Settings > PI Management**, then add your organizational structure under **Organization**.
 
 ## App Layout

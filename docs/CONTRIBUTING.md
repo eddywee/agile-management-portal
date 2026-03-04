@@ -80,9 +80,9 @@ docs: Add architecture diagram to README
 ### Styling
 
 - Use CSS custom properties defined in `src/styles/global.css`
-- No Tailwind, no CSS-in-JS — project uses a purpose-built dark theme design system
+- No Tailwind, no CSS-in-JS — project uses a purpose-built "Light Steel" design system with dark and light themes
 - Color tokens: `--accent`, `--green`, `--amber`, `--red`, `--purple` (with `-lo`, `-bd` variants)
-- Fonts: `--font-display` (Playfair Display), `--font-body` (DM Sans)
+- Fonts: `--font-display` (Montserrat), `--font-body` (DM Sans)
 
 ## Project Structure
 
@@ -107,16 +107,17 @@ src-tauri/                    # Rust backend
 
 ## Releasing
 
-Releases are triggered by git tags:
+The project uses **CalVer** versioning: `YYYY.M.#` (e.g., `2026.3.1` for the first March 2026 release). No zero-padded segments.
+
+Version must be bumped in three files before release: `package.json`, `src-tauri/tauri.conf.json`, `src-tauri/Cargo.toml`.
+
+Releases are created via the GitHub CLI:
 
 ```bash
-git tag v0.1.0
-git push origin v0.1.0
+gh release create v2026.3.1 --target main --title "v2026.3.1" --notes "..."
 ```
 
 The CI pipeline:
-1. Runs `sync-version.mjs` to update version in `package.json`, `Cargo.toml`, and `tauri.conf.json`
-2. Builds macOS (`.dmg`) and Windows (`.exe`) installers
-3. Creates a GitHub Release with download links and updater manifest
-
-Use [semantic versioning](https://semver.org/) for all tags.
+1. Triggers on the tag push created by `gh release create`
+2. Builds macOS (`.app`) and Windows (`.exe`, `.msi`) installers
+3. Uploads artifacts and updater manifest to the GitHub Release
