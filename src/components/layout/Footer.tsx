@@ -68,7 +68,7 @@ export function Footer() {
           }`}
           onClick={hasUpdate ? openUpdateModal : undefined}
         >
-          v{__APP_VERSION__}
+          v{__APP_VERSION__} ({__BUILD_HASH__})
           {hasUpdate && <span className="footer__update-dot" />}
         </span>
         <span>© Edmund Wallner</span>
