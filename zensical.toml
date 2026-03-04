@@ -9,13 +9,24 @@ repo_name = "eddywee/agile-management-portal"
 nav = [
   { "Home" = "index.md" },
   { "Getting Started" = "getting-started.md" },
-  { "Dashboard" = "dashboard.md" },
-  { "Organization" = "organization.md" },
-  { "People" = "people.md" },
-  { "Import" = "import.md" },
-  { "Settings" = "settings.md" },
-  { "Keyboard Shortcuts" = "keyboard-shortcuts.md" },
-  { "Updates" = "updates.md" },
+  { "Features" = [
+    { "Dashboard" = "dashboard.md" },
+    { "Organization" = "organization.md" },
+    { "People" = "people.md" },
+  ] },
+  { "Data" = [
+    { "CSV Import" = "import.md" },
+    { "Data Management" = "data-management.md" },
+    { "Cost Rates" = "cost-rates.md" },
+  ] },
+  { "Configuration" = [
+    { "PI Management" = "pi-management.md" },
+    { "Settings" = "settings.md" },
+  ] },
+  { "Reference" = [
+    { "Keyboard Shortcuts" = "keyboard-shortcuts.md" },
+    { "Updates" = "updates.md" },
+  ] },
 ]
 
 extra_css = ["extra.css"]
@@ -34,6 +45,7 @@ features = [
   "navigation.footer",
   "navigation.top",
   "navigation.tracking",
+  "navigation.sections",
   "search.highlight",
   "content.code.copy",
 ]

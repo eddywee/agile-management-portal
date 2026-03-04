@@ -28,10 +28,12 @@ Built for portfolio managers, RTEs, and agile leaders who need to plan and visua
 ## Quick Links
 
 - [Getting Started](getting-started.md) — Installation and first launch
-- [Dashboard](dashboard.md) — Understanding your KPI overview
+- [PI Management](pi-management.md) — Managing Program Increments
 - [Organization](organization.md) — Managing Solutions, ARTs, and Teams
 - [People](people.md) — Managing people and their allocations
 - [Import](import.md) — Bulk importing data via CSV
-- [Settings](settings.md) — PI management, data, and cost rates
+- [Dashboard](dashboard.md) — Understanding your KPI overview
+- [Data Management](data-management.md) — Export, import, and reset data
+- [Cost Rates](cost-rates.md) — Role-based cost rates
 - [Keyboard Shortcuts](keyboard-shortcuts.md) — All available shortcuts
 - [Updates](updates.md) — How automatic updates work
