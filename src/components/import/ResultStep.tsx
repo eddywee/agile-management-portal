@@ -11,8 +11,8 @@ export function ResultStep() {
   return (
     <div style={{ textAlign: 'center', padding: '20px 0' }}>
       <svg viewBox="0 0 48 48" fill="none" style={{ width: 48, height: 48, margin: '0 auto 12px', display: 'block' }}>
-        <circle cx="24" cy="24" r="22" stroke="#22c55e" strokeWidth="2" />
-        <path d="M14 24l7 7 13-13" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="24" cy="24" r="22" stroke="var(--green)" strokeWidth="2" />
+        <path d="M14 24l7 7 13-13" stroke="var(--green)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
       <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, marginBottom: 8 }}>Import Complete</h3>
       <p style={{ color: 'var(--muted)', fontSize: 14 }}>{result.total} rows processed successfully</p>

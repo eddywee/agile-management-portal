@@ -13,15 +13,20 @@ import { useUpdateChecker } from './hooks/useUpdateChecker';
 import { useModalStore } from './store/modalStore';
 import { usePIStore } from './store/piStore';
 import { useAppStore } from './store/appStore';
+import { useThemeStore } from './store/themeStore';
 
 function App() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const closeModal = useModalStore((s) => s.closeModal);
   const loadPIs = usePIStore((s) => s.loadPIs);
+  const initTheme = useThemeStore((s) => s.initTheme);
 
   const { isReady, isSetupComplete, loadAppState } = useAppStore();
 
+  useEffect(() => {
+    initTheme();
+  }, [initTheme]);
   useEffect(() => {
     loadAppState();
   }, [loadAppState]);
