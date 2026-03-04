@@ -21,6 +21,7 @@ nav = [
 extra_css = ["extra.css"]
 
 [project.theme]
+custom_dir = "docs/overrides"
 favicon = "assets/favicon.png"
 
 [project.theme.font]

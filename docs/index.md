@@ -1,3 +1,11 @@
+---
+template: home.html
+hide:
+  - navigation
+  - toc
+title: Agile Management Portal
+---
+
 # Agile Management Portal
 
 **Agile Management Portal** is a cross-platform desktop application for tracking FTE (Full-Time Equivalent) allocation across SAFe (Scaled Agile Framework) organizational hierarchies.

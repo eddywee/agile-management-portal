@@ -1,0 +1,99 @@
+{% extends "main.html" %}
+
+{% block hero %}
+<section class="mdx-hero">
+  <div class="mdx-hero__overlay"></div>
+  <div class="mdx-hero__inner">
+    <div class="mdx-hero__image">
+      <img src="assets/hero-logo.png" alt="Agile Management Portal" draggable="false">
+    </div>
+    <div class="mdx-hero__content">
+      <h1>Agile Management Portal</h1>
+      <p class="mdx-hero__subtitle">SAFe FTE Allocation Tracking</p>
+      <p class="mdx-hero__tagline">
+        Plan and visualize how people are allocated across Solutions,
+        ARTs, and Teams &mdash; per Program Increment.
+      </p>
+      <div class="mdx-hero__actions">
+        <a href="getting-started/" class="md-button md-button--primary">
+          Get Started
+        </a>
+        <a href="https://github.com/eddywee/agile-management-portal/releases" class="md-button">
+          Latest Release
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="mdx-features">
+  <div class="mdx-features__inner">
+    <ul class="mdx-features__grid">
+
+      <li class="mdx-features__card">
+        <div class="mdx-features__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </div>
+        <h3>Dashboard &amp; KPIs</h3>
+        <p>FTE bar charts, role distribution donut, over-allocation conflict table, and live KPI cards.</p>
+      </li>
+
+      <li class="mdx-features__card">
+        <div class="mdx-features__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="11"/><circle cx="6" cy="17" r="2"/><circle cx="18" cy="17" r="2"/><line x1="12" y1="11" x2="6" y2="15"/><line x1="12" y1="11" x2="18" y2="15"/></svg>
+        </div>
+        <h3>Organization Tree</h3>
+        <p>Hierarchical view of Solutions, ARTs, and Teams with leadership and membership management.</p>
+      </li>
+
+      <li class="mdx-features__card">
+        <div class="mdx-features__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>People Management</h3>
+        <p>Searchable directory with per-person allocation details, role breakdown, and PI history.</p>
+      </li>
+
+      <li class="mdx-features__card">
+        <div class="mdx-features__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3>CSV Import Wizard</h3>
+        <p>Four-step guided import for bulk-loading people and allocation data from spreadsheets.</p>
+      </li>
+
+      <li class="mdx-features__card">
+        <div class="mdx-features__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h3>PI Management</h3>
+        <p>Create, activate, complete, clone, and delete Program Increments with full lifecycle control.</p>
+      </li>
+
+      <li class="mdx-features__card">
+        <div class="mdx-features__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+        <h3>Auto-Updates</h3>
+        <p>Built-in updater checks for new releases automatically and installs with a single click.</p>
+      </li>
+
+    </ul>
+  </div>
+</section>
+
+<section class="mdx-cta">
+  <div class="mdx-cta__inner">
+    <h2>Explore the Documentation</h2>
+    <p>
+      Learn how to install, configure, and get the most out of
+      Agile Management Portal.
+    </p>
+    <a href="getting-started/" class="md-button md-button--primary">
+      Read the Docs
+    </a>
+  </div>
+</section>
+{% endblock %}
