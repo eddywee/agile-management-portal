@@ -430,18 +430,23 @@
 
 /* =============================================
    HOMEPAGE OVERRIDES
-   Hide default content on home, show custom hero
+   Break landing page out of md-grid container
    ============================================= */
 
-.md-content--home .md-content__inner {
-  margin: 0;
-  padding: 0;
-  max-width: none;
+/* The landing-page lives inside md-main__inner.md-grid which has
+   max-width and padding. Break out of it completely. */
+.landing-page {
+  margin: 0 calc(-50vw + 50%);
+  width: 100vw;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
-.md-content--home .md-typeset h1,
-.md-content--home .md-typeset > p:first-of-type {
-  display: none;
+/* Hide the md-main grid padding when landing page is present */
+.md-main__inner:has(.landing-page) {
+  padding: 0;
+  margin: 0;
+  max-width: none;
 }
 
 /* =============================================
