@@ -1,0 +1,97 @@
+site_name: Agile Management Portal
+site_description: User documentation for the Agile Management Portal desktop application — SAFe FTE allocation tracking.
+site_author: Edmund Wallner
+copyright: Copyright &copy; Edmund Wallner
+repo_url: https://github.com/eddywee/agile-management-portal
+repo_name: eddywee/agile-management-portal
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Features:
+    - Dashboard: dashboard.md
+    - Organization: organization.md
+    - People: people.md
+  - Data:
+    - CSV Import: import.md
+    - Data Management: data-management.md
+    - Cost Rates: cost-rates.md
+  - Configuration:
+    - PI Management: pi-management.md
+    - Settings: settings.md
+  - Reference:
+    - Keyboard Shortcuts: keyboard-shortcuts.md
+    - Updates: updates.md
+
+extra_css:
+  - stylesheets/extra.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/eddywee/agile-management-portal
+
+theme:
+  name: material
+  custom_dir: overrides
+  favicon: assets/favicon.png
+  font:
+    text: DM Sans
+    code: JetBrains Mono
+  icon:
+    logo: material/view-dashboard
+  features:
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - toc.follow
+    - header.autohide
+  palette:
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - attr_list
+  - md_in_html
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - toc:
+      permalink: true
