@@ -2,11 +2,7 @@
 
 {% block tabs %}
   {{ super() }}
-{% endblock %}
-
-{% block site_nav %}{% endblock %}
-
-{% block container %}
+  <style>.md-header{position:initial}.md-main__inner{margin:0}.md-content{display:none}.md-sidebar{display:none}</style>
 <div class="landing-page">
 
 <!-- HERO WITH PARALLAX -->
@@ -421,8 +417,6 @@
   </div>
 </section>
 
-</div>
-
 <script>
   // Parallax
   const layers = document.querySelectorAll('.parallax-layer[data-speed]');
@@ -469,4 +463,7 @@
 
   updateParallax();
 </script>
+</div>
 {% endblock %}
+
+{% block content %}{% endblock %}
