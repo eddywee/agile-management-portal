@@ -2,7 +2,14 @@
 
 {% block tabs %}
   {{ super() }}
-  <style>.md-main__inner{margin:0}.md-content{display:none}.md-sidebar{display:none}</style>
+  <style>
+    .md-main__inner{margin:0}
+    .md-content{display:none}
+    .md-sidebar{display:none}
+    /* On landing page, header matches parallax sky */
+    [data-md-color-scheme="slate"] .md-header{background:#040810;border-bottom-color:rgba(0,188,212,0.04)}
+    [data-md-color-scheme="slate"] .md-tabs{background:#040810;border-bottom-color:transparent}
+  </style>
 <div class="landing-page">
 
 <!-- HERO WITH PARALLAX -->
