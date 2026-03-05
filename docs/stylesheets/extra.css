@@ -81,9 +81,14 @@
 
 /* Dark — Header */
 [data-md-color-scheme="slate"] .md-header {
-  background: #0a1420;
+  background: #040810;
   border-bottom: 1px solid rgba(0, 188, 212, 0.08);
   box-shadow: none;
+}
+
+/* Dark — Tabs bar */
+[data-md-color-scheme="slate"] .md-tabs {
+  background: #040810;
 }
 
 [data-md-color-scheme="slate"] .md-header::after {
