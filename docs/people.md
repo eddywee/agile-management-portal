@@ -36,6 +36,10 @@ Select a person from the table, then click **Edit** in the detail panel. Modify 
 
 Select a person and click **Delete** in the detail panel. This permanently removes the person and all their memberships and leadership assignments across every PI.
 
+!!! danger "Permanent deletion"
+    Deleting a person permanently removes them and all their memberships
+    and leadership assignments across every PI. This cannot be undone.
+
 ## Person Detail Panel
 
 When a person is selected, the right panel shows their allocation details for the active PI.
@@ -49,6 +53,11 @@ A summary of all the person's assignments in the active PI, including:
 - **Total FTE** — The sum of all allocations. If this exceeds 100%, an over-allocation warning is displayed.
 
 ### Over-Allocation
+
+!!! info "Over-allocation threshold"
+    A person is flagged when their total FTE across all assignments in
+    a single PI exceeds 100%. Over-allocated people appear in the
+    Dashboard conflict table.
 
 A person is considered **over-allocated** when their total FTE percentage across all memberships and leadership roles in a single PI exceeds 100%. For example:
 

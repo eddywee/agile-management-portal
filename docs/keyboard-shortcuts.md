@@ -28,3 +28,7 @@ Agile Management Portal supports keyboard shortcuts for fast navigation. On macO
 
 - Shortcuts are disabled when a text input, textarea, or dropdown is focused, to avoid interfering with typing. The **Escape** key is an exception — it always works for closing search and modals.
 - All shortcuts use the standard modifier key for your platform: **Cmd** on macOS, **Ctrl** on Windows/Linux.
+
+!!! tip "Platform modifier"
+    All shortcuts use **Cmd** on macOS and **Ctrl** on Windows/Linux.
+    The **Escape** key always works regardless of focus state.

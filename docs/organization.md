@@ -2,6 +2,10 @@
 
 The Organization page provides a tree-based view of your SAFe hierarchy: **Solutions > ARTs > Teams**. Use this page to build and manage your organizational structure and assign people to leadership and team membership roles.
 
+!!! tip "Quick navigation"
+    Click any node in the tree to view its details. Use the **+** buttons
+    at each level to add new Solutions, ARTs, or Teams.
+
 ## Org Tree
 
 The left panel shows a collapsible tree with three levels:
@@ -57,6 +61,11 @@ When you select a Team, the detail panel shows:
 - **Create** — Click the **+** button at the Team level or use **Add Team** from within an ART detail. Select the parent ART and provide a name.
 - **Edit** — Click the pencil icon next to the Team name.
 - **Delete** — Click the trash icon. The team and all its memberships for every PI are permanently removed.
+
+!!! warning "Deleting organizational nodes"
+    Deleting a Solution or ART does not delete its children — they become
+    standalone. However, deleting a **Team** permanently removes it and
+    all its memberships across every PI.
 
 ### Managing Team Members
 

@@ -1,0 +1,474 @@
+{% extends "main.html" %}
+
+{% block tabs %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="landing-page">
+
+<!-- HERO WITH PARALLAX -->
+<section class="landing-hero">
+  <div class="parallax-scene" id="parallaxScene">
+
+    <!-- Layer 0: Deep sky -->
+    <svg class="parallax-layer layer-sky" data-speed="0.05" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="900" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#040810"/>
+          <stop offset="30%" stop-color="#071020"/>
+          <stop offset="60%" stop-color="#0a1830"/>
+          <stop offset="100%" stop-color="#0e2040"/>
+        </linearGradient>
+        <radialGradient id="neb1" cx="0.3" cy="0.25" r="0.5">
+          <stop offset="0%" stop-color="#00bcd4" stop-opacity="0.07"/>
+          <stop offset="100%" stop-color="#00bcd4" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="neb2" cx="0.75" cy="0.2" r="0.35">
+          <stop offset="0%" stop-color="#7c4dff" stop-opacity="0.045"/>
+          <stop offset="100%" stop-color="#7c4dff" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="1440" height="900" fill="url(#sky)"/>
+      <ellipse cx="430" cy="220" rx="500" ry="300" fill="url(#neb1)"/>
+      <ellipse cx="1050" cy="180" rx="380" ry="260" fill="url(#neb2)"/>
+      <g fill="#fff">
+        <circle cx="140" cy="60" r="0.9" opacity="0.6"/><circle cx="310" cy="100" r="0.7" opacity="0.4"/>
+        <circle cx="430" cy="40" r="1.1" opacity="0.7"/><circle cx="590" cy="80" r="0.6" opacity="0.35"/>
+        <circle cx="720" cy="50" r="0.9" opacity="0.5"/><circle cx="880" cy="30" r="0.8" opacity="0.6"/>
+        <circle cx="1020" cy="75" r="1" opacity="0.55"/><circle cx="1180" cy="45" r="0.7" opacity="0.45"/>
+        <circle cx="1300" cy="90" r="0.9" opacity="0.5"/><circle cx="200" cy="160" r="0.5" opacity="0.25"/>
+        <circle cx="500" cy="150" r="0.6" opacity="0.3"/><circle cx="780" cy="130" r="0.5" opacity="0.2"/>
+        <circle cx="1100" cy="150" r="0.7" opacity="0.3"/><circle cx="1380" cy="55" r="0.8" opacity="0.5"/>
+        <circle cx="60" cy="110" r="0.6" opacity="0.35"/><circle cx="960" cy="20" r="1" opacity="0.6"/>
+      </g>
+      <g fill="#4dd0e1">
+        <circle cx="350" cy="70" r="1.1"><animate attributeName="opacity" values="0.15;0.7;0.15" dur="3s" repeatCount="indefinite"/></circle>
+        <circle cx="820" cy="45" r="0.9"><animate attributeName="opacity" values="0.2;0.8;0.2" dur="4.5s" repeatCount="indefinite"/></circle>
+        <circle cx="1230" cy="80" r="1"><animate attributeName="opacity" values="0.1;0.6;0.1" dur="3.8s" repeatCount="indefinite"/></circle>
+      </g>
+    </svg>
+
+    <!-- Layer 1: Distant geometric spires -->
+    <svg class="parallax-layer" data-speed="0.15" style="bottom:-5%" viewBox="0 0 1440 500" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id="spire1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0c2838"/><stop offset="100%" stop-color="#0a2030"/>
+        </linearGradient>
+      </defs>
+      <g fill="url(#spire1)" opacity="0.5">
+        <polygon points="180,500 195,280 210,500"/>
+        <polygon points="220,500 240,310 260,500"/>
+        <polygon points="250,500 258,340 266,500"/>
+        <polygon points="420,500 445,260 470,500"/>
+        <polygon points="460,500 472,320 484,500"/>
+        <polygon points="680,500 700,240 720,500"/>
+        <polygon points="710,500 718,300 726,500"/>
+        <polygon points="740,500 755,280 770,500"/>
+        <polygon points="950,500 975,250 1000,500"/>
+        <polygon points="1000,500 1010,310 1020,500"/>
+        <polygon points="1200,500 1220,270 1240,500"/>
+        <polygon points="1240,500 1250,320 1260,500"/>
+        <polygon points="1340,500 1350,300 1360,500"/>
+      </g>
+      <g stroke="#00bcd4" stroke-width="0.5" fill="none" opacity="0.06">
+        <line x1="195" y1="280" x2="210" y2="500"/>
+        <line x1="445" y1="260" x2="470" y2="500"/>
+        <line x1="700" y1="240" x2="720" y2="500"/>
+        <line x1="975" y1="250" x2="1000" y2="500"/>
+        <line x1="1220" y1="270" x2="1240" y2="500"/>
+      </g>
+    </svg>
+
+    <!-- Layer 2: Midground terrain -->
+    <svg class="parallax-layer" data-speed="0.3" style="bottom:-8%" viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id="midTerrain" x1="0" y1="0" x2="0" y2="400" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#0c2a3a"/><stop offset="100%" stop-color="#103040"/>
+        </linearGradient>
+        <linearGradient id="midGlow" x1="720" y1="100" x2="720" y2="400" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#00bcd4" stop-opacity="0.04"/><stop offset="100%" stop-color="#00bcd4" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path d="M0,400 L0,280 L60,260 L120,270 L200,220 L260,240 L340,180 L380,200 L440,190 L520,230 L580,210 L660,180 L720,160 L780,175 L860,140 L920,160 L1000,180 L1060,150 L1120,170 L1180,200 L1240,180 L1320,210 L1380,190 L1440,220 L1440,400 Z" fill="url(#midTerrain)"/>
+      <path d="M0,400 L0,280 L60,260 L120,270 L200,220 L260,240 L340,180 L380,200 L440,190 L520,230 L580,210 L660,180 L720,160 L780,175 L860,140 L920,160 L1000,180 L1060,150 L1120,170 L1180,200 L1240,180 L1320,210 L1380,190 L1440,220 L1440,400 Z" fill="url(#midGlow)"/>
+      <g stroke="#00bcd4" stroke-width="0.6" fill="none" opacity="0.05">
+        <polyline points="340,180 380,200 440,190"/>
+        <polyline points="660,180 720,160 780,175"/>
+        <polyline points="1060,150 1120,170 1180,200"/>
+      </g>
+      <g stroke="#00bcd4" stroke-width="0.3" opacity="0.03">
+        <line x1="340" y1="180" x2="340" y2="400"/>
+        <line x1="720" y1="160" x2="720" y2="400"/>
+        <line x1="860" y1="140" x2="860" y2="400"/>
+        <line x1="1060" y1="150" x2="1060" y2="400"/>
+      </g>
+    </svg>
+
+    <!-- Layer 3: Foreground structures -->
+    <svg class="parallax-layer" data-speed="0.5" style="bottom:-12%" viewBox="0 0 1440 350" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id="fgL" x1="0" y1="0" x2="0" y2="350" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#0a2230"/><stop offset="100%" stop-color="#0d2838"/>
+        </linearGradient>
+      </defs>
+      <g fill="url(#fgL)">
+        <polygon points="0,350 0,200 40,180 80,190 80,350"/>
+        <polygon points="60,350 90,120 110,130 130,350"/>
+        <polygon points="110,350 130,160 150,170 170,350"/>
+        <polygon points="140,350 160,200 180,350"/>
+        <polygon points="1260,350 1280,180 1300,190 1320,350"/>
+        <polygon points="1300,350 1330,130 1350,140 1370,350"/>
+        <polygon points="1350,350 1370,170 1390,180 1410,350"/>
+        <polygon points="1390,350 1410,210 1440,200 1440,350"/>
+      </g>
+      <g stroke="#00bcd4" stroke-width="0.7" fill="none" opacity="0.07">
+        <line x1="90" y1="120" x2="110" y2="130"/>
+        <line x1="90" y1="120" x2="60" y2="350"/>
+        <line x1="130" y1="160" x2="150" y2="170"/>
+        <line x1="130" y1="160" x2="110" y2="350"/>
+        <line x1="1330" y1="130" x2="1350" y2="140"/>
+        <line x1="1330" y1="130" x2="1300" y2="350"/>
+        <line x1="1370" y1="170" x2="1390" y2="180"/>
+      </g>
+      <path d="M0,300 C200,280 400,310 600,290 C800,270 1000,300 1200,280 C1350,268 1420,290 1440,300 L1440,350 L0,350 Z" fill="#0b2434"/>
+    </svg>
+
+    <!-- Layer 4: Ground fog -->
+    <svg class="parallax-layer" data-speed="0.6" style="bottom:-15%" viewBox="0 0 1440 200" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id="fog" x1="0" y1="0" x2="0" y2="200" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#00bcd4" stop-opacity="0"/>
+          <stop offset="40%" stop-color="#00bcd4" stop-opacity="0.03"/>
+          <stop offset="100%" stop-color="#0e2040" stop-opacity="0.95"/>
+        </linearGradient>
+        <filter id="fogBlur"><feGaussianBlur stdDeviation="8"/></filter>
+      </defs>
+      <rect width="1440" height="200" fill="url(#fog)"/>
+      <g filter="url(#fogBlur)" opacity="0.4">
+        <ellipse cx="300" cy="140" rx="200" ry="25" fill="#00bcd4" opacity="0.04"/>
+        <ellipse cx="800" cy="130" rx="250" ry="20" fill="#00bcd4" opacity="0.03"/>
+        <ellipse cx="1200" cy="145" rx="180" ry="22" fill="#00bcd4" opacity="0.035"/>
+      </g>
+    </svg>
+
+    <!-- Floating light particles -->
+    <svg class="parallax-layer" data-speed="0.25" style="top:0;bottom:0" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <filter id="particleGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <g fill="#4dd0e1" filter="url(#particleGlow)">
+        <circle r="2" opacity="0.4">
+          <animateMotion dur="20s" repeatCount="indefinite" path="M200,600 C400,400 600,650 800,450 C1000,250 1200,500 1400,350"/>
+        </circle>
+        <circle r="1.5" opacity="0.3">
+          <animateMotion dur="25s" repeatCount="indefinite" path="M1300,700 C1100,500 900,700 700,500 C500,300 300,550 100,400"/>
+        </circle>
+        <circle r="1.8" opacity="0.25">
+          <animateMotion dur="18s" repeatCount="indefinite" path="M100,400 C300,300 500,500 720,350 C940,200 1100,400 1350,300"/>
+        </circle>
+        <circle r="1.2" opacity="0.35">
+          <animateMotion dur="22s" repeatCount="indefinite" path="M700,200 C900,350 600,500 800,650 C1000,500 1200,300 1000,200"/>
+        </circle>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Hero text -->
+  <div class="hero-content">
+    <div class="hero-badge">SAFe &middot; FTE Allocation Tracking</div>
+    <h1>Agile Management Portal</h1>
+    <p>Plan and visualize how people are allocated across Solutions, ARTs, and Teams &mdash; per Program Increment.</p>
+    <div class="hero-actions">
+      <a href="getting-started/" class="landing-btn landing-btn-primary">Get Started &rarr;</a>
+      <a href="https://github.com/eddywee/agile-management-portal/releases" class="landing-btn landing-btn-ghost">Latest Release</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES GRID -->
+<section class="landing-section landing-features" id="features">
+  <div class="landing-section-inner">
+    <div class="landing-section-title landing-reveal">Everything you need</div>
+    <div class="landing-section-subtitle landing-reveal">A complete toolkit for tracking team capacity, FTE allocation, and organizational structure within the SAFe framework.</div>
+
+    <div class="landing-feature-grid">
+      <div class="landing-feature-card landing-reveal">
+        <div class="landing-feature-icon teal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </div>
+        <h3>Dashboard &amp; KPIs</h3>
+        <p>FTE bar charts, role distribution donut, over-allocation conflict table, and live KPI cards &mdash; all in one view.</p>
+      </div>
+      <div class="landing-feature-card landing-reveal">
+        <div class="landing-feature-icon purple">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/><line x1="12" y1="14" x2="6" y2="16"/><line x1="12" y1="14" x2="18" y2="16"/></svg>
+        </div>
+        <h3>Organization Tree</h3>
+        <p>Hierarchical view of Solutions, ARTs, and Teams with leadership and membership management.</p>
+      </div>
+      <div class="landing-feature-card landing-reveal">
+        <div class="landing-feature-icon teal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>People Management</h3>
+        <p>Searchable directory with per-person allocation details, role breakdown, and PI history.</p>
+      </div>
+      <div class="landing-feature-card landing-reveal">
+        <div class="landing-feature-icon amber">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        </div>
+        <h3>CSV Import Wizard</h3>
+        <p>Four-step guided import for bulk-loading people and allocation data from spreadsheets.</p>
+      </div>
+      <div class="landing-feature-card landing-reveal">
+        <div class="landing-feature-icon green">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>PI Management</h3>
+        <p>Create, activate, complete, clone, and delete Program Increments with full lifecycle control.</p>
+      </div>
+      <div class="landing-feature-card landing-reveal">
+        <div class="landing-feature-icon teal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+        </div>
+        <h3>Auto-Updates</h3>
+        <p>Built-in updater checks for new releases automatically and installs with a single click.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPOTLIGHT SECTIONS -->
+<section class="landing-section" id="spotlight" style="background: var(--dark-1);">
+  <div class="landing-section-inner">
+    <div class="landing-section-title landing-reveal">More than just a tracker</div>
+    <div class="landing-section-subtitle landing-reveal">Purpose-built for SAFe organizations that need clarity on team capacity and cost transparency across Program Increments.</div>
+
+    <!-- Spotlight 1: Dashboard -->
+    <div class="landing-spotlight landing-reveal">
+      <div class="landing-spotlight-text">
+        <div class="landing-spotlight-label">Real-Time Insights</div>
+        <h2>Dashboard that tells the story</h2>
+        <p>Instantly see FTE distribution, role breakdowns, and over-allocation conflicts. KPI cards surface the numbers that matter &mdash; no digging through spreadsheets.</p>
+        <a href="dashboard/">Learn more &rarr;</a>
+      </div>
+      <div class="landing-spotlight-visual">
+        <svg viewBox="0 0 480 330" fill="none">
+          <rect width="480" height="330" fill="#0a1520"/>
+          <g transform="translate(20,20)">
+            <rect width="100" height="55" rx="6" fill="#111e2e" stroke="#1e3044" stroke-width="0.5"/>
+            <text x="12" y="22" fill="#546e7a" font-family="monospace" font-size="8">TOTAL FTE</text>
+            <text x="12" y="42" fill="#4dd0e1" font-family="monospace" font-size="18" font-weight="700">47.5</text>
+          </g>
+          <g transform="translate(130,20)">
+            <rect width="100" height="55" rx="6" fill="#111e2e" stroke="#1e3044" stroke-width="0.5"/>
+            <text x="12" y="22" fill="#546e7a" font-family="monospace" font-size="8">TEAMS</text>
+            <text x="12" y="42" fill="#26c6da" font-family="monospace" font-size="18" font-weight="700">12</text>
+          </g>
+          <g transform="translate(240,20)">
+            <rect width="100" height="55" rx="6" fill="#111e2e" stroke="#1e3044" stroke-width="0.5"/>
+            <text x="12" y="22" fill="#546e7a" font-family="monospace" font-size="8">ARTs</text>
+            <text x="12" y="42" fill="#00acc1" font-family="monospace" font-size="18" font-weight="700">3</text>
+          </g>
+          <g transform="translate(350,20)">
+            <rect width="110" height="55" rx="6" fill="#111e2e" stroke="#ff5252" stroke-width="0.5" opacity="0.8"/>
+            <text x="12" y="22" fill="#546e7a" font-family="monospace" font-size="8">CONFLICTS</text>
+            <text x="12" y="42" fill="#ff5252" font-family="monospace" font-size="18" font-weight="700">2</text>
+          </g>
+          <g transform="translate(20,100)">
+            <line x1="0" y1="180" x2="440" y2="180" stroke="#1e3044" stroke-width="0.5"/>
+            <rect x="10" y="50" width="30" height="130" rx="3" fill="#00bcd4" opacity="0.7"/>
+            <rect x="55" y="80" width="30" height="100" rx="3" fill="#26c6da" opacity="0.7"/>
+            <rect x="100" y="30" width="30" height="150" rx="3" fill="#00bcd4" opacity="0.7"/>
+            <rect x="145" y="100" width="30" height="80" rx="3" fill="#26c6da" opacity="0.7"/>
+            <rect x="190" y="60" width="30" height="120" rx="3" fill="#00bcd4" opacity="0.7"/>
+            <rect x="235" y="110" width="30" height="70" rx="3" fill="#26c6da" opacity="0.7"/>
+            <rect x="280" y="20" width="30" height="160" rx="3" fill="#4dd0e1" opacity="0.7"/>
+            <rect x="325" y="70" width="30" height="110" rx="3" fill="#00bcd4" opacity="0.7"/>
+            <rect x="370" y="90" width="30" height="90" rx="3" fill="#26c6da" opacity="0.7"/>
+            <rect x="415" y="55" width="30" height="125" rx="3" fill="#00bcd4" opacity="0.7"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Spotlight 2: Organization -->
+    <div class="landing-spotlight landing-reveal">
+      <div class="landing-spotlight-text">
+        <div class="landing-spotlight-label">Structural Clarity</div>
+        <h2>Organization, visualized</h2>
+        <p>Navigate your SAFe hierarchy from Solution level down to individual team members. Drag-and-drop restructuring, leadership assignment, and capacity views at every level.</p>
+        <a href="organization/">Learn more &rarr;</a>
+      </div>
+      <div class="landing-spotlight-visual">
+        <svg viewBox="0 0 480 330" fill="none">
+          <rect width="480" height="330" fill="#0a1520"/>
+          <g stroke="#00bcd4" stroke-width="1" opacity="0.15">
+            <line x1="240" y1="55" x2="120" y2="130"/>
+            <line x1="240" y1="55" x2="240" y2="130"/>
+            <line x1="240" y1="55" x2="360" y2="130"/>
+            <line x1="120" y1="155" x2="60" y2="220"/><line x1="120" y1="155" x2="160" y2="220"/>
+            <line x1="240" y1="155" x2="210" y2="220"/><line x1="240" y1="155" x2="270" y2="220"/>
+            <line x1="360" y1="155" x2="340" y2="220"/><line x1="360" y1="155" x2="400" y2="220"/>
+          </g>
+          <g>
+            <rect x="192" y="30" width="96" height="30" rx="6" fill="#111e2e" stroke="#00bcd4" stroke-width="1"/>
+            <text x="240" y="50" text-anchor="middle" fill="#b0bec5" font-family="monospace" font-size="9" font-weight="600">Solution</text>
+          </g>
+          <g>
+            <rect x="76" y="126" width="88" height="30" rx="5" fill="#111e2e" stroke="#26c6da" stroke-width="0.8"/>
+            <text x="120" y="146" text-anchor="middle" fill="#90a4ae" font-family="monospace" font-size="8">ART Alpha</text>
+            <rect x="196" y="126" width="88" height="30" rx="5" fill="#111e2e" stroke="#00bcd4" stroke-width="1"/>
+            <rect x="196" y="126" width="88" height="30" rx="5" fill="#00bcd4" opacity="0.04"/>
+            <text x="240" y="146" text-anchor="middle" fill="#b0bec5" font-family="monospace" font-size="8">ART Beta</text>
+            <rect x="316" y="126" width="88" height="30" rx="5" fill="#111e2e" stroke="#26c6da" stroke-width="0.8"/>
+            <text x="360" y="146" text-anchor="middle" fill="#90a4ae" font-family="monospace" font-size="8">ART Gamma</text>
+          </g>
+          <g font-family="monospace" font-size="7" fill="#78909c">
+            <rect x="28" y="216" width="64" height="24" rx="4" fill="#111e2e" stroke="#1e3044" stroke-width="0.5"/><text x="60" y="232" text-anchor="middle">Platform</text>
+            <rect x="128" y="216" width="64" height="24" rx="4" fill="#111e2e" stroke="#1e3044" stroke-width="0.5"/><text x="160" y="232" text-anchor="middle">Frontend</text>
+            <rect x="178" y="216" width="64" height="24" rx="4" fill="#111e2e" stroke="#1e3044" stroke-width="0.5"/><text x="210" y="232" text-anchor="middle">API</text>
+            <rect x="238" y="216" width="64" height="24" rx="4" fill="#111e2e" stroke="#1e3044" stroke-width="0.5"/><text x="270" y="232" text-anchor="middle">Data</text>
+            <rect x="308" y="216" width="64" height="24" rx="4" fill="#111e2e" stroke="#1e3044" stroke-width="0.5"/><text x="340" y="232" text-anchor="middle">Mobile</text>
+            <rect x="368" y="216" width="64" height="24" rx="4" fill="#111e2e" stroke="#1e3044" stroke-width="0.5"/><text x="400" y="232" text-anchor="middle">DevOps</text>
+          </g>
+          <g fill="#4dd0e1" opacity="0.35">
+            <circle cx="44" cy="254" r="3"/><circle cx="54" cy="254" r="3"/><circle cx="64" cy="254" r="3"/><circle cx="74" cy="254" r="3"/>
+            <circle cx="144" cy="254" r="3"/><circle cx="154" cy="254" r="3"/><circle cx="164" cy="254" r="3"/>
+            <circle cx="202" cy="254" r="3"/><circle cx="212" cy="254" r="3"/>
+            <circle cx="254" cy="254" r="3"/><circle cx="264" cy="254" r="3"/><circle cx="274" cy="254" r="3"/>
+            <circle cx="324" cy="254" r="3"/><circle cx="334" cy="254" r="3"/><circle cx="344" cy="254" r="3"/>
+            <circle cx="382" cy="254" r="3"/><circle cx="392" cy="254" r="3"/><circle cx="402" cy="254" r="3"/><circle cx="412" cy="254" r="3"/>
+          </g>
+          <g transform="translate(0, 268)">
+            <rect x="40" y="0" width="40" height="5" rx="2.5" fill="#1e3044"/><rect x="40" y="0" width="32" height="5" rx="2.5" fill="#00bcd4" opacity="0.4"/>
+            <rect x="140" y="0" width="40" height="5" rx="2.5" fill="#1e3044"/><rect x="140" y="0" width="28" height="5" rx="2.5" fill="#00bcd4" opacity="0.4"/>
+            <rect x="197" y="0" width="40" height="5" rx="2.5" fill="#1e3044"/><rect x="197" y="0" width="20" height="5" rx="2.5" fill="#00bcd4" opacity="0.4"/>
+            <rect x="252" y="0" width="40" height="5" rx="2.5" fill="#1e3044"/><rect x="252" y="0" width="35" height="5" rx="2.5" fill="#00bcd4" opacity="0.4"/>
+            <rect x="322" y="0" width="40" height="5" rx="2.5" fill="#1e3044"/><rect x="322" y="0" width="24" height="5" rx="2.5" fill="#00bcd4" opacity="0.4"/>
+            <rect x="382" y="0" width="40" height="5" rx="2.5" fill="#1e3044"/><rect x="382" y="0" width="38" height="5" rx="2.5" fill="#00bcd4" opacity="0.4"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Spotlight 3: Import -->
+    <div class="landing-spotlight landing-reveal">
+      <div class="landing-spotlight-text">
+        <div class="landing-spotlight-label">Seamless Onboarding</div>
+        <h2>CSV import, zero friction</h2>
+        <p>A four-step wizard walks you through uploading, mapping columns, previewing data, and importing &mdash; with validation warnings for over-allocation conflicts before anything lands.</p>
+        <a href="import/">Learn more &rarr;</a>
+      </div>
+      <div class="landing-spotlight-visual">
+        <svg viewBox="0 0 480 330" fill="none">
+          <rect width="480" height="330" fill="#0a1520"/>
+          <g transform="translate(60,30)">
+            <line x1="0" y1="0" x2="360" y2="0" stroke="#1e3044" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="0" y1="0" x2="240" y2="0" stroke="#00bcd4" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="0" cy="0" r="12" fill="#00bcd4"/><path d="M-3,0 L-1,2.5 L3,-2.5" stroke="#0a1520" stroke-width="1.8" fill="none"/>
+            <circle cx="120" cy="0" r="12" fill="#00bcd4"/><path d="M117,0 L119,2.5 L123,-2.5" stroke="#0a1520" stroke-width="1.8" fill="none"/>
+            <circle cx="240" cy="0" r="12" fill="#0a1520" stroke="#00bcd4" stroke-width="2"/><text x="240" y="4" text-anchor="middle" fill="#00bcd4" font-family="monospace" font-size="10" font-weight="700">3</text>
+            <circle cx="360" cy="0" r="12" fill="#0a1520" stroke="#1e3044" stroke-width="1.5"/><text x="360" y="4" text-anchor="middle" fill="#37474f" font-family="monospace" font-size="10">4</text>
+            <g font-family="monospace" font-size="8" text-anchor="middle">
+              <text x="0" y="24" fill="#4dd0e1">Upload</text>
+              <text x="120" y="24" fill="#4dd0e1">Map</text>
+              <text x="240" y="24" fill="#4dd0e1">Preview</text>
+              <text x="360" y="24" fill="#546e7a">Import</text>
+            </g>
+          </g>
+          <g transform="translate(20,70)">
+            <rect width="440" height="235" rx="8" fill="#111e2e" stroke="#1e3044" stroke-width="0.5"/>
+            <rect width="440" height="30" rx="8" fill="#162438"/><rect y="20" width="440" height="10" fill="#162438"/>
+            <text x="18" y="20" fill="#546e7a" font-family="monospace" font-size="9" font-weight="600">Name</text>
+            <text x="140" y="20" fill="#546e7a" font-family="monospace" font-size="9" font-weight="600">Team</text>
+            <text x="260" y="20" fill="#546e7a" font-family="monospace" font-size="9" font-weight="600">FTE</text>
+            <text x="340" y="20" fill="#546e7a" font-family="monospace" font-size="9" font-weight="600">Status</text>
+            <g font-family="monospace" font-size="9">
+              <text x="18" y="52" fill="#b0bec5">Jane Doe</text><text x="140" y="52" fill="#78909c">Platform</text><text x="260" y="52" fill="#4dd0e1">0.75</text><circle cx="360" cy="48" r="5" fill="#69f0ae" opacity="0.15"/><circle cx="360" cy="48" r="2.5" fill="#69f0ae"/>
+              <line x1="10" y1="62" x2="430" y2="62" stroke="#1a2a3a" stroke-width="0.4"/>
+              <text x="18" y="82" fill="#b0bec5">John Smith</text><text x="140" y="82" fill="#78909c">Frontend</text><text x="260" y="82" fill="#4dd0e1">1.00</text><circle cx="360" cy="78" r="5" fill="#69f0ae" opacity="0.15"/><circle cx="360" cy="78" r="2.5" fill="#69f0ae"/>
+              <line x1="10" y1="92" x2="430" y2="92" stroke="#1a2a3a" stroke-width="0.4"/>
+              <text x="18" y="112" fill="#b0bec5">Alex Chen</text><text x="140" y="112" fill="#78909c">API</text><text x="260" y="112" fill="#ffab40">1.25</text><circle cx="360" cy="108" r="5" fill="#ffab40" opacity="0.15"/><text x="360" y="112" text-anchor="middle" fill="#ffab40" font-size="11" font-weight="700">!</text>
+              <line x1="10" y1="122" x2="430" y2="122" stroke="#1a2a3a" stroke-width="0.4"/>
+              <text x="18" y="142" fill="#b0bec5">Maria Garcia</text><text x="140" y="142" fill="#78909c">Data</text><text x="260" y="142" fill="#4dd0e1">0.50</text><circle cx="360" cy="138" r="5" fill="#69f0ae" opacity="0.15"/><circle cx="360" cy="138" r="2.5" fill="#69f0ae"/>
+              <line x1="10" y1="152" x2="430" y2="152" stroke="#1a2a3a" stroke-width="0.4"/>
+              <text x="18" y="172" fill="#b0bec5">Tom Lee</text><text x="140" y="172" fill="#78909c">Mobile</text><text x="260" y="172" fill="#4dd0e1">1.00</text><circle cx="360" cy="168" r="5" fill="#69f0ae" opacity="0.15"/><circle cx="360" cy="168" r="2.5" fill="#69f0ae"/>
+            </g>
+            <rect y="195" width="440" height="28" rx="0" fill="#162438"/>
+            <rect y="195" width="440" height="2" fill="#162438"/>
+            <text x="18" y="214" fill="#546e7a" font-family="monospace" font-size="8.5">5 records &middot; 1 warning</text>
+            <text x="422" y="214" text-anchor="end" fill="#4dd0e1" font-family="monospace" font-size="8.5">3.50 FTE total</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="landing-section landing-cta">
+  <div class="landing-section-inner landing-reveal">
+    <div class="landing-section-title">Ready to get started?</div>
+    <div class="landing-section-subtitle">Download the portal, import your team structure, and get visibility into FTE allocation in minutes.</div>
+    <div class="hero-actions">
+      <a href="getting-started/" class="landing-btn landing-btn-primary">Get Started &rarr;</a>
+      <a href="https://github.com/eddywee/agile-management-portal" class="landing-btn landing-btn-ghost">View on GitHub</a>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+  // Parallax
+  const layers = document.querySelectorAll('.parallax-layer[data-speed]');
+  const hero = document.querySelector('.landing-hero');
+
+  function updateParallax() {
+    const scrolled = window.pageYOffset;
+    if (!hero) return;
+    const heroHeight = hero.offsetHeight;
+    if (scrolled > heroHeight) return;
+    layers.forEach(layer => {
+      const speed = parseFloat(layer.dataset.speed);
+      const yOffset = -(scrolled * speed);
+      layer.style.transform = 'translateY(' + yOffset + 'px)';
+    });
+  }
+
+  // Scroll Reveal
+  const reveals = document.querySelectorAll('.landing-reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Throttled scroll handler
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        updateParallax();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  updateParallax();
+</script>
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+{% endblock %}

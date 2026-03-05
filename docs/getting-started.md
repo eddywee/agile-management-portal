@@ -2,17 +2,22 @@
 
 ## Installation
 
-### macOS
+=== "macOS"
 
-1. Download the `.dmg` installer from the [latest release](https://github.com/eddywee/agile-management-portal/releases/latest).
-2. Open the DMG and drag **Agile Management Portal** into your Applications folder.
-3. On first launch, macOS may show a security prompt — click **Open** to allow the app.
+    1. Download the `.dmg` installer from the [latest release](https://github.com/eddywee/agile-management-portal/releases/latest).
+    2. Open the DMG and drag **Agile Management Portal** into your Applications folder.
+    3. On first launch, macOS may show a security prompt — click **Open** to allow the app.
 
-### Windows
+=== "Windows"
 
-1. Download the `.exe` installer from the [latest release](https://github.com/eddywee/agile-management-portal/releases/latest).
-2. Run the installer and follow the on-screen prompts.
-3. Launch **Agile Management Portal** from the Start menu.
+    1. Download the `.exe` installer from the [latest release](https://github.com/eddywee/agile-management-portal/releases/latest).
+    2. Run the installer and follow the on-screen prompts.
+    3. Launch **Agile Management Portal** from the Start menu.
+
+!!! tip "First time?"
+    After installing, the portal will open with an empty workspace.
+    Head to **CSV Import** to load your team structure, or start
+    building it manually via the **Organization** view.
 
 ## First Launch
 
@@ -60,4 +65,5 @@ The most important concept to understand is that **all allocation data is scoped
 - People allocation details reflect that PI
 - The conflict table shows over-allocations for that PI
 
-This means you can plan future PIs without affecting your current PI data. Each PI maintains its own independent set of memberships and leadership assignments.
+!!! info "Why PI scoping matters"
+    PI scoping means you can plan future PIs without affecting your current PI data. Each PI maintains its own independent set of memberships and leadership assignments.

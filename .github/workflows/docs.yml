@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'docs/**'
+      - 'overrides/**'
       - 'zensical.toml'
   workflow_dispatch:
 

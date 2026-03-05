@@ -2,6 +2,11 @@
 
 The Dashboard provides a high-level overview of your SAFe organization's FTE allocation for the currently selected Program Increment.
 
+!!! info "How FTE is calculated"
+    FTE (Full-Time Equivalent) values represent the fraction of a
+    person's capacity allocated to a specific team within the active PI.
+    A value of `1.0` means full-time, `0.5` means half-time.
+
 ## KPI Cards
 
 Four summary cards appear at the top of the dashboard:
@@ -36,6 +41,11 @@ A donut chart showing the overall split between:
 Use this to check whether your organization's overhead ratio is within acceptable bounds.
 
 ## Conflict Table
+
+!!! warning "Over-Allocation Conflicts"
+    When a person's total FTE across all teams exceeds `1.0`, the
+    dashboard flags this as a conflict. Resolve these before finalizing
+    your PI plan.
 
 The bottom section lists all people whose total FTE allocation in the active PI exceeds 100%. For each conflicting person, the table shows:
 

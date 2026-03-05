@@ -24,11 +24,20 @@ New PIs are created with **Planned** status.
 
 ## PI Lifecycle
 
+!!! abstract "PI Lifecycle"
+    Each Program Increment moves through these states:
+    **Planned** > **Active** > **Completed**
+
 A PI follows this lifecycle: **Planned > Active > Completed**.
 
 - **Activate** — Moves a Planned PI to Active status. Multiple PIs can be Active simultaneously.
 - **Complete** — Locks an Active PI. Completed PIs cannot be modified.
 - **Delete** — Permanently removes a PI and all its associated memberships and leadership assignments.
+
+!!! danger "Deleting a PI"
+    Deleting a PI permanently removes all associated allocation data
+    including memberships and leadership assignments. This action
+    cannot be undone. Export your data first.
 
 ## Clone PI
 

@@ -12,6 +12,11 @@ Click the upload area to browse for a file. The wizard supports `.csv` and `.tsv
 
 Once a file is selected, the app parses it and displays the file name and row count. If the file is valid, click **Next: Map Columns** to proceed.
 
+??? example "Supported CSV formats"
+    The import wizard accepts UTF-8 encoded CSV files with comma,
+    semicolon, or tab delimiters. Files up to 10MB are supported.
+    Excel exports (`.xlsx`) must first be saved as CSV.
+
 ### Step 2: Mapping
 
 In this step, you map each column from your CSV file to an application field. The available target fields are:
@@ -59,6 +64,14 @@ People are matched by **full name** — if a person with the same name already e
 
 ## Tips
 
-- Export a PI first (from **Settings > Data Management**) to see the expected CSV format, then use that as a template for your import file.
-- The import assigns all memberships to the **currently active PI**. Make sure you've selected the correct PI in the sidebar before importing.
+!!! warning "Active PI matters"
+    The import assigns all memberships to the **currently active PI**.
+    Make sure you've selected the correct PI in the sidebar before
+    importing.
+
+!!! tip "Use an export as a template"
+    Export a PI first (from **Settings > Data Management**) to see
+    the expected CSV format, then use that as a template for your
+    import file.
+
 - Teams referenced in the CSV that don't already exist will be auto-created as standalone teams (not assigned to any ART). You can reassign them to ARTs afterward on the [Organization](organization.md) page.

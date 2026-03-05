@@ -20,6 +20,11 @@ Updates include the complete application — both the frontend interface and the
 
 Each release includes notes describing what changed. You can review release notes on the [GitHub Releases page](https://github.com/eddywee/agile-management-portal/releases) before or after updating.
 
+!!! info "Data preserved"
+    Your local database is preserved across updates — no data is lost
+    during the update process. The app stores data separately from
+    the application files.
+
 ## Troubleshooting
 
 If an update fails to apply:
@@ -29,3 +34,8 @@ If an update fails to apply:
 3. If the issue persists, download the latest installer manually from the [releases page](https://github.com/eddywee/agile-management-portal/releases/latest) and reinstall.
 
 Reinstalling from a fresh download preserves your database — the app stores data separately from the application files.
+
+!!! tip "Manual fallback"
+    If auto-update fails, download the latest installer from the
+    [releases page](https://github.com/eddywee/agile-management-portal/releases/latest)
+    and reinstall. Your database will be preserved.

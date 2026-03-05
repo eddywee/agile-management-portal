@@ -9,3 +9,7 @@ The Cost Rates tab (third tab on the **Settings** page) shows role-based daily c
 - **Effective PI** — Which PI the rate applies from
 
 Use the dropdown filters at the top to narrow results by hub and department. Cost rates are imported via CSV and provide visibility into the cost impact of FTE allocation decisions.
+
+!!! info "Import only"
+    Cost rates are imported via CSV and are read-only in the application.
+    Use the dropdown filters to narrow results by hub and department.
